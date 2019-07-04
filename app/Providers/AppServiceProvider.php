@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace SavyCon\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // To help during migration: increase string length to 191
+        Schema::defaultStringLength(191);
     }
 }

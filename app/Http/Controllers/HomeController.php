@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace SavyCon\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (auth()->user()->role == 'vendor') {
+            return redirect()->route('vendor');
+        } else {
+            return redirect()->route('user');
+        }
     }
 }

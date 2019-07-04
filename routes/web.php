@@ -11,10 +11,40 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagesController@index')->name('index');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('vendor')->group(function () {
+	Route::get('/service', 'Vendor\ServiceController@index');
+	Route::post('/service', 'Vendor\ServiceController@store');
+	Route::put('/service/{id}', 'Vendor\ServiceController@update')->where('id', '([0-9]+)');
+	Route::delete('/service', 'Vendor\ServiceController@delete');
+
+	Route::middleware(['role:vendor'])->group(function () {
+		Route::get('/', 'VendorController@index')->name('vendor');
+
+		Route::get('/{path}', 'VendorController@index')->where('/path', '([A-Z\d-\/_.]+)?');
+	});
+});
+
+Route::middleware(['role:user'])->group(function () {
+	Route::prefix('user')->group(function () {
+		Route::get('/', 'UserController@index')->name('user');
+		Route::post('/post-request', 'User\UserRequestController@store');
+
+		Route::get('/{path}', 'UserController@index')->where('/path', '([A-Z\d-\/_.]+)?');
+	});
+});
+
+Route::get('/category', 'CategoryController@index')->name('category.all');
+Route::get('/category/services/{id}', 'CategoryController@services')->where('id', '([0-9]+)')->name('category.services');
+
+Route::get('/profile', 'ProfileController@index')->name('user.profile');
+Route::put('/profile', 'ProfileController@update')->name('user.update');
+Route::delete('/profile', 'ProfileController@delete')->name('user.delete');
+
+Route::get('/states', 'LocationController@states')->name('state.all');
+Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)')->name('state.cities.all');

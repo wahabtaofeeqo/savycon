@@ -1,32 +1,106 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 require('./bootstrap');
 
 window.Vue = require('vue');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+// Form
+import { Form, HasError, AlertError } from 'vform';
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+// Router
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Axios
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+Vue.use(VueAxios, axios);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// Sweet Alert
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+const Toast = Swal.mixin({
+	toast: true,
+	position: 'center',
+	showConfirmButton: false,
+	timer: 3000
+});
+window.Toast = Toast;
+
+// Overlay loader
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+Vue.use(Loading, {
+	loader: 'bars',
+});
+
+// event emitter
+window.Fire = new Vue();
+
+
+// Components
+import VendorDashboard from './components/vendor/Dashboard.vue';
+import VendorProfile from './components/vendor/Profile.vue';
+import VendorServices from './components/vendor/Services.vue';
+import BuyerRequests from './components/vendor/BuyerRequests.vue';
+
+import UserDashboard from './components/user/Dashboard.vue';
+import UserRequests from './components/user/UserRequests.vue';
+import PostRequest from './components/user/PostRequest.vue';
+import UserProfile from './components/user/Profile.vue';
+
+// Routes
+const routes = [
+	{
+		name: 'VendorDashboard',
+		path: '/vendor/',
+		component: VendorDashboard
+	},
+	{
+		name: 'VendorServices',
+		path: '/vendor/services',
+		component: VendorServices
+	},
+	{
+		name: 'VendorProfile',
+		path: '/vendor/profile',
+		component: VendorProfile
+	},
+	{
+		name: 'BuyerRequests',
+		path: '/vendor/buyer-requests',
+		component: BuyerRequests
+	},
+	{
+		name: 'UserDashboard',
+		path: '/user/',
+		component: UserDashboard
+	},
+	{
+		name: 'UserRequests',
+		path: '/user/requests',
+		component: UserRequests
+	},
+	{
+		name: 'PostRequest',
+		path: '/user/post-request',
+		component: PostRequest
+	},
+	{
+		name: 'UserProfile',
+		path: '/user/profile',
+		component: UserProfile
+	},
+];
+const router = new VueRouter({ mode: 'history', routes: routes });
+
+// Standalone components
+Vue.component('register', require('./components/Register.vue').default);
+
 
 const app = new Vue({
     el: '#app',
+    router
 });
