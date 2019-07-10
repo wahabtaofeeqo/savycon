@@ -44,6 +44,7 @@ window.Fire = new Vue();
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/vendor/Profile.vue';
 import VendorServices from './components/vendor/Services.vue';
+import VendorNewService from './components/vendor/NewService.vue';
 import BuyerRequests from './components/vendor/BuyerRequests.vue';
 
 import UserDashboard from './components/user/Dashboard.vue';
@@ -62,6 +63,11 @@ const routes = [
 		name: 'VendorServices',
 		path: '/vendor/services',
 		component: VendorServices
+	},
+	{
+		name: 'VendorNewService',
+		path: '/vendor/services/new/:id?',
+		component: VendorNewService
 	},
 	{
 		name: 'VendorProfile',

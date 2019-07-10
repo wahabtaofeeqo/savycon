@@ -71,6 +71,12 @@
 			            		</router-link>
 			            	</li>
 			            	<li>
+			            		<router-link :to="{ name: 'VendorNewService' }">
+			            			<i class="pe-7s-portfolio"></i>
+			            			<p>Add New Service</p>
+			            		</router-link>
+			            	</li>
+			            	<li>
 			            		<router-link :to="{ name: 'BuyerRequests' }">
 			            			<i class="pe-7s-speaker"></i>
 			            			<p>Buyer Requests</p>

@@ -11,12 +11,12 @@ class LocationController extends Controller
 {
     public function states()
     {
-    	return response(State::all(), 200);
+    	return response(State::orderBy('name', 'ASC')->get(), 200);
     }
 
     public function cities($id)
     {
-    	$cities = State::findOrFail($id)->cities;
+    	$cities = State::findOrFail($id)->cities()->orderBy('name', 'ASC')->get();
 
     	return response($cities, 200);
     }

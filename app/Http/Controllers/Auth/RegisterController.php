@@ -2,7 +2,7 @@
 
 namespace SavyCon\Http\Controllers\Auth;
 
-use SavyCon\User;
+use SavyCon\Models\User;
 use SavyCon\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'digits:10'],
+            'role' => ['required', 'string']
             'city_id' => ['required', 'numeric'],
         ]);
     }
@@ -70,6 +71,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone' => $data['phone'],
+            'role' => $data['role'],
             'city_id' => $data['city_id']
         ]);
     }

@@ -26,7 +26,7 @@
 		                    			<div class="input-group-prepend">
 		                    				<span class="input-group-text" id="addon-phone">+234</span>
 		                    			</div>
-		                    			<input type="number" name="phone" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" v-model="form.phone" placeholder="Phone number" id="phone" aria-describedby="addon-phone" min="10" max="10" required>
+		                    			<input type="text" name="phone" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" v-model="form.phone" placeholder="Phone number" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
 		                    		</div>
 
 		                    		<span class="help-block text-info"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>
@@ -60,6 +60,7 @@
 		                    		<input type="password" name="password_confirmation" class="form-control" :class="{ 'has-error':form.errors.has('password_confirmation') }" v-model="form.password_confirmation" placeholder="Re-enter your password" id="password_confirmation" required>
 		                    		<has-error :form="form" field="password_confirmation"></has-error>
 		                    	</div>
+
 		                    	<button type="submit" :disabled="form.busy" class="btn btn-primary">Register</button>
 		                    </form>
 		                </div>
@@ -81,12 +82,14 @@
 					phone: '',
 					password: '',
 					password_confirmation: '',
+					role: 'user',
 					city: {
 						id: '',
 						state: {
 							id: ''
 						}
-					}
+					},
+					city_id: '',
 				}),
 
 				states: {},
@@ -117,16 +120,64 @@
 					loader.hide()
 				})
 				.catch(() => {
-					Toast.fire({
-						type: 'warning',
-						title: 'We could not load the cities...'
+					Swal.fire({
+						type: 'error',
+						title: 'Oops!',
+						text: 'We could not load the cities...'
 					})
 
 					loader.hide()
 				})
 			},
 			registerUser() {
-				this.form.post(this.url)
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-primary'
+					},
+					buttonsStyling: false
+				})
+
+				swalWithBootstrapButtons.fire({
+					title: 'Register as?',
+					html: 'Not sure? <a href="#" target="__blank">Click here</a> to understand what each user can do',
+					type: 'info',
+					showCancelButton: true,
+					confirmButtonText: 'Vendor',
+					cancelButtonText: 'Buyer',
+					reverseButtons: true
+				})
+				.then((result) => {
+					if (result.value) {
+						this.form.role = 'vendor'
+					}
+					console.log(this.form.role)
+
+					const loader = this.$loading.show()
+					this.form.city_id = this.form.city.id
+
+					this.form.post(this.url)
+					.then(() => {
+						Swal.fire({
+							type: 'success',
+							title: 'Yay!!!',
+							text: 'You will be redirected now...'
+						})
+
+						setTimeout(() => {
+							window.location.href = '/home'
+						}, 2000)
+					})
+					.catch(() => {
+						Swal.fire({
+							title: 'Oops...',
+							text: 'Something went horribly wrong!',
+							type: 'error'
+						})
+
+						loader.hide()
+					})
+				})
 			}
 		},
 		created() {

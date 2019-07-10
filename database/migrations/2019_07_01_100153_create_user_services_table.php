@@ -26,7 +26,7 @@ class CreateUserServicesTable extends Migration
             $table->string('image_1');
             $table->string('image_2');
             $table->string('image_3');
-            $table->boolean('featured');
+            $table->boolean('featured')->default(0);
             $table->timestamps();
         });
     }

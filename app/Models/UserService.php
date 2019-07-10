@@ -20,8 +20,8 @@ class UserService extends Model
     	return $this->belongsTo('SavyCon\Models\Service');
     }
 
-    public function getPriceAttribute($value)
-    {
-        return number_format($value);
-    }
+    // public function getPriceAttribute($value)
+    // {
+    //     return number_format($value);
+    // }
 }

@@ -13,12 +13,13 @@
 
 Route::get('/', 'PagesController@index')->name('index');
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('vendor')->group(function () {
 	Route::get('/service', 'Vendor\ServiceController@index');
+	Route::get('/service/{id}', 'Vendor\ServiceController@show')->where('/id', '([0-9]+)?');
 	Route::post('/service', 'Vendor\ServiceController@store');
 	Route::put('/service/{id}', 'Vendor\ServiceController@update')->where('id', '([0-9]+)');
 	Route::delete('/service', 'Vendor\ServiceController@delete');
@@ -26,7 +27,20 @@ Route::prefix('vendor')->group(function () {
 	Route::middleware(['role:vendor'])->group(function () {
 		Route::get('/', 'VendorController@index')->name('vendor');
 
-		Route::get('/{path}', 'VendorController@index')->where('/path', '([A-Z\d-\/_.]+)?');
+		Route::get('/{path}', 'VendorController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+		]);
+
+		Route::get('/{path}/{pathTwo}', 'VendorController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+			'/pathTwo' => '([A-Z\d-\/_.]+)?',
+		]);
+
+		Route::get('/{path}/{pathTwo}/{id}', 'VendorController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+			'/pathTwo' => '([A-Z\d-\/_.]+)?',
+			'/id' => '([0-9]+)?',
+		]);
 	});
 });
 
