@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 
 use SavyCon\Models\User;
 use SavyCon\Http\Requests\StoreUserData;
+use SavyCon\Http\Requests\UpdateUserData;
 
 class ProfileController extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth');
+    	$this->middleware('auth:api');
     }
 
     public function index()
@@ -19,20 +20,37 @@ class ProfileController extends Controller
         $user = User::with([
             'city',
             'city.state'
-        ])->where('id', auth()->user()->id)
+        ])->where('id', auth('api')->user()->id)
         ->get()[0];
 
     	return response($user, 200);
     }
 
-    public function update(StoreUserData $request)
+    public function show(Request $request, $id)
+    {
+        // 
+    }
+
+    public function store(Request $request)
+    {
+        // 
+    }
+
+    public function update(UpdateUserData $request)
     {
     	$validated = $request->validated();
 
-    	$user = auth()->user();
-    	$user->update([
-    		$request->all()
-    	]);
+        $user = auth()->user();
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email,'.$user->id,
+        ]);
+
+    	$user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->city_id = $request->city_id;
+        $user->save();
 
     	return response($user, 200);
     }

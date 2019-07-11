@@ -14,7 +14,7 @@ class ServiceController extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth');
+    	$this->middleware('auth:api');
     }
 
     public function index()
@@ -22,7 +22,7 @@ class ServiceController extends Controller
     	$services = auth()->user()->userServices()->with([
             'service',
             'service.category'
-        ])->paginate(10);
+        ])->latest()->paginate(10);
 
         return response($services, 200);
     }
@@ -60,7 +60,7 @@ class ServiceController extends Controller
         $service->image_1 = $request->image_1;
         $service->image_2 = $request->image_2;
         $service->image_3 = $request->image_3;
-        $service->user_id = auth()->user()->id;
+        $service->user_id = auth('api')->user()->id;
         $service->service_id = $request->input('service.id');
         $service->save();
 
@@ -128,7 +128,7 @@ class ServiceController extends Controller
         $service->title = $request->title;
         $service->description = $request->description;
         $service->price = $request->price;
-        $service->user_id = auth()->user()->id;
+        $service->user_id = auth('api')->user()->id;
         $service->service_id = $request->input('service.id');
         $service->save();
 
