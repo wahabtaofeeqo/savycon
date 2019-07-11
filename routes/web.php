@@ -22,7 +22,7 @@ Route::prefix('vendor')->group(function () {
 	Route::get('/service/{id}', 'Vendor\ServiceController@show')->where('/id', '([0-9]+)?');
 	Route::post('/service', 'Vendor\ServiceController@store');
 	Route::put('/service/{id}', 'Vendor\ServiceController@update')->where('id', '([0-9]+)');
-	Route::delete('/service', 'Vendor\ServiceController@delete');
+	Route::delete('/service/{id}', 'Vendor\ServiceController@delete')->where('id', '([0-9]+)');
 
 	Route::middleware(['role:vendor'])->group(function () {
 		Route::get('/', 'VendorController@index')->name('vendor');

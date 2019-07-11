@@ -13,7 +13,7 @@ class UpdateVendorService extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class UpdateVendorService extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:50',
+            'description' => 'required',
+            'price' => 'required|numeric|between:10000.00,10000000.00',
+            'service.id' => 'required|numeric',
+            'image_1' => 'sometimes',
+            'image_2' => 'sometimes',
+            'image_3' => 'sometimes',
         ];
     }
 }

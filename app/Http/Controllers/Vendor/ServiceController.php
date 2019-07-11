@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
 use SavyCon\Http\Requests\StoreVendorService;
+use SavyCon\Http\Requests\UpdateVendorService;
+
 use SavyCon\Models\UserService;
 
 class ServiceController extends Controller
@@ -83,6 +85,11 @@ class ServiceController extends Controller
         $service = UserService::findOrFail($id);
 
         if ($request->image_1 && (strlen($request->image_1) > 50)) {
+            $serviceImage = 'images/services/'.$service->image_1;
+            if (file_exists($serviceImage)) {
+                @unlink($serviceImage);
+            }
+
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_1, 0, strpos($request->image_1, ';')))[1])[1];
 
             \Image::make($request->image_1)->fit(1200, 1480)->save('images/services/'.$name);
@@ -91,14 +98,25 @@ class ServiceController extends Controller
             $service->image_1 = $request->image_1;
         }
         if ($request->image_2 && (strlen($request->image_2) > 50)) {
+            $serviceImage = 'images/services/'.$service->image_2;
+            if (file_exists($serviceImage)) {
+                @unlink($serviceImage);
+            }
+
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_2, 0, strpos($request->image_2, ';')))[1])[1];
 
             \Image::make($request->image_2)->fit(1200, 1480)->save('images/services/'.$name);
             
             $request->merge(['image_2' => $name]);
+
             $service->image_2 = $request->image_2;
         }
         if ($request->image_3 && (strlen($request->image_3) > 50)) {
+            $serviceImage = 'images/services/'.$service->image_3;
+            if (file_exists($serviceImage)) {
+                @unlink($serviceImage);
+            }
+
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_3, 0, strpos($request->image_3, ';')))[1])[1];
 
             \Image::make($request->image_3)->fit(1200, 1480)->save('images/services/'.$name);

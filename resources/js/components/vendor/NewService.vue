@@ -61,17 +61,20 @@
 			                </div>
 		                	<div class="form-group">
 			                	<label for="image_1">Image 1</label>
-			                	<input type="file" name="image_1" class="form-control" id="image_1" accept="image/*" @change="updateImage1" required>
+			                	<input type="file" name="image_1" class="form-control" id="image_1" accept="image/*" @change="updateImage1">
+			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
 			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
 			                </div>
 			                <div class="form-group">
 			                	<label for="image_2">Image 2</label>
-			                	<input type="file" name="image_2" class="form-control" id="image_2" accept="image/*" @change="updateImage2" required>
+			                	<input type="file" name="image_2" class="form-control" id="image_2" accept="image/*" @change="updateImage2">
+			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
 			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
 			                </div>
 			                <div class="form-group">
 			                	<label for="image_3">Image 3</label>
-			                	<input type="file" name="image_3" class="form-control" id="image_3" accept="image/*" @change="updateImage3" required>
+			                	<input type="file" name="image_3" class="form-control" id="image_3" accept="image/*" @change="updateImage3">
+			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
 			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
 			                </div>
 		                </div>
@@ -79,7 +82,7 @@
 
                     <button class="btn btn-primary btn-fill" :disabled="form.busy" type="submit" v-show="!editmode">Create Service</button>
                     <button class="btn btn-primary btn-fill" :disabled="form.busy" type="submit" v-show="editmode">Update Service</button>
-                    <button class="btn btn-danger btn-fill" type="button" @click="goBack" v-show="editmode">Cancel</button>
+                    <router-link :to="{ name: 'VendorServices' }" class="btn btn-danger btn-fill" type="button" v-show="editmode">Cancel</router-link>
 
                     <div class="clearfix"></div>
 		        </form>
@@ -138,9 +141,6 @@
 
 					loader.hide()
 				})
-			},
-			goBack() {
-				this.$route.go(-1)
 			},
 			loadCategories() {
 				axios.get('/category/')
@@ -241,17 +241,18 @@
 				})
 			},
 			updateService() {
-				const loader = this.$loader.show();
+				const loader = this.$loading.show();
 
-				this.form.put(this.url)
+				this.form.put(this.url+'/'+this.form.id)
 				.then(() => {
-					Toast.fire({
+					Swal.fire({
 						type: 'success',
 						title: 'Service was updated successfully'
 					})
 
 					this.form.reset();
-					Fire.$emit('refreshServices');
+					
+					window.location.href = '/vendor/services'
 				})
 				.catch(() => {
 					Swal.fire({
@@ -275,10 +276,6 @@
 			} else {
 				this.form.reset()
 			}
-
-			Fire.$on('refreshServices', () => {
-				console.log('something refreshed')
-			})
 		},
 		mounted() {
 

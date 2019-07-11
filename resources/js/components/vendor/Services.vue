@@ -9,7 +9,7 @@
 				<div class="alert alert-danger" v-show="services.length < 1">
 					You have no services yet
 				</div>
-				<div class="table-responsive" v-show="services.length > 0">
+				<div class="table-responsive table-full-width" v-show="services.length > 0">
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -90,9 +90,6 @@
                 this.url = url;
                 this.loadServices();
             },
-			editService(service) {
-				console.log('edit')
-			},
 			deleteService(id) {
 				Swal.fire({
 					title: 'Are you sure?',
@@ -103,15 +100,16 @@
 				})
 				.then((result) => {
 					if (result.value) {
-						const loader = this.$loader.show();
+						const loader = this.$loading.show();
 
-						this.form.delete(this.url+'/'+id)
+						axios.delete(this.url+'/'+id)
 						.then(() => {
-							Toast.fire({
+							Swal.fire({
 								type: 'success',
 								title: 'Service was deleted successfully'
 							})
 
+							loader.hide()
 							Fire.$emit('refreshServices')
 						})
 						.catch(() => {

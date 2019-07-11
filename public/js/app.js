@@ -2593,6 +2593,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2637,9 +2640,6 @@ __webpack_require__.r(__webpack_exports__);
         });
         loader.hide();
       });
-    },
-    goBack: function goBack() {
-      this.$route.go(-1);
     },
     loadCategories: function loadCategories() {
       var _this2 = this;
@@ -2738,16 +2738,16 @@ __webpack_require__.r(__webpack_exports__);
     updateService: function updateService() {
       var _this8 = this;
 
-      var loader = this.$loader.show();
-      this.form.put(this.url).then(function () {
-        Toast.fire({
+      var loader = this.$loading.show();
+      this.form.put(this.url + '/' + this.form.id).then(function () {
+        Swal.fire({
           type: 'success',
           title: 'Service was updated successfully'
         });
 
         _this8.form.reset();
 
-        Fire.$emit('refreshServices');
+        window.location.href = '/vendor/services';
       })["catch"](function () {
         Swal.fire({
           title: 'Oops!',
@@ -2768,10 +2768,6 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       this.form.reset();
     }
-
-    Fire.$on('refreshServices', function () {
-      console.log('something refreshed');
-    });
   },
   mounted: function mounted() {}
 });
@@ -3038,9 +3034,6 @@ __webpack_require__.r(__webpack_exports__);
       this.url = url;
       this.loadServices();
     },
-    editService: function editService(service) {
-      console.log('edit');
-    },
     deleteService: function deleteService(id) {
       var _this2 = this;
 
@@ -3052,13 +3045,14 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         if (result.value) {
-          var loader = _this2.$loader.show();
+          var loader = _this2.$loading.show();
 
-          _this2.form["delete"](_this2.url + '/' + id).then(function () {
-            Toast.fire({
+          axios["delete"](_this2.url + '/' + id).then(function () {
+            Swal.fire({
               type: 'success',
               title: 'Service was deleted successfully'
             });
+            loader.hide();
             Fire.$emit('refreshServices');
           })["catch"](function () {
             Swal.fire({
@@ -44551,11 +44545,29 @@ var render = function() {
                       type: "file",
                       name: "image_1",
                       id: "image_1",
-                      accept: "image/*",
-                      required: ""
+                      accept: "image/*"
                     },
                     on: { change: _vm.updateImage1 }
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.editmode,
+                          expression: "!editmode"
+                        }
+                      ],
+                      staticClass: "help-block text-info"
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-info-circle" }),
+                      _vm._v(" Required")
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "small",
@@ -44588,11 +44600,29 @@ var render = function() {
                       type: "file",
                       name: "image_2",
                       id: "image_2",
-                      accept: "image/*",
-                      required: ""
+                      accept: "image/*"
                     },
                     on: { change: _vm.updateImage2 }
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.editmode,
+                          expression: "!editmode"
+                        }
+                      ],
+                      staticClass: "help-block text-info"
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-info-circle" }),
+                      _vm._v(" Required")
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "small",
@@ -44625,11 +44655,29 @@ var render = function() {
                       type: "file",
                       name: "image_3",
                       id: "image_3",
-                      accept: "image/*",
-                      required: ""
+                      accept: "image/*"
                     },
                     on: { change: _vm.updateImage3 }
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.editmode,
+                          expression: "!editmode"
+                        }
+                      ],
+                      staticClass: "help-block text-info"
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-info-circle" }),
+                      _vm._v(" Required")
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "small",
@@ -44688,7 +44736,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "button",
+              "router-link",
               {
                 directives: [
                   {
@@ -44699,14 +44747,14 @@ var render = function() {
                   }
                 ],
                 staticClass: "btn btn-danger btn-fill",
-                attrs: { type: "button" },
-                on: { click: _vm.goBack }
+                attrs: { to: { name: "VendorServices" }, type: "button" }
               },
               [_vm._v("Cancel")]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" })
-          ]
+          ],
+          1
         )
       ])
     ])
@@ -45167,7 +45215,7 @@ var render = function() {
                 expression: "services.length > 0"
               }
             ],
-            staticClass: "table-responsive"
+            staticClass: "table-responsive table-full-width"
           },
           [
             _c("table", { staticClass: "table table-hover" }, [
