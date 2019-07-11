@@ -6,6 +6,8 @@
 				<p class="category">Change what is only required</p>
 			</div>
 			<div class="content">
+				<alert-error :form="form"></alert-error>
+				
 				<form method="POST" @submit.prevent="updateProfile()" @keydown="form.onKeydown($event)">
 					<div class="row">
                         <div class="col-12">
@@ -25,10 +27,8 @@
                         <div class="col-12">
                         	<label for="phone">Phone number</label>
                             <div class="input-group">
-                            	<div class="input-group-prepend">
-                            		<div class="input-group-text" id="addon-phone">+234</div>
-                            	</div>
-                            	<input v-model="form.phone" type="number" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" min="10" max="10" required>
+                            	<div class="input-group-addon" id="addon-phone">+234</div>
+                            	<input v-model="form.phone" type="text" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
                             </div>
 
                             <span class="help-block text-info"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>
@@ -79,7 +79,8 @@
 						state: {
 							id: '',
 						},
-					}
+					},
+					city_id: ''
 				}),
 
 				url: '/profile',
@@ -92,22 +93,28 @@
 					this.states = response.data
 				})
 				.catch(() => {
-					Toast.fire({
+					Swal.fire({
 						type: 'warning',
 						title: 'We could not load the states...'
 					})
 				})
 			},
 			loadCities() {
+				const loader = this.$loading.show()
+
 				axios.get('/states/cities/'+this.form.city.state.id)
 				.then((response) => {
 					this.cities = response.data
+
+					loader.hide()
 				})
 				.catch(() => {
-					Toast.fire({
+					Swal.fire({
 						type: 'warning',
 						title: 'We could not load the cities...'
 					})
+
+					loader.hide()
 				})
 			},
 			loadUser() {
@@ -128,14 +135,17 @@
 			updateProfile() {
 				const loader = this.$loading.show()
 
+				this.form.city_id = this.form.city.id
+
 				this.form.put(this.url)
 				.then(() => {
-					Toast.fire({
+					Swal.fire({
 						type: 'success',
 						title: 'Profile was updated successfully',
 					})
 
 					Fire.$emit('refreshProfile')
+					loader.hide()
 				})
 				.catch(() => {
 					loader.hide()

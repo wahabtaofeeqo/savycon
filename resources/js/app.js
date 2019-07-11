@@ -42,7 +42,7 @@ window.Fire = new Vue();
 
 // Components
 import VendorDashboard from './components/vendor/Dashboard.vue';
-import VendorProfile from './components/vendor/Profile.vue';
+import VendorProfile from './components/Profile.vue';
 import VendorServices from './components/vendor/Services.vue';
 import VendorNewService from './components/vendor/NewService.vue';
 import BuyerRequests from './components/vendor/BuyerRequests.vue';
@@ -50,7 +50,7 @@ import BuyerRequests from './components/vendor/BuyerRequests.vue';
 import UserDashboard from './components/user/Dashboard.vue';
 import UserRequests from './components/user/UserRequests.vue';
 import PostRequest from './components/user/PostRequest.vue';
-import UserProfile from './components/user/Profile.vue';
+import UserProfile from './components/Profile.vue';
 
 // Routes
 const routes = [
@@ -91,7 +91,7 @@ const routes = [
 	},
 	{
 		name: 'PostRequest',
-		path: '/user/post-request',
+		path: '/user/post-request/:id?',
 		component: PostRequest
 	},
 	{

@@ -16,7 +16,7 @@
                             <thead>
                                 <th></th>
                             	<th>Name</th>
-                            	<th>Price</th>
+                            	<th>Price (₦)</th>
                             	<th>Description</th>
                             	<th>Views <i class="fa fa-heart"></i></th>
                             </thead>
@@ -45,7 +45,7 @@
 			return {
 				services: {},
 				pagination: [],
-				url: '/vendor/service',
+				url: '/api/service',
 			}
 		},
 		methods: {

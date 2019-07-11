@@ -19,4 +19,9 @@ class City extends Model
     {
     	return $this->belongsTo('SavyCon\Models\State');
     }
+
+    public function userRequests()
+    {
+        return $this->hasManyThrough('SavyCon\Models\UserRequest', 'SavyCon\Models\User');
+    }
 }

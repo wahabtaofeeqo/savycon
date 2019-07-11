@@ -117,6 +117,10 @@ h1 .subtitle {
 .text-danger, .text-danger:hover {
   color: #FF4A55 !important; }
 
+.invalid-feedback {
+  color: red;
+}
+
 /*     General overwrite     */
 body,
 .wrapper {

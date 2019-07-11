@@ -10,6 +10,8 @@
 				<p class="category">Let your customers find you</p>
 			</div>
 			<div class="content">
+				<alert-error :form="form"></alert-error>
+				
 				<form method="POST" @submit.prevent="editmode ? updateService() : createService()" @keydown="form.onKeydown($event)">
 					<div class="row">
 						<div class="col-md-7">
@@ -118,7 +120,7 @@
 
 				serviceToLoad: '',
 
-				url: '/vendor/service',
+				url: '/api/service',
 			}
 		},
 		methods: {

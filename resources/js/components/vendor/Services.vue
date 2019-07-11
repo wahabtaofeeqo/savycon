@@ -50,7 +50,7 @@
 				services: {},
 				pagination: [],
 
-				url: '/vendor/service',
+				url: '/api/service',
 			}
 		},
 		methods: {
