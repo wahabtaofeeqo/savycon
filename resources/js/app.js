@@ -104,6 +104,10 @@ const router = new VueRouter({ mode: 'history', routes: routes });
 
 // Standalone components
 Vue.component('register', require('./components/Register.vue').default);
+Vue.component('quick-login', require('./components/QuickLogin.vue').default);
+Vue.component('services-overview', require('./components/sections/ServicesOverview.vue').default);
+Vue.component('featured-services', require('./components/sections/FeaturedServices.vue').default);
+Vue.component('footer-categories', require('./components/sections/FooterCategories.vue').default);
 
 
 const app = new Vue({

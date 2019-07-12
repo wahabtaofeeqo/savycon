@@ -14,4 +14,9 @@ class Category extends Model
     {
     	return $this->hasMany('SavyCon\Models\Service');
     }
+
+    public function userServices()
+    {
+    	return $this->hasManyThrough('SavyCon\Models\UserService', 'SavyCon\Models\Service');
+    }
 }
