@@ -1,6 +1,8 @@
 @extends('layouts.main')
 
-@section('title', 'Service Overview')
+@section('title')
+	{{ $service->title }}
+@endsection
 
 @section('description')
 	{{ $service->description }}
@@ -123,6 +125,50 @@
 
 							<button class="js-show-cart flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">Click to login</button>
 							@endauth
+
+							<div class="m-t-40">
+								<span class="mtext-106">Share</span>
+								<div class="clearfix"></div>
+
+								<!-- vue-goodshare -->
+								<vue-goodshare-facebook style="color: white;" 
+									title_social="Facebook"
+									has_counter
+									has_icon
+									has_square_edges>
+								</vue-goodshare-facebook>
+
+								<vue-goodshare-twitter style="color: white;" 
+									title_social="Twitter"
+									has_icon
+									has_square_edges>
+								</vue-goodshare-twitter>
+
+								<vue-goodshare-linked-in style="color: white;" 
+									title_social="LinkedIn"
+									has_counter
+									has_icon
+									has_square_edges>
+								</vue-goodshare-linked-in>
+
+								<vue-goodshare-whats-app style="color: white;" 
+									title_social="WhatsApp"
+									has_icon
+									has_square_edges>
+								</vue-goodshare-whats-app>
+
+								<vue-goodshare-telegram style="color: white;" 
+									title_social="Telegram"
+									has_icon
+									has_square_edges>
+								</vue-goodshare-telegram>
+
+								<vue-goodshare-email style="color: white;" 
+									title_social="Mail"
+									has_icon
+									has_square_edges>
+								</vue-goodshare-email>
+							</div>
 						</div>
 
 						<!-- Share buttons -->

@@ -39,7 +39,6 @@ Vue.use(Loading, {
 // event emitter
 window.Fire = new Vue();
 
-
 // Components
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
@@ -112,9 +111,24 @@ Vue.component('footer-categories', require('./components/sections/FooterCategori
 Vue.component('load-services-in-category', require('./components/sections/CategoryOverview.vue').default);
 Vue.component('load-services-in-sub-category', require('./components/sections/SubCategoryOverview.vue').default);
 
+// Goodshare
+import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
+import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
+import VueGoodshareLinkedIn from "vue-goodshare/src/providers/LinkedIn.vue";
+import VueGoodshareWhatsApp from "vue-goodshare/src/providers/WhatsApp.vue";
+import VueGoodshareTelegram from "vue-goodshare/src/providers/Telegram.vue";
+import VueGoodshareEmail from "vue-goodshare/src/providers/Email.vue";
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    components: {
+    	VueGoodshareFacebook,
+    	VueGoodshareTwitter,
+    	VueGoodshareLinkedIn,
+    	VueGoodshareWhatsApp,
+    	VueGoodshareTelegram,
+    	VueGoodshareEmail
+    }
 });
 
