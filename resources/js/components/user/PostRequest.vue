@@ -90,6 +90,8 @@
 				categoryServices: {},
 
 				url: '/api/request',
+				categoryURL: '/api/category/',
+				categoryServicesURL: '/api/category/services/',
 			}
 		},
 		methods: {
@@ -114,7 +116,7 @@
 				})
 			},
 			loadCategories() {
-				axios.get('/category/')
+				axios.get(this.categoryURL)
 				.then(response => {
 					this.categories = response.data
 				});
@@ -122,7 +124,7 @@
 			loadCategoryServices() {
 				const loader = this.$loading.show()
 
-				axios.get('/category/services/'+this.form.service.category.id)
+				axios.get(this.categoryServicesURL+this.form.service.category.id)
 				.then((response) => {
 					this.categoryServices = response.data
 

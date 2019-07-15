@@ -30,14 +30,25 @@ class ServiceController extends Controller
     	return response($services, 200);
     }
 
+    public function limitedFeatured($count)
+    {
+        $services = UserService::where('featured', '1')->with([
+            'user',
+            'service',
+            'service.category'
+        ])->latest()->limit($count)->get();
+
+        return response($services, 200);
+    }
+
     public function show($id)
     {
-    	$services = UserService::findOrFail($id)->with([
+    	$service = UserService::with([
     		'user',
     		'service',
     		'service.category'
-    	])->first();
+    	])->findOrFail($id);
 
-    	return response($services, 200);
+    	return response($service, 200);
     }
 }

@@ -14,7 +14,7 @@
 			return {
 				categories: {},
 
-				categoriesURL: '/category/limited',
+				categoriesURL: '/api/category/limited',
 			}
 		},
 		methods: {

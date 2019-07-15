@@ -5,6 +5,7 @@ namespace SavyCon\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SavyCon\Models\Category;
+use SavyCon\Models\Service;
 
 class CategoryController extends Controller
 {
@@ -43,5 +44,33 @@ class CategoryController extends Controller
         ])->latest()->paginate(20);
 
         return response($services, 200);
+    }
+
+    public function show($id)
+    {
+        $category = Category::findOrFail($id);
+
+        return response($category, 200);
+    }
+
+    // Sub-category
+    public function showUserServicesFromSub($id) 
+    {
+        $services = Service::findOrFail($id)->userServices()->with([
+            'user',
+            'service',
+            'service.category'
+        ])->latest()->paginate(20);
+
+        return response($services, 200);
+    }
+
+    public function showSub($id)
+    {
+        $sub_category = Service::with([
+            'category'
+        ])->findOrFail($id);
+
+        return response($sub_category, 200);
     }
 }

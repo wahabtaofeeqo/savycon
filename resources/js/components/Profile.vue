@@ -83,12 +83,12 @@
 					city_id: ''
 				}),
 
-				url: '/profile',
+				url: '/api/profile',
 			}
 		},
 		methods: {
 			loadStates() {
-				axios.get('/states/')
+				axios.get('/api/states/')
 				.then((response) => {
 					this.states = response.data
 				})
@@ -102,7 +102,7 @@
 			loadCities() {
 				const loader = this.$loading.show()
 
-				axios.get('/states/cities/'+this.form.city.state.id)
+				axios.get('/api/states/cities/'+this.form.city.state.id)
 				.then((response) => {
 					this.cities = response.data
 
@@ -137,7 +137,7 @@
 
 				this.form.city_id = this.form.city.id
 
-				this.form.put(this.url)
+				this.form.put(this.url+'/'+this.form.id)
 				.then(() => {
 					Swal.fire({
 						type: 'success',
@@ -157,7 +157,7 @@
 			this.loadUser()
 
 			Fire.$on('refreshProfile', () => {
-				this.loadUser()
+				window.location.reload()
 			})
 		},
 		mounted() {

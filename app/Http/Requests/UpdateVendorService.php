@@ -26,7 +26,7 @@ class UpdateVendorService extends FormRequest
         return [
             'title' => 'required|max:50',
             'description' => 'required',
-            'price' => 'required|numeric|between:10000.00,10000000.00',
+            'price' => 'required|numeric|between:500.00,10000000.00',
             'service.id' => 'required|numeric',
             'image_1' => 'sometimes',
             'image_2' => 'sometimes',

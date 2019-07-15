@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Lagos',
 
     /*
     |--------------------------------------------------------------------------
@@ -226,6 +226,15 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+    ],
+
+    'developer' => [
+        'name' => 'Adeyinka M. Adefolurin',
+        'phone' => '+2348135303377',
+        'email' => 'folurinyinka@gmail.com',
+        'whatsapp' => '2348135303377',
+        'twitter' => '_fykay',
+        'instagram' => 'fykay'
     ],
 
 ];

@@ -36,7 +36,7 @@ class ProfileController extends Controller
         // 
     }
 
-    public function update(UpdateUserData $request)
+    public function update(UpdateUserData $request, $id)
     {
     	$validated = $request->validated();
 

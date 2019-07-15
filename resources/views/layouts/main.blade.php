@@ -32,6 +32,7 @@
 
                 <!-- Stylesheets -->
                 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
                 <link rel="stylesheet" href="{{ asset('main/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/fonts/iconic/css/material-design-iconic-font.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/fonts/linearicons-v1.0.0/icon-font.min.css') }}">
@@ -44,8 +45,18 @@
                 <link rel="stylesheet" href="{{ asset('main/vendor/perfect-scrollbar/perfect-scrollbar.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/css/util.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/css/main.css') }}">
+
+                <style scoped>
+                        .isotope-grid {
+                                min-height: 429.344px !important;
+                        }
+                        .block2 .block2-pic {
+                                height: 284.078px !important;
+                                max-height: 284.078px !important;
+                        }
+                </style>
         </head>
-        <body class="">
+        <body class="animsition">
                 <div id="app">
                         <!-- Header -->
                         <header class="header-v2">
@@ -60,16 +71,16 @@
                                                         <!-- Menu desktop -->
                                                         <div class="menu-desktop">
                                                                 <ul class="main-menu">
-                                                                        <li class="active-menu">
+                                                                        <li class="@yield('activeHome')">
                                                                                 <a href="{{ route('index') }}">Home</a>
                                                                         </li>
-                                                                        <li class="label1" data-label1="new">
+                                                                        <li class="@yield('activeServices') label1" data-label1="new">
                                                                                 <a href="{{ route('services') }}">Services</a>
                                                                         </li>
-                                                                        <li>
+                                                                        <li class="@yield('activeAbout')">
                                                                                 <a href="{{ route('about') }}">About</a>
                                                                         </li>
-                                                                        <li>
+                                                                        <li class="@yield('activeContact')">
                                                                                 <a href="{{ route('contact') }}">Contact</a>
                                                                         </li>
                                                                 </ul>
@@ -199,6 +210,11 @@
                                                                         Terms of Use
                                                                 </a>
                                                         </li>
+                                                        <li class="p-b-13">
+                                                                <a href="{{ route('privacyPolicy') }}" class="stext-102 cl2 hov-cl1 trans-04">
+                                                                        Privacy Policy
+                                                                </a>
+                                                        </li>
                                                 </ul>
 
                                                 <div class="sidebar-gallery w-full p-tb-30">
@@ -213,9 +229,28 @@
                                                         </span>
 
                                                         <p class="stext-108 cl6 p-t-27">
-                                                                <p>Adeyinka M. Adefolurin</p>
-                                                                <p><a href="https://api.whatsapp.com/send?phone=2348135303377" target="__blank">+234 813 530 3377</a></p>
-                                                                <p><a href="mailto:folurinyinka@gmail.com" target="__blank"> folurinyinka@gmail.com</a></p>
+                                                                <p>{{ config('app.developer.name') }}</p>
+                                                                <div class="p-t-0">
+                                                                        <a href="mailto:{{ config('app.developer.email') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                                <i class="fa fa-envelope"></i>
+                                                                        </a>
+
+                                                                        <a href="tel:{{ config('app.developer.phone') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                                <i class="fa fa-phone"></i>
+                                                                        </a>
+
+                                                                        <a href="https://twitter.com/{{ config('app.developer.twitter') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                                <i class="fa fa-twitter"></i>
+                                                                        </a>
+
+                                                                        <a href="https://instagram.com/{{ config('app.developer.instagram') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                                <i class="fa fa-instagram"></i>
+                                                                        </a>
+
+                                                                        <a href="https://api.whatsapp.com/send?phone={{ config('app.developer.whatsapp') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                                <i class="fa fa-whatsapp"></i>
+                                                                        </a>
+                                                                </div>
                                                         </p>
                                                 </div>
                                         </div>
@@ -322,15 +357,15 @@
                                                                 Any questions? Let us know on our social media pages or you can <a href="{{ route('contact') }}"> contact us</a>
                                                         </p>
                                                         <div class="p-t-27">
-                                                                <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                <a href="{{ env('CONTACT_FACEBOOK') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                                                                         <i class="fa fa-facebook"></i>
                                                                 </a>
 
-                                                                <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                <a href="{{ env('CONTACT_INSTAGRAM') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                                                                         <i class="fa fa-instagram"></i>
                                                                 </a>
 
-                                                                <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                <a href="{{ env('CONTACT_TWITTER') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                                                                         <i class="fa fa-twitter"></i>
                                                                 </a>
                                                         </div>
@@ -357,7 +392,7 @@
                                         <div class="p-t-40">
                                                 <p class="stext-107 cl6 txt-center">
                                                         Copyright &copy; 2019
-                                                        All rights reserved | Powered by <a href="https://api.whatsapp.com/send?phone=2348135303377" target="_blank">Adeyinka M. Adefolurin</a>
+                                                        All rights reserved | Powered by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
                                                         <br><small>Template by <a href="https://colorlib.com" target="_blank">Colorlib</a></small>
                                                 </p>
                                         </div>

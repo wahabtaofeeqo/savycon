@@ -109,8 +109,12 @@ Vue.component('services-overview', require('./components/sections/ServicesOvervi
 Vue.component('featured-services', require('./components/sections/FeaturedServices.vue').default);
 Vue.component('footer-categories', require('./components/sections/FooterCategories.vue').default);
 
+Vue.component('load-services-in-category', require('./components/sections/CategoryOverview.vue').default);
+Vue.component('load-services-in-sub-category', require('./components/sections/SubCategoryOverview.vue').default);
+
 
 const app = new Vue({
     el: '#app',
     router
 });
+

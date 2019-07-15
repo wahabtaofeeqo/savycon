@@ -52,7 +52,7 @@
 					this.form.busy = true
 
 					setTimeout(() => {
-						window.location.href = '/'
+						window.location.reload()
 					}, 2000)
 				})
 				.catch(() => {

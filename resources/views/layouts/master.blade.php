@@ -51,7 +51,7 @@
 				<div class="sidebar" data-color="green" data-image="{{ asset('master/img/sidebar-4.jpg') }}">
 					<div class="sidebar-wrapper">
 						<div class="logo">
-			                <a href="{{ route(Auth::user()->role) }}" class="simple-text">
+			                <a href="{{ route('index') }}" class="simple-text">
 			                    SavyCon
 			                </a>
 			            </div>

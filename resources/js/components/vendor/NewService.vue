@@ -28,7 +28,7 @@
 		                    <div class="form-group">
 	                        	<div class="input-group">
 	                            	<div class="input-group-addon">₦</div>
-	                            	<input type="number" name="price" v-model="form.price" min="1000.00" id="price" placeholder="5000.00" class="form-control" :class="{ 'has-error':form.errors.has('price') }" aria-describedby="addon-price" required>
+	                            	<input type="number" name="price" v-model="form.price" min="500.00" id="price" placeholder="5000.00" class="form-control" :class="{ 'has-error':form.errors.has('price') }" aria-describedby="addon-price" required>
 	                            </div>
 	                            <has-error :form="form" field="price"></has-error>
 		                    </div>
@@ -58,7 +58,6 @@
 			                	<ul>
 			                		<li>Must be a JPG or PNG file</li>
 			                		<li>Must be less than 2MB in size</li>
-			                		<li>Should be within 1200x1480 pixels in width and height respectively</li>
 			                	</ul>
 			                </div>
 		                	<div class="form-group">
@@ -66,18 +65,21 @@
 			                	<input type="file" name="image_1" class="form-control" id="image_1" accept="image/*" @change="updateImage1">
 			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
 			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
+			                	<has-error :form="form" field="image_1"></has-error>
 			                </div>
 			                <div class="form-group">
 			                	<label for="image_2">Image 2</label>
 			                	<input type="file" name="image_2" class="form-control" id="image_2" accept="image/*" @change="updateImage2">
 			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
 			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
+			                	<has-error :form="form" field="image_2"></has-error>
 			                </div>
 			                <div class="form-group">
 			                	<label for="image_3">Image 3</label>
 			                	<input type="file" name="image_3" class="form-control" id="image_3" accept="image/*" @change="updateImage3">
 			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
 			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
+			                	<has-error :form="form" field="image_3"></has-error>
 			                </div>
 		                </div>
 		            </div>
@@ -121,6 +123,8 @@
 				serviceToLoad: '',
 
 				url: '/api/service',
+				categoryURL: '/api/category',
+				categoryServicesURL: '/api/category/services/',
 			}
 		},
 		methods: {
@@ -145,7 +149,7 @@
 				})
 			},
 			loadCategories() {
-				axios.get('/category/')
+				axios.get(this.categoryURL)
 				.then(response => {
 					this.categories = response.data
 				});
@@ -153,7 +157,7 @@
 			loadCategoryServices() {
 				const loader = this.$loading.show()
 
-				axios.get('/category/services/'+this.form.service.category.id)
+				axios.get(this.categoryServicesURL+this.form.service.category.id)
 				.then((response) => {
 					this.categoryServices = response.data
 					loader.hide()

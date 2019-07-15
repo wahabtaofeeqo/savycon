@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'SavyCon\Model' => 'SavyCon\Policies\ModelPolicy',
+        'SavyCon\Models\UserService' => 'SavyCon\Policies\UserServicePolicy',
     ];
 
     /**
@@ -35,5 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isUser', function($user) {
             return $user->role === 'user';
         });
+
+        
     }
 }

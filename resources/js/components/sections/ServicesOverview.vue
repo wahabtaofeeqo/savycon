@@ -4,7 +4,11 @@
 			<div class="container">
 				<div class="p-b-10">
 					<h3 class="ltext-103 cl5">
-						Services Overview
+						Services Overview 
+						<small class="cl1" style="font-size: 35%;">
+							<span class="pull-right">Showing page {{ pagination.current_page }} of {{ pagination.last_page }}</span>
+						</small>
+						<div class="clearfix"></div>
 					</h3>
 				</div>
 
@@ -46,13 +50,13 @@
 				</div>
 
 				<div class="row isotope-grid" v-show="services.length > 0">
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item design" v-for="service in services">
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 						<div class="block2">
 							<div class="block2-pic hov-img0">
 								<img :src="getPhoto(service.image_1)" alt="IMG-SERVICE">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									Quick View
+								<a :href="openService(service.id)" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+									View
 								</a>
 							</div>
 
@@ -70,11 +74,15 @@
 					</div>
 				</div>
 
-				<!-- Load more -->
-				<div class="flex-c-m flex-w w-full p-t-45" v-show="services.length > 0">
-					<a :href="categoriesLink()" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-						Load More
-					</a>
+				<!-- Pagination -->
+				<div class="flex-c-m flex-w w-full p-t-38" v-show="pagination.next_page_url">
+					<button class="flex-c-m how-pagination1 trans-04 m-all-7" @click="fetchPaginateServices(pagination.prev_page_url)" :disabled="!pagination.prev_page_url">
+						<i class="fa fa-arrow-left"></i>
+					</button>
+
+					<button class="flex-c-m how-pagination1 trans-04 m-all-7" @click="fetchPaginateServices(pagination.next_page_url)" :disabled="!pagination.next_page_url">
+						<i class="fa fa-arrow-right"></i>
+					</button>
 				</div>
 			</div>
 		</section>
@@ -86,10 +94,12 @@
 		data() {
 			return {
 				categories: {},
-				services: {},
 
-				servicesURL: '/services',
-				categoriesURL: '/category',
+				services: {},
+				pagination: [],
+
+				servicesURL: '/api/services',
+				categoriesURL: '/api/category',
 			}
 		},
 		methods: {
@@ -119,6 +129,8 @@
 				.then((response) => {
 					this.services = response.data.data
 
+					this.makePagination(response.data)
+
 					loader.hide()
 				})
 				.catch(() => {
@@ -131,6 +143,21 @@
 					loader.hide()
 				})
 			},
+			makePagination(data) {
+                let pagination = {
+                    current_page: data.current_page,
+                    last_page: data.last_page,
+                    next_page_url: data.next_page_url,
+                    prev_page_url: data.prev_page_url,
+                    total_pages: data.total,
+                };
+
+                this.pagination = pagination;
+            }, 
+            fetchPaginateServices(url) {
+                this.url = url;
+                this.loadServices();
+            },
 			switchCategory(id) {
 				const loader = this.$loading.show()
 
@@ -155,11 +182,5 @@
 			this.loadCategories()
 			this.loadServices()
 		}
-	}
+	}	
 </script>
-
-<style scoped>
-	.isotope-grid {
-		height: 429.344px !important;
-	}
-</style>

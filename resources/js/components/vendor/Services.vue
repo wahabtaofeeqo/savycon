@@ -15,7 +15,7 @@
 							<tr>
 								<th></th>
 								<th>Title</th>
-								<th>Description</th>
+								<th width="350">Description</th>
 								<th>Price (₦)</th>
 								<th>Category</th>
 								<th></th>
@@ -24,7 +24,7 @@
 						<tbody>
 							<tr v-for="service in services">
 								<td>
-									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill">View</a>
+									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
 								</td>
 								<td>{{ service.title }}</td>
 								<td style="white-space: pre-line;">{{ service.description }}</td>
@@ -125,7 +125,7 @@
 				})
 			},
 			viewService(id) {
-            	return '/services/'+id;
+            	return '/service/'+id;
             },
 		},
 		created() {

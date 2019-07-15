@@ -24,3 +24,21 @@ Route::apiResources([
 ]);
 
 Route::get('user-requests', 'UserRequestController@userRequests');
+
+Route::get('/category', 'CategoryController@index');
+Route::get('/category/limited', 'CategoryController@limitedIndex');
+Route::get('/category/show/{id}', 'CategoryController@show')->where('id', '([0-9]+)');
+Route::get('/category/{id}', 'CategoryController@showUserServices')->where('id', '([0-9]+)');
+Route::get('/category/services/{id}', 'CategoryController@services')->where('id', '([0-9]+)');
+
+// Sub-categories
+Route::get('/sub-category/{id}', 'CategoryController@showUserServicesFromSub')->where('id', '([0-9]+)');
+Route::get('/sub-category/show/{id}', 'CategoryController@showSub')->where('id', '([0-9]+)');
+
+Route::get('/services', 'ServiceController@index')->name('services');
+Route::get('/services/featured', 'ServiceController@featured');
+Route::get('/services/featured/{count}', 'ServiceController@limitedFeatured')->where('count', '([0-9]+)');
+Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');
+
+Route::get('/states', 'LocationController@states')->name('state.all');
+Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)');

@@ -18,6 +18,12 @@ Route::get('/index', 'PagesController@index');
 // Services
 Route::get('/services', 'PagesController@services')->name('services');
 Route::get('/our-services', 'PagesController@services');
+Route::get('/service/{id}', 'PagesController@showService')->where('/id', '([0-9]+)')->name('service.single');
+
+// Categories & Sub-categories
+Route::get('/category/{id}', 'PagesController@loadCategory')->where('/id', '([0-9]+)')->name('service.category');
+Route::get('/sub-category/{id}', 'PagesController@loadSubCategory')->where('/id', '([0-9]+)')->name('service.service');
+Route::get('/sub/{id}', 'PagesController@loadSubCategory')->where('/id', '([0-9]+)');
 
 // About
 Route::get('/about', 'PagesController@about')->name('about');
@@ -81,15 +87,3 @@ Route::middleware(['role:user'])->group(function () {
 		]);
 	});
 });
-
-Route::get('/category', 'CategoryController@index')->name('category.all');
-Route::get('/category/limited', 'CategoryController@limitedIndex');
-Route::get('/category/{id}', 'CategoryController@showUserServices')->where('id', '([0-9]+)');
-Route::get('/category/services/{id}', 'CategoryController@services')->where('id', '([0-9]+)')->name('category.services');
-
-Route::get('/services', 'ServiceController@index')->name('services');
-Route::get('/services/featured', 'ServiceController@featured')->name('services.featured');
-Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');
-
-Route::get('/states', 'LocationController@states')->name('state.all');
-Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)')->name('state.cities.all');
