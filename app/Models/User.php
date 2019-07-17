@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('SavyCon\Models\UserRequest');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany('SavyCon\Models\UserServiceRating');
+    }
 }

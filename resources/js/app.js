@@ -23,7 +23,7 @@ import Swal from 'sweetalert2';
 window.Swal = Swal;
 const Toast = Swal.mixin({
 	toast: true,
-	position: 'center',
+	position: 'top-end',
 	showConfirmButton: false,
 	timer: 3000
 });
@@ -110,6 +110,7 @@ Vue.component('footer-categories', require('./components/sections/FooterCategori
 
 Vue.component('load-services-in-category', require('./components/sections/CategoryOverview.vue').default);
 Vue.component('load-services-in-sub-category', require('./components/sections/SubCategoryOverview.vue').default);
+Vue.component('service-review', require('./components/sections/ServiceReview.vue').default);
 
 // Goodshare
 import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";

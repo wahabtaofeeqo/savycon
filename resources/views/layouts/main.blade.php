@@ -54,6 +54,9 @@
                                 height: 284.078px !important;
                                 max-height: 284.078px !important;
                         }
+                        .invalid-feedback {
+                                display: block;
+                        }
                 </style>
         </head>
         <body class="animsition">

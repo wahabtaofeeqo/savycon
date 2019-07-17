@@ -21,6 +21,7 @@ Route::apiResources([
 	'service' => 'Vendor\ServiceController',
 	'request' => 'User\UserRequestController',
 	'profile' => 'ProfileController',
+	'rating' => 'RatingController',
 ]);
 
 Route::get('user-requests', 'UserRequestController@userRequests');

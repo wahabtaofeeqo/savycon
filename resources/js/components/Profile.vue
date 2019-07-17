@@ -28,7 +28,7 @@
                         	<label for="phone">Phone number</label>
                             <div class="input-group">
                             	<div class="input-group-addon" id="addon-phone">+234</div>
-                            	<input v-model="form.phone" type="text" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
+                            	<input v-model="form.phone" type="tel" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
                             </div>
 
                             <span class="help-block text-info"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>

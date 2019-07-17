@@ -26,7 +26,7 @@
 
                     	<div class="form-group m-b-20">
                     		<div class="bor8 how-pos4-parent">
-                    			<input type="text" name="phone" class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" :class="{ 'has-error':form.errors.has('phone') }" v-model="form.phone" placeholder="Phone number" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
+                    			<input type="tel" name="phone" class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" :class="{ 'has-error':form.errors.has('phone') }" v-model="form.phone" placeholder="Phone number" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
                     			<span class="how-pos4 pointer-none phone"></span>
                     		</div>
 
