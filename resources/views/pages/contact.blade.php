@@ -88,13 +88,5 @@
 				</div>
 			</div>
 		</div>
-	</section>	
-	
-	<!-- Map -->
-	<div class="map">
-		<div class="size-303" id="google_map" data-map-x="40.691446" data-map-y="-73.886787" data-pin="{{ asset('main/images/icons/pin.png') }}" data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
-	</div>
-
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
-	<script src="{{ asset('main/js/map-custom.js') }}"></script>
+	</section>
 @endsection
