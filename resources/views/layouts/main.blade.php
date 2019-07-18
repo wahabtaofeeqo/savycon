@@ -375,16 +375,42 @@
                                                 </div>
 
                                                 <div class="col-sm-6 col-lg-3 p-b-50">
+                                                        @if (session('status'))
+                                                                <div class="alert alert-success" role="alert">
+                                                                        {{ session('status') }}
+                                                                </div>
+                                                        @endif
+
+                                                        @if ($errors->any())
+                                                            <div class="alert alert-danger" role="alert">
+                                                                <ul>
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li>{{ $error }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+
                                                         <h4 class="stext-301 cl0 p-b-30">
                                                                 Newsletter
                                                         </h4>
-                                                        <form>
+
+                                                        <form method="POST" action="{{ route('subscription') }}">
+                                                                @csrf
+
                                                                 <div class="wrap-input1 w-full p-b-4">
-                                                                        <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+                                                                        <input class="input1 bg-none plh1 stext-107 cl7  @error('email') is-invalid @enderror" type="text" name="email" placeholder="email@example.com" value="{{ old('email') }}">
                                                                         <div class="focus-input1 trans-04"></div>
+
+                                                                        @error('email')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                 </div>
+                                                                <input type="hidden" value="{{ url()->current() }}" name="page">
                                                                 <div class="p-t-18">
-                                                                        <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                                                                        <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04" type="submit">
                                                                                 Subscribe
                                                                         </button>
                                                                 </div>

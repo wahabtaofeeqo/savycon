@@ -32,6 +32,7 @@ Route::get('/about-us', 'PagesController@about');
 // Contact
 Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/contact-us', 'PagesController@contact');
+Route::post('/contact', 'General\ContactEnquiryController@store')->name('contact');
 
 // Help and FAQs
 Route::get('/help-and-faqs', 'PagesController@help')->name('help');
@@ -49,6 +50,9 @@ Route::get('/how-it-works', 'PagesController@howItWorks')->name('howItWorks');
 // Privacy policy
 Route::get('/privacy-policy', 'PagesController@privacyPolicy')->name('privacyPolicy');
 Route::get('/privacy', 'PagesController@privacyPolicy');
+
+// Subscription
+Route::post('/subscription', 'General\SubscriptionController@store')->name('subscription');
 
 Auth::routes(['verify' => false]);
 
