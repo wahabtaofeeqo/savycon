@@ -420,7 +420,7 @@
 
                                         <div class="p-t-40">
                                                 <p class="stext-107 cl6 txt-center">
-                                                        Copyright &copy; 2019
+                                                        Copyright &copy; @php echo date("Y") @endphp
                                                         All rights reserved | Powered by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
                                                         <br><small>Template by <a href="https://colorlib.com" target="_blank">Colorlib</a></small>
                                                 </p>
