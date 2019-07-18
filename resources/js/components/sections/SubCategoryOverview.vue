@@ -58,9 +58,9 @@
 								<div class="side-menu">
 									<!-- Search -->
 									<div class="bor17 of-hidden pos-relative">
-										<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="Search">
+										<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" v-model="search" @keyup.enter="searchServices" name="search" placeholder="Search">
 
-										<button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
+										<button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04" @click="searchServices">
 											<i class="zmdi zmdi-search"></i>
 										</button>
 									</div>
@@ -133,6 +133,8 @@
 				url: '/api/sub-category/',
 				subCategoryURL: '/api/sub-category/show/',
 				featuredServicesURL: '/api/services/featured/5',
+
+				search: '',
 			}
 		},
 		methods: {
@@ -203,6 +205,23 @@
 			},
 			openSubCategory(id) {
 				return '/sub-category/'+id
+			},
+			searchServices() {
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
+
+				axios.get('/api/findService/'+this.search)
+				.then((response) => {
+					this.services = response.data.data
+
+					this.makePagination(response.data)
+
+					loader.hide()
+				})
+				.catch(() => {
+					loader.hide()
+				})
 			}
 		},
 		created() {

@@ -172,12 +172,12 @@
                                                         <img src="{{ asset('main/images/icons/icon-close2.png') }}" alt="CLOSE">
                                                 </button>
 
-                                                <form class="wrap-search-header flex-w p-l-15">
-                                                        <button class="flex-c-m trans-04">
+                                                <div class="wrap-search-header flex-w p-l-15">
+                                                        <button class="flex-c-m trans-04" @click="searchServices">
                                                                 <i class="zmdi zmdi-search"></i>
                                                         </button>
-                                                        <input class="plh3" type="text" name="search" placeholder="Search...">
-                                                </form>
+                                                        <input class="plh3" type="text" v-model="global_search" @keyup.enter="searchServices" name="search" placeholder="Search...">
+                                                </div>
                                         </div>
                                 </div>
                         </header>

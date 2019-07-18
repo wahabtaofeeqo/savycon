@@ -231,4 +231,7 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Services Overview -->
+	<services-overview></services-overview>
 @endsection

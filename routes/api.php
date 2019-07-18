@@ -24,7 +24,9 @@ Route::apiResources([
 	'rating' => 'RatingController',
 ]);
 
-Route::get('user-requests', 'UserRequestController@userRequests');
+Route::get('/findService/{query}', 'ServiceController@search')->where('/query', '([A-Za-z0-9])\w+')->name('search');
+
+Route::get('/user-requests', 'UserRequestController@userRequests');
 
 Route::get('/category', 'CategoryController@index');
 Route::get('/category/limited', 'CategoryController@limitedIndex');

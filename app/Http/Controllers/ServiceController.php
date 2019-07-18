@@ -51,4 +51,14 @@ class ServiceController extends Controller
 
     	return response($service, 200);
     }
+
+    public function search($query)
+    {
+        $services = UserService::where('title', 'LIKE', '%'.$query.'%')
+        ->orWhere('description', 'LIKE', '%'.$query.'%')
+        ->orderBy('created_at', 'ASC')
+        ->paginate(15);
+
+        return response($services, 200);
+    }
 }

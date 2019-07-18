@@ -1,6 +1,6 @@
 <template>
 	<div>
-    	<section class="bg0 p-t-23 p-b-140">
+    	<section class="bg0 p-t-23 p-b-140" id="search">
 			<div class="container">
 				<div class="p-b-10">
 					<h3 class="ltext-103 cl5">
@@ -36,20 +36,20 @@
 					</div>
 					<div class="dis-none panel-search w-full p-t-10 p-b-15">
 						<div class="bor8 dis-flex p-l-15">
-							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" @click="searchServices">
 								<i class="zmdi zmdi-search"></i>
 							</button>
 
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search" @keyup.enter="searchServices" name="search-service" placeholder="Search">
 						</div>	
 					</div>
 				</div>
 
 				<div class="alert alert-info" v-show="services.length < 1">
-					There are no services yet in this category
+					No service was found <mark>{{ search ? search : 'in this category'}}</mark>
 				</div>
 
-				<div class="row isotope-grid" v-show="services.length > 0">
+				<div class="row isotope-grid" ref="serviceContainer" v-show="services.length > 0">
 					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 						<div class="block2">
 							<div class="block2-pic hov-img0">
@@ -95,11 +95,13 @@
 			return {
 				categories: {},
 
-				services: {},
-				pagination: [],
+				services: [],
+				pagination: {},
 
 				servicesURL: '/api/services',
 				categoriesURL: '/api/category',
+
+				search: '',
 			}
 		},
 		methods: {
@@ -176,9 +178,35 @@
 			},
 			openService(id) {
 				return '/service/'+id
+			},
+			searchServices() {
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
+
+				axios.get('/api/findService/'+this.search)
+				.then((response) => {
+					this.services = response.data.data
+
+					this.makePagination(response.data)
+
+					loader.hide()
+				})
+				.catch(() => {
+					loader.hide()
+				})
 			}
 		},
 		created() {
+			Fire.$on('searching', () => {
+				this.search = this.$parent.global_search				
+				this.searchServices()
+
+				window.location.hash = "search"
+				$('.modal-search-header').removeClass('show-modal-search');
+        		$('.js-show-modal-search').css('opacity','1');
+			})
+
 			this.loadCategories()
 			this.loadServices()
 		}

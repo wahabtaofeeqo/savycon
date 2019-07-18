@@ -2444,7 +2444,8 @@ __webpack_require__.r(__webpack_exports__);
       categoryURL: '/api/category/show/',
       categoriesURL: '/api/category/',
       subCategoriesURL: '/api/category/services/',
-      featuredServicesURL: '/api/services/featured/5'
+      featuredServicesURL: '/api/services/featured/5',
+      search: ''
     };
   },
   methods: {
@@ -2531,6 +2532,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     openSubCategory: function openSubCategory(id) {
       return '/sub-category/' + id;
+    },
+    searchServices: function searchServices() {
+      var _this6 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
+      axios.get('/api/findService/' + this.search).then(function (response) {
+        _this6.services = response.data.data;
+
+        _this6.makePagination(response.data);
+
+        loader.hide();
+      })["catch"](function () {
+        loader.hide();
+      });
     }
   },
   created: function created() {
@@ -2948,10 +2965,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       categories: {},
-      services: {},
-      pagination: [],
+      services: [],
+      pagination: {},
       servicesURL: '/api/services',
-      categoriesURL: '/api/category'
+      categoriesURL: '/api/category',
+      search: ''
     };
   },
   methods: {
@@ -3023,9 +3041,36 @@ __webpack_require__.r(__webpack_exports__);
     },
     openService: function openService(id) {
       return '/service/' + id;
+    },
+    searchServices: function searchServices() {
+      var _this4 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
+      axios.get('/api/findService/' + this.search).then(function (response) {
+        _this4.services = response.data.data;
+
+        _this4.makePagination(response.data);
+
+        loader.hide();
+      })["catch"](function () {
+        loader.hide();
+      });
     }
   },
   created: function created() {
+    var _this5 = this;
+
+    Fire.$on('searching', function () {
+      _this5.search = _this5.$parent.global_search;
+
+      _this5.searchServices();
+
+      window.location.hash = "search";
+      $('.modal-search-header').removeClass('show-modal-search');
+      $('.js-show-modal-search').css('opacity', '1');
+    });
     this.loadCategories();
     this.loadServices();
   }
@@ -3170,7 +3215,8 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       url: '/api/sub-category/',
       subCategoryURL: '/api/sub-category/show/',
-      featuredServicesURL: '/api/services/featured/5'
+      featuredServicesURL: '/api/services/featured/5',
+      search: ''
     };
   },
   methods: {
@@ -3235,6 +3281,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     openSubCategory: function openSubCategory(id) {
       return '/sub-category/' + id;
+    },
+    searchServices: function searchServices() {
+      var _this4 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
+      axios.get('/api/findService/' + this.search).then(function (response) {
+        _this4.services = response.data.data;
+
+        _this4.makePagination(response.data);
+
+        loader.hide();
+      })["catch"](function () {
+        loader.hide();
+      });
     }
   },
   created: function created() {
@@ -47313,7 +47375,58 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-4 col-lg-3 p-b-80" }, [
                 _c("div", { staticClass: "side-menu" }, [
-                  _vm._m(0),
+                  _c("div", { staticClass: "bor17 of-hidden pos-relative" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search,
+                          expression: "search"
+                        }
+                      ],
+                      staticClass: "stext-103 cl2 plh4 size-116 p-l-28 p-r-55",
+                      attrs: {
+                        type: "text",
+                        name: "search",
+                        placeholder: "Search"
+                      },
+                      domProps: { value: _vm.search },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.searchServices($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04",
+                        on: { click: _vm.searchServices }
+                      },
+                      [_c("i", { staticClass: "zmdi zmdi-search" })]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "p-t-50" }, [
                     _c("h4", { staticClass: "mtext-112 cl2 p-b-27" }, [
@@ -47548,25 +47661,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bor17 of-hidden pos-relative" }, [
-      _c("input", {
-        staticClass: "stext-103 cl2 plh4 size-116 p-l-28 p-r-55",
-        attrs: { type: "text", name: "search", placeholder: "Search" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04" },
-        [_c("i", { staticClass: "zmdi zmdi-search" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -48050,228 +48145,295 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("section", { staticClass: "bg0 p-t-23 p-b-140" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "p-b-10" }, [
-          _c("h3", { staticClass: "ltext-103 cl5" }, [
-            _vm._v("\n\t\t\t\t\t\tServices Overview \n\t\t\t\t\t\t"),
-            _c(
-              "small",
-              { staticClass: "cl1", staticStyle: { "font-size": "35%" } },
-              [
-                _c("span", { staticClass: "pull-right" }, [
-                  _vm._v(
-                    "Showing page " +
-                      _vm._s(_vm.pagination.current_page) +
-                      " of " +
-                      _vm._s(_vm.pagination.last_page)
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex-w flex-sb-m p-b-52" }, [
-          _c(
-            "div",
-            { staticClass: "flex-w flex-l-m filter-tope-group m-tb-10" },
-            [
+    _c(
+      "section",
+      { staticClass: "bg0 p-t-23 p-b-140", attrs: { id: "search" } },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "p-b-10" }, [
+            _c("h3", { staticClass: "ltext-103 cl5" }, [
+              _vm._v("\n\t\t\t\t\t\tServices Overview \n\t\t\t\t\t\t"),
               _c(
-                "button",
-                {
-                  staticClass:
-                    "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1",
-                  attrs: { "data-filter": "*" },
-                  on: { click: _vm.loadServices }
-                },
-                [_vm._v("\n\t\t\t\t\t\t\tAll Categories\n\t\t\t\t\t\t")]
+                "small",
+                { staticClass: "cl1", staticStyle: { "font-size": "35%" } },
+                [
+                  _c("span", { staticClass: "pull-right" }, [
+                    _vm._v(
+                      "Showing page " +
+                        _vm._s(_vm.pagination.current_page) +
+                        " of " +
+                        _vm._s(_vm.pagination.last_page)
+                    )
+                  ])
+                ]
               ),
               _vm._v(" "),
-              _vm._l(_vm.categories, function(category) {
-                return _c("span", [
+              _c("div", { staticClass: "clearfix" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex-w flex-sb-m p-b-52" }, [
+            _c(
+              "div",
+              { staticClass: "flex-w flex-l-m filter-tope-group m-tb-10" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1",
+                    attrs: { "data-filter": "*" },
+                    on: { click: _vm.loadServices }
+                  },
+                  [_vm._v("\n\t\t\t\t\t\t\tAll Categories\n\t\t\t\t\t\t")]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.categories, function(category) {
+                  return _c("span", [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5",
+                        attrs: {
+                          "data-filter": _vm.categoryName(category.name)
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.switchCategory(category.id)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t\t" +
+                            _vm._s(category.name) +
+                            "\n\t\t\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  ])
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "dis-none panel-search w-full p-t-10 p-b-15" },
+              [
+                _c("div", { staticClass: "bor8 dis-flex p-l-15" }, [
                   _c(
                     "button",
                     {
                       staticClass:
-                        "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5",
-                      attrs: { "data-filter": _vm.categoryName(category.name) },
-                      on: {
-                        click: function($event) {
-                          return _vm.switchCategory(category.id)
-                        }
-                      }
+                        "size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04",
+                      on: { click: _vm.searchServices }
                     },
-                    [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\t" +
-                          _vm._s(category.name) +
-                          "\n\t\t\t\t\t\t\t"
-                      )
-                    ]
-                  )
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1)
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.services.length < 1,
-                expression: "services.length < 1"
-              }
-            ],
-            staticClass: "alert alert-info"
-          },
-          [
-            _vm._v(
-              "\n\t\t\t\t\tThere are no services yet in this category\n\t\t\t\t"
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.services.length > 0,
-                expression: "services.length > 0"
-              }
-            ],
-            staticClass: "row isotope-grid"
-          },
-          _vm._l(_vm.services, function(service) {
-            return _c(
-              "div",
-              { staticClass: "col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" },
-              [
-                _c("div", { staticClass: "block2" }, [
-                  _c("div", { staticClass: "block2-pic hov-img0" }, [
-                    _c("img", {
-                      attrs: {
-                        src: _vm.getPhoto(service.image_1),
-                        alt: "IMG-SERVICE"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass:
-                          "block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04",
-                        attrs: { href: _vm.openService(service.id) }
-                      },
-                      [_vm._v("\n\t\t\t\t\t\t\t\t\tView\n\t\t\t\t\t\t\t\t")]
-                    )
-                  ]),
+                    [_c("i", { staticClass: "zmdi zmdi-search" })]
+                  ),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "block2-txt flex-w flex-t p-t-14" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "block2-txt-child1 flex-col-l " },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6",
-                              attrs: { href: _vm.openService(service.id) }
-                            },
-                            [
-                              _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t\t" +
-                                  _vm._s(service.title) +
-                                  "\n\t\t\t\t\t\t\t\t\t"
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "stext-105 cl3" }, [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t\t₦" +
-                                _vm._s(service.price) +
-                                "\n\t\t\t\t\t\t\t\t\t"
-                            )
-                          ])
-                        ]
-                      )
-                    ]
-                  )
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search,
+                        expression: "search"
+                      }
+                    ],
+                    staticClass: "mtext-107 cl2 size-114 plh2 p-r-15",
+                    attrs: {
+                      type: "text",
+                      name: "search-service",
+                      placeholder: "Search"
+                    },
+                    domProps: { value: _vm.search },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.searchServices($event)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.search = $event.target.value
+                      }
+                    }
+                  })
                 ])
               ]
             )
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.pagination.next_page_url,
-                expression: "pagination.next_page_url"
-              }
-            ],
-            staticClass: "flex-c-m flex-w w-full p-t-38"
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "flex-c-m how-pagination1 trans-04 m-all-7",
-                attrs: { disabled: !_vm.pagination.prev_page_url },
-                on: {
-                  click: function($event) {
-                    return _vm.fetchPaginateServices(
-                      _vm.pagination.prev_page_url
-                    )
-                  }
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.services.length < 1,
+                  expression: "services.length < 1"
                 }
-              },
-              [_c("i", { staticClass: "fa fa-arrow-left" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "flex-c-m how-pagination1 trans-04 m-all-7",
-                attrs: { disabled: !_vm.pagination.next_page_url },
-                on: {
-                  click: function($event) {
-                    return _vm.fetchPaginateServices(
-                      _vm.pagination.next_page_url
-                    )
-                  }
+              ],
+              staticClass: "alert alert-info"
+            },
+            [
+              _vm._v("\n\t\t\t\t\tNo service was found "),
+              _c("mark", [
+                _vm._v(_vm._s(_vm.search ? _vm.search : "in this category"))
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.services.length > 0,
+                  expression: "services.length > 0"
                 }
-              },
-              [_c("i", { staticClass: "fa fa-arrow-right" })]
-            )
-          ]
-        )
-      ])
-    ])
+              ],
+              ref: "serviceContainer",
+              staticClass: "row isotope-grid"
+            },
+            _vm._l(_vm.services, function(service) {
+              return _c(
+                "div",
+                {
+                  staticClass: "col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item"
+                },
+                [
+                  _c("div", { staticClass: "block2" }, [
+                    _c("div", { staticClass: "block2-pic hov-img0" }, [
+                      _c("img", {
+                        attrs: {
+                          src: _vm.getPhoto(service.image_1),
+                          alt: "IMG-SERVICE"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04",
+                          attrs: { href: _vm.openService(service.id) }
+                        },
+                        [_vm._v("\n\t\t\t\t\t\t\t\t\tView\n\t\t\t\t\t\t\t\t")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "block2-txt flex-w flex-t p-t-14" },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "block2-txt-child1 flex-col-l " },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6",
+                                attrs: { href: _vm.openService(service.id) }
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(service.title) +
+                                    "\n\t\t\t\t\t\t\t\t\t"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "stext-105 cl3" }, [
+                              _vm._v(
+                                "\n\t\t\t\t\t\t\t\t\t\t₦" +
+                                  _vm._s(service.price) +
+                                  "\n\t\t\t\t\t\t\t\t\t"
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.pagination.next_page_url,
+                  expression: "pagination.next_page_url"
+                }
+              ],
+              staticClass: "flex-c-m flex-w w-full p-t-38"
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "flex-c-m how-pagination1 trans-04 m-all-7",
+                  attrs: { disabled: !_vm.pagination.prev_page_url },
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchPaginateServices(
+                        _vm.pagination.prev_page_url
+                      )
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-arrow-left" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "flex-c-m how-pagination1 trans-04 m-all-7",
+                  attrs: { disabled: !_vm.pagination.next_page_url },
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchPaginateServices(
+                        _vm.pagination.next_page_url
+                      )
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-arrow-right" })]
+              )
+            ]
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -48299,33 +48461,6 @@ var staticRenderFns = [
         ]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "dis-none panel-search w-full p-t-10 p-b-15" },
-      [
-        _c("div", { staticClass: "bor8 dis-flex p-l-15" }, [
-          _c(
-            "button",
-            { staticClass: "size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" },
-            [_c("i", { staticClass: "zmdi zmdi-search" })]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "mtext-107 cl2 size-114 plh2 p-r-15",
-            attrs: {
-              type: "text",
-              name: "search-product",
-              placeholder: "Search"
-            }
-          })
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -48530,7 +48665,58 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-4 col-lg-3 p-b-80" }, [
                 _c("div", { staticClass: "side-menu" }, [
-                  _vm._m(0),
+                  _c("div", { staticClass: "bor17 of-hidden pos-relative" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search,
+                          expression: "search"
+                        }
+                      ],
+                      staticClass: "stext-103 cl2 plh4 size-116 p-l-28 p-r-55",
+                      attrs: {
+                        type: "text",
+                        name: "search",
+                        placeholder: "Search"
+                      },
+                      domProps: { value: _vm.search },
+                      on: {
+                        keyup: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return _vm.searchServices($event)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04",
+                        on: { click: _vm.searchServices }
+                      },
+                      [_c("i", { staticClass: "zmdi zmdi-search" })]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "p-t-55" }, [
                     _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
@@ -48673,25 +48859,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bor17 of-hidden pos-relative" }, [
-      _c("input", {
-        staticClass: "stext-103 cl2 plh4 size-116 p-l-28 p-r-55",
-        attrs: { type: "text", name: "search", placeholder: "Search" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04" },
-        [_c("i", { staticClass: "zmdi zmdi-search" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -65254,6 +65422,15 @@ Vue.component('service-review', __webpack_require__(/*! ./components/sections/Se
 var app = new Vue({
   el: '#app',
   router: router,
+  data: {
+    global_search: ''
+  },
+  methods: {
+    searchServices: function searchServices() {
+      // window.location.hash = "services_overview"
+      Fire.$emit('searching');
+    }
+  },
   components: {
     VueGoodshareFacebook: vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
     VueGoodshareTwitter: vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_16__["default"],

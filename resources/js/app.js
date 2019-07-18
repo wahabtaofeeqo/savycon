@@ -123,6 +123,15 @@ import VueGoodshareEmail from "vue-goodshare/src/providers/Email.vue";
 const app = new Vue({
     el: '#app',
     router,
+    data: {
+    	global_search: ''
+    },
+    methods: {
+    	searchServices() {
+    		// window.location.hash = "services_overview"
+    		Fire.$emit('searching')
+    	}
+    },
     components: {
     	VueGoodshareFacebook,
     	VueGoodshareTwitter,

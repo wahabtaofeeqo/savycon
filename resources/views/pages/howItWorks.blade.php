@@ -16,7 +16,6 @@
 			You need to understand how & what each user can do
 		</span>
 	</div>
-
 	<section class="bg0 p-t-30 p-b-120">
 		<div class="container">
 			<div class="bor10 p-t-43 p-b-40">
@@ -155,4 +154,7 @@
 			</div>
 		</div>
 	</section>	
+
+	<!-- Services Overview -->
+	<services-overview></services-overview>
 @endsection
