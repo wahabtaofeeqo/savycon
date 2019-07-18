@@ -51,6 +51,8 @@ import UserRequests from './components/user/UserRequests.vue';
 import PostRequest from './components/user/PostRequest.vue';
 import UserProfile from './components/Profile.vue';
 
+import ErrorPage from './components/404.vue';
+
 // Routes
 const routes = [
 	{
@@ -97,6 +99,18 @@ const routes = [
 		name: 'UserProfile',
 		path: '/user/profile',
 		component: UserProfile
+	},
+
+	// Error page
+	{
+		name: 'ErrorPage',
+		path: '/vendor/*',
+		component: ErrorPage
+	},
+	{
+		name: 'ErrorPage',
+		path: '/user/*',
+		component: ErrorPage
 	},
 ];
 const router = new VueRouter({ mode: 'history', routes: routes });
