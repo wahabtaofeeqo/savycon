@@ -103,12 +103,10 @@ const routes = [
 
 	// Error page
 	{
-		name: 'ErrorPage',
 		path: '/vendor/*',
 		component: ErrorPage
 	},
 	{
-		name: 'ErrorPage',
 		path: '/user/*',
 		component: ErrorPage
 	},

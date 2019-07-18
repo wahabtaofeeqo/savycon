@@ -65394,7 +65394,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_user_Dashboard_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/user/Dashboard.vue */ "./resources/js/components/user/Dashboard.vue");
 /* harmony import */ var _components_user_UserRequests_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/user/UserRequests.vue */ "./resources/js/components/user/UserRequests.vue");
 /* harmony import */ var _components_user_PostRequest_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/user/PostRequest.vue */ "./resources/js/components/user/PostRequest.vue");
-/* harmony import */ var _components_404_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/404.vue */ "./resources/js/components/404.vue");
+/* harmony import */ var _components_404_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/404.vue */ "./resources/js/components/404.vue");
 /* harmony import */ var vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue-goodshare/src/providers/Facebook.vue */ "./node_modules/vue-goodshare/src/providers/Facebook.vue");
 /* harmony import */ var vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vue-goodshare/src/providers/Twitter.vue */ "./node_modules/vue-goodshare/src/providers/Twitter.vue");
 /* harmony import */ var vue_goodshare_src_providers_LinkedIn_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue-goodshare/src/providers/LinkedIn.vue */ "./node_modules/vue-goodshare/src/providers/LinkedIn.vue");
@@ -65484,13 +65484,11 @@ var routes = [{
   component: _components_Profile_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, // Error page
 {
-  name: 'ErrorPage',
   path: '/vendor/*',
-  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
 }, {
-  name: 'ErrorPage',
   path: '/user/*',
-  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
