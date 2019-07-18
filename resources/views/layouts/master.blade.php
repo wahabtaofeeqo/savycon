@@ -152,6 +152,30 @@
 			        		<router-view></router-view>
 			        	</div>
 			        </div>
+
+			        <footer class="footer">
+						<div class="container-fluid">
+							<nav class="pull-left">
+								<ul>
+									<li>
+										<a href="{{ route('index') }}" target="__blank">Home</a>
+									</li>
+									<li>
+										<a href="{{ route('about') }}" target="__blank">About</a>
+									</li>
+									<li>
+										<a href="{{ route('terms') }}" target="__blank">Terms of Use</a>
+									</li>
+									<li>
+										<a href="{{ route('privacyPolicy') }}" target="__blank">Privacy Policy</a>
+									</li>
+								</ul>
+							</nav>
+							<p class="copyright pull-right">
+								&copy; @php echo date("Y") @endphp Developed by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
+							</p>
+						</div>
+					</footer>
 				</div>
 			</div>
 		</div>
