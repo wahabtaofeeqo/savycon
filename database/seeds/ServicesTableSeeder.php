@@ -14,26 +14,48 @@ class ServicesTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            'web development' => [
-                'Frontend Development' => 'Frontend Developer',
-                'Backend Development' => 'Backend Developer',
+            'software development' => [
+                'Frontend Development',
+                'Backend Development',
+                'Mobile App Development',
+                'Desktop App Development',
             ],
             'design' => [
-                'Graphics Design' => 'Graphic Designer',
-                'UI/UX Design' => 'UI/UX Designer',
+                'Graphics Design',
+                'UI/UX Design',
             ],
             'marketing' => [
-                'Digital Marketing' => 'Digital Marketer',
+                'Digital Marketing',
+                'Content Marketing',
+                'Social Media Marketing',
+                'Field Marketing',
+                'Affiliate Marketing',
+            ],
+            'accounting' => [
+                'Accounting',
+            ],
+            'consultancy' => [
+                'Consultancy',
+            ],
+            'fashion' => [
+                'Fashion Design',
+                'Tailoring',
+                'Modelling',
+            ],
+            'law' => [
+                'Criminal Law',
+                'Corporate Law',
+                'International Law',
+                'Civil Law',
             ],
         ];
 
         foreach ($categories as $name => $category) {
             $category_id = Category::where('name', $name)->first()->id;
 
-            foreach ($category as $name => $title) {
+            foreach ($category as $name) {
                 Service::create([
                     'name' => $name,
-                    'title' => $title,
                     'category_id' => $category_id,
                 ]);
             }

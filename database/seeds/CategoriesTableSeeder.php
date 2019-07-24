@@ -13,9 +13,13 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            'web development',
+            'software development',
             'design',
-            'marketing'
+            'marketing',
+            'fashion',
+            'accounting', 
+            'consultancy',
+            'law'
         ];
 
         foreach ($categories as $category => $value) {
