@@ -142,7 +142,6 @@
 											</h4>
 											<p class="stext-117 cl6">
 												You can quickly submit a request for a specific service.
-												<p>Please note: This is the location the system will channel all your requests to, so vendors will find them easily.</p>
 											</p>
 										</div>
 									</div>
