@@ -210,7 +210,7 @@
 										<!-- If user is uthenticated -->
 										@auth	
 											<!-- If auth:user owns service -->
-											@if($canComment == 1)
+											@can('update', $service)
 												<service-review can_comment="yes" service_id="{{ $service->id }}" can_user_review="no" can_really_comment="no"></service-review>
 											@else
 												@if($alreadyReviewed == null)
@@ -218,7 +218,7 @@
 												@else
 													<service-review can_comment="yes" service_id="{{ $service->id }}" can_user_review="yes" can_really_comment="no"></service-review>
 												@endif
-											@endif
+											@endcan
 										@else
 											<service-review can_comment="no" service_id="{{ $service->id }}" can_user_review="no" can_really_comment="no"></service-review>
 										@endauth
