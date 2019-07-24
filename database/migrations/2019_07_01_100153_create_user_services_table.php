@@ -21,7 +21,7 @@ class CreateUserServicesTable extends Migration
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
 
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->float('price', 8, 2);
             $table->string('image_1');
             $table->string('image_2');

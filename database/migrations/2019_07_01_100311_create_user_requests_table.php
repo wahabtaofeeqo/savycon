@@ -16,7 +16,7 @@ class CreateUserRequestsTable extends Migration
         Schema::create('user_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->float('price', 8, 2);
 
             $table->unsignedBigInteger('user_id');
