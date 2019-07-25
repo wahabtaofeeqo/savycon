@@ -16,25 +16,24 @@ A platform where people find and post services for direct contact.
 
 ## Tasks
 #### Location discovery and mapping environment
-- [ ] Add 'My Location [HOT]' to main navigation
 - [ ] Get location API configuration
-- [ ] Channel services with guest's location API on 'My Location' page
-- [ ] Address field in search
-	- Map to user_service 'address'
+	- [x] Get latitude and longitude
+	- [ ] Use position to get address
+- [x] Address field in search
 
 #### Auto Suggestion of Search keyword
 - [ ] Add HTML datalist to search data
 
-#### Admin Dashboard
-- [ ] Review and make a list of functionalities -> [SavyCon Admin Dashboard](http://savycon.com/admin/dashboard)
-- [ ] Create middleware for admin
-- [ ] Seed admin details into database
+#### [Admin Dashboard](http://savycon.com/admin/dashboard)
+- [x] Create middleware for admin
+- [x] Seed admin details into database
 - [ ] Write all features to add
 	- [ ] Unfound Search
 	- [ ] Services and 'Add New' (from Vendor)
 		- View
 		- Edit
 		- Delete
+		- Featured
 		- Ban
 		- Suspend
 			- Open a modal to set datetime for suspension
