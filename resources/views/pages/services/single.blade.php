@@ -98,16 +98,17 @@
 						</h4>
 
 						<span class="mtext-106 cl2">
-							₦{{ $service->price }}
+							<b>₦</b> {{ $service->price }} <br>
+							<span style="font-size: 13px;"><i class="fa fa-map-marker"></i> {{ $service->address }}</span>
 						</span>
 
 						<p class="stext-102 cl3 p-t-23 p-b-50" style="white-space: pre-line;">
-							{{ str_limit($service->description, 100) }}
+							{{ str_limit($service->description, 100) }} <a href="#description-tab">Read more</a>
 						</p>
 						
 						<div class="cl2">
 							<span class="mtext-106">
-								Vendor Contact
+								Vendor's Contact Details
 							</span>
 
 							@auth
@@ -126,6 +127,12 @@
 
 							<button class="js-show-cart flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">Click to login</button>
 							@endauth
+
+							@cannot('update', $service)
+							<div class="alert alert-success">
+								You can <a href="#message-tab">drop a message</a> below for the vendor if you would like
+							</div>
+							@endcan
 
 							<div class="m-t-40">
 								<span class="mtext-106">Share</span>
@@ -183,11 +190,15 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item p-b-10">
-							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+							<a class="nav-link active" data-toggle="tab" href="#description" id="description-tab" role="tab">Description</a>
 						</li>
 
 						<li class="nav-item p-b-10">
 							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews ({{ $service->ratings_count }})</a>
+						</li>
+
+						<li class="nav-item p-b-10">
+							<a class="nav-link" data-toggle="tab" href="#message" role="tab" id="message-tab">Message</a>
 						</li>
 					</ul>
 
@@ -207,6 +218,10 @@
 							<div class="row">
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<div class="p-b-30 m-lr-15-sm">
+										<h5 class="mtext-108 cl2 m-b-30 text-center">
+											<mark>{{ $average_rating }} / 5</mark>
+										</h5>
+
 										<!-- If user is uthenticated -->
 										@auth	
 											<!-- If auth:user owns service -->
@@ -224,6 +239,25 @@
 										@endauth
 									</div>
 								</div>
+							</div>
+						</div>
+
+						<!-- Message -->
+						<div class="tab-pane fade" id="message" role="tabpanel" ref="messageContainer">
+							<div class="how-pos2 p-lr-15-md">
+								<p class="stext-102 cl6">
+									@cannot('update', $service)
+										@auth
+										<message name="{{ Auth::user()->name }}" phone="{{ Auth::user()->phone }}" email="{{ Auth::user()->email }}" service_id="{{ $service->id }}"></message>
+										@else
+										<message service_id="{{ $service->id }}"></message>
+										@endauth
+									@else
+										<div class="alert alert-danger">
+											You cannot send a message to yourself for your service :-) 
+										</div>
+									@endcan
+								</p>
 							</div>
 						</div>
 					</div>

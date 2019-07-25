@@ -22,6 +22,7 @@ Route::apiResources([
 	'request' => 'User\UserRequestController',
 	'profile' => 'ProfileController',
 	'rating' => 'RatingController',
+	'message' => 'MessageController',
 ]);
 
 Route::get('/findService/{query}', 'ServiceController@search')->where('/query', '([A-Za-z0-9])\w+')->name('search');
