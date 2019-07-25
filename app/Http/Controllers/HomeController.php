@@ -23,7 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->role == 'vendor') {
+        if (auth()->user()->role == 'admin') {
+            return redirect()->route('admin');
+        } else if (auth()->user()->role == 'vendor') {
             return redirect()->route('vendor');
         } else {
             return redirect()->route('user');

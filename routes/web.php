@@ -79,6 +79,27 @@ Route::middleware(['role:vendor'])->group(function () {
 	});
 });
 
+Route::middleware(['role:admin'])->group(function () {
+	Route::prefix('admin')->group(function () {		
+		Route::get('/', 'AdminController@index')->name('admin');
+
+		Route::get('/{path}', 'AdminController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+		]);
+
+		Route::get('/{path}/{pathTwo}', 'AdminController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+			'/pathTwo' => '([A-Z\d-\/_.]+)?',
+		]);
+
+		Route::get('/{path}/{pathTwo}/{id}', 'AdminController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+			'/pathTwo' => '([A-Z\d-\/_.]+)?',
+			'/id' => '([0-9]+)?',
+		]);
+	});
+});
+
 Route::middleware(['role:user'])->group(function () {
 	Route::prefix('user')->group(function () {
 		

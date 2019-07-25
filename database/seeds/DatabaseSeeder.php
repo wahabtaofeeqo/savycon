@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         	CitiesTableSeeder::class,
         	CategoriesTableSeeder::class,
             ServicesTableSeeder::class,
+            UsersTableSeeder::class,
         ]);
     }
 }

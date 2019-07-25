@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use SavyCon\Models\User;
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(SavyCon\Models\User::class, 2)->create();
+        $admin = new User();
+        $admin->name = 'Adeyinka Adefolurin';
+        $admin->email = 'folurinyinka@gmail.com';
+        $admin->password = bcrypt('microsoft');
+        $admin->email_verified_at = now();
+        $admin->phone = '8135303377';
+        $admin->role = 'admin';
+        $admin->save();
     }
 }

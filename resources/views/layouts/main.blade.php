@@ -59,7 +59,7 @@
                         }
                 </style>
         </head>
-        <body class="">
+        <body class="animsition">
                 <div id="app">
                         <!-- Header -->
                         <header class="header-v2">
@@ -77,7 +77,7 @@
                                                                         <li class="@yield('activeHome')">
                                                                                 <a href="{{ route('index') }}">Home</a>
                                                                         </li>
-                                                                        <li class="@yield('activeServices') label1" data-label1="new">
+                                                                        <li class="@yield('activeServices') label1" data-label1="hot">
                                                                                 <a href="{{ route('services') }}">Services</a>
                                                                         </li>
                                                                         <li class="@yield('activeAbout')">
@@ -98,9 +98,9 @@
                                                                 </div>
                                                                 <div class="flex-c-m h-full p-l-18 p-r-25 bor5">
                                                                         @auth
-                                                                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="1">
+                                                                                <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="1">
                                                                         @else
-                                                                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="0">
+                                                                                <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="0">
                                                                         @endauth
                                                                                 <i class="zmdi zmdi-account"></i>
                                                                         </div>
@@ -176,7 +176,15 @@
                                                         <button class="flex-c-m trans-04" @click="searchServices">
                                                                 <i class="zmdi zmdi-search"></i>
                                                         </button>
-                                                        <input class="plh3" type="text" v-model="global_search" @keyup.enter="searchServices" name="search" placeholder="Search...">
+
+                                                        <input class="plh3" type="text" v-model="global_search" @keyup.enter="searchServices" name="search" placeholder="What you are looking for?" autofocus="on">
+                                                </div>
+                                                <div class="wrap-search-header flex-w p-l-15">
+                                                        <button class="flex-c-m trans-04" @click="getMyLocation" id="location_search_button" title="Use my current location">
+                                                                <i class="zmdi zmdi-my-location"></i>
+                                                        </button>
+
+                                                        <input class="plh3" type="text" v-model="global_search_address" @keyup.enter="searchServices" name="search" placeholder="Enter a location">
                                                 </div>
                                         </div>
                                 </div>
@@ -439,7 +447,7 @@
                 <script src="{{ asset('js/app.js') }}"></script>
 
                 <!-- Core -->
-                <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}"></script>
+                <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}" async defer></script>
 
                 <script src="{{ asset('main/vendor/select2/select2.min.js') }}"></script>
                 <script>

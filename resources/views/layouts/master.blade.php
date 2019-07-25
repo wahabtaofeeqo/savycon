@@ -58,61 +58,62 @@
 
 			            <ul class="nav">
 			            	@can('isVendor')
-			            	<li>
-			            		<router-link :to="{ name: 'VendorDashboard' }">
-			            			<i class="pe-7s-home"></i>
-			            			<p>Dashboard</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'VendorServices' }">
-			            			<i class="pe-7s-portfolio"></i>
-			            			<p>Services</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'VendorNewService' }">
-			            			<i class="pe-7s-plug"></i>
-			            			<p>Add New Service</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'BuyerRequests' }">
-			            			<i class="pe-7s-speaker"></i>
-			            			<p>Buyer Requests</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'VendorProfile' }">
-			            			<i class="pe-7s-user"></i>
-			            			<p>Profile</p>
-			            		</router-link>
-			            	</li>
-		            		@else
-		            		<li>
-			            		<router-link :to="{ name: 'UserDashboard' }">
-			            			<i class="pe-7s-home"></i>
-			            			<p>Dashboard</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'UserRequests' }">
-			            			<i class="pe-7s-notebook"></i>
-			            			<p>Requests</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'PostRequest' }">
-			            			<i class="pe-7s-news-paper"></i>
-			            			<p>Post a Request</p>
-			            		</router-link>
-			            	</li>
-			            	<li>
-			            		<router-link :to="{ name: 'UserProfile' }">
-			            			<i class="pe-7s-user"></i>
-			            			<p>Profile</p>
-			            		</router-link>
-			            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'VendorDashboard' }">
+				            			<i class="pe-7s-home"></i>
+				            			<p>Dashboard</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'VendorServices' }">
+				            			<i class="pe-7s-portfolio"></i>
+				            			<p>Services</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'VendorNewService' }">
+				            			<i class="pe-7s-plug"></i>
+				            			<p>Add New Service</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'BuyerRequests' }">
+				            			<i class="pe-7s-speaker"></i>
+				            			<p>Buyer Requests</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'VendorProfile' }">
+				            			<i class="pe-7s-user"></i>
+				            			<p>Profile</p>
+				            		</router-link>
+				            	</li>
+				            @endcan
+		            		@can('isUser')
+			            		<li>
+				            		<router-link :to="{ name: 'UserDashboard' }">
+				            			<i class="pe-7s-home"></i>
+				            			<p>Dashboard</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'UserRequests' }">
+				            			<i class="pe-7s-notebook"></i>
+				            			<p>Requests</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'PostRequest' }">
+				            			<i class="pe-7s-news-paper"></i>
+				            			<p>Post a Request</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'UserProfile' }">
+				            			<i class="pe-7s-user"></i>
+				            			<p>Profile</p>
+				            		</router-link>
+				            	</li>
 		            		@endcan
 			            </ul>
 					</div>
