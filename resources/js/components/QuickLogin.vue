@@ -18,7 +18,8 @@
                     </div>
             </div>
             <div class="form-group">
-				<button type="submit" :disabled="form.busy" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn1 p-lr-15 trans-04">Login</button>
+				<button type="submit" :disabled="form.busy" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn1 p-lr-15 trans-04">Login</button><br>
+				<small class="text-primary">Don't have an account? | Can't remember your password?<br>Click the respective button below <i class="fa fa-arrow-down"></i></small>
             </div>
         </form>
 	</div>

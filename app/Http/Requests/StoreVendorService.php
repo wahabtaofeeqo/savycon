@@ -31,6 +31,7 @@ class StoreVendorService extends FormRequest
             'image_1' => 'required',
             'image_2' => 'required',
             'image_3' => 'required',
+            'address' => 'required|string'
         ];
     }
 }

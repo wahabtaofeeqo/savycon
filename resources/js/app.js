@@ -123,6 +123,7 @@ Vue.component('footer-categories', require('./components/sections/FooterCategori
 Vue.component('load-services-in-category', require('./components/sections/CategoryOverview.vue').default);
 Vue.component('load-services-in-sub-category', require('./components/sections/SubCategoryOverview.vue').default);
 Vue.component('service-review', require('./components/sections/ServiceReview.vue').default);
+Vue.component('message', require('./components/sections/Message.vue').default);
 
 // Goodshare
 import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";

@@ -31,6 +31,7 @@ class UpdateVendorService extends FormRequest
             'image_1' => 'sometimes',
             'image_2' => 'sometimes',
             'image_3' => 'sometimes',
+            'address' => 'required|string',
         ];
     }
 }

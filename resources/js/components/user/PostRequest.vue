@@ -56,6 +56,13 @@
                         	<has-error :form="form" field="price"></has-error>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-12">
+                        	<label for="address">Address</label>
+                            <input type="text" class="form-control" :class="{ 'has-error':form.errors.has('address') }" v-model="form.address" id="address" placeholder="Descriptive address you intend to find help for this request" required>
+                            <has-error :form="form" field="address"></has-error>
+                        </div>
+                    </div>
 
                     <button class="btn btn-primary btn-fill" :disabled="form.busy" type="submit" v-show="!editmode">Submit Request</button>
                     <button class="btn btn-success btn-fill" :disabled="form.busy" type="submit" v-show="editmode">Update Request</button>
@@ -83,7 +90,8 @@
 					service_id: '',
 					title: '',
 					description: '',
-					price: ''
+					price: '',
+					address: ''
 				}),
 
 				categories: {},

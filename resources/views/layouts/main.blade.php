@@ -59,7 +59,7 @@
                         }
                 </style>
         </head>
-        <body class="animsition">
+        <body class="">
                 <div id="app">
                         <!-- Header -->
                         <header class="header-v2">

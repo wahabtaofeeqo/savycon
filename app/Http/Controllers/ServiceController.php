@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-    	$services = UserService::with([
+    	$services = UserService::inRandomOrder()->with([
     		'user',
     		'service',
     		'service.category'
@@ -21,7 +21,7 @@ class ServiceController extends Controller
 
     public function featured()
     {
-    	$services = UserService::where('featured', '1')->with([
+    	$services = UserService::inRandomOrder()->where('featured', '1')->with([
     		'user',
     		'service',
     		'service.category'
@@ -32,7 +32,7 @@ class ServiceController extends Controller
 
     public function limitedFeatured($count)
     {
-        $services = UserService::where('featured', '1')->with([
+        $services = UserService::inRandomOrder()->where('featured', '1')->with([
             'user',
             'service',
             'service.category'
@@ -52,10 +52,10 @@ class ServiceController extends Controller
     	return response($service, 200);
     }
 
-    public function search($query)
+    public function search($text)
     {
-        $services = UserService::where('title', 'LIKE', '%'.$query.'%')
-        ->orWhere('description', 'LIKE', '%'.$query.'%')
+        $services = UserService::inRandomOrder()->where('title', 'LIKE', '%'.$text.'%')
+        ->orWhere('description', 'LIKE', '%'.$text.'%')
         ->orderBy('created_at', 'ASC')
         ->paginate(15);
 

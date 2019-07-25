@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRequest extends Model
 {
     protected $fillable = [
-        'title', 'description', 'price', 'user_id', 'service_id'
+        'title', 'description', 'price', 'address', 'user_id', 'service_id'
     ];
 
     public function user()

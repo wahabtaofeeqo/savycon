@@ -88,7 +88,7 @@
 			'service_id'
 		],
 		data() {
-			return {
+			return {				
 				form: new Form({
 					id: '',
 					stars: 0,

@@ -8,6 +8,7 @@ use SavyCon\Models\UserService;
 use SavyCon\Models\User;
 use SavyCon\Models\Category;
 use SavyCon\Models\Service;
+use SavyCon\Models\UserServiceRating;
 
 class PagesController extends Controller
 {
@@ -39,16 +40,18 @@ class PagesController extends Controller
             }
 
             $ratings = auth()->user()->ratings()->where('user_service_id', $service->id)->get();
-            if (!empty($ratings)) {
+            if (count($ratings) > 0) {
                 $alreadyReviewed = 1;
             }
         }
-        // return $alreadyReviewed;
+
+        $average_rating = $this->getAverageReview(UserServiceRating::where('user_service_id', $service->id)->get()); 
 
         return view('pages.services.single')->with([
             'service' => $service,
             'canComment' => $canComment,
-            'alreadyReviewed' => $alreadyReviewed
+            'alreadyReviewed' => $alreadyReviewed,
+            'average_rating' => $average_rating
         ]);
     }
 
@@ -98,5 +101,23 @@ class PagesController extends Controller
         return view('pages.services.subCategory')->with([
             'subCategory' => $subCategory,
         ]);
+    }
+
+    private function getAverageReview($ratings)
+    {
+        $number_of_reviews = count($ratings);
+        $total = 0;
+
+        foreach ($ratings as $rating) {
+            $total += $rating->stars;
+        }
+
+        if ($number_of_reviews > 0) {
+            $average = $total / $number_of_reviews;
+        } else {
+            $average = 0;
+        }
+
+        return $average;
     }
 }

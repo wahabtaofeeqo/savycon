@@ -16,23 +16,6 @@
 					<div class="row">
 						<div class="col-md-7">
 	                        <div class="form-group">
-	                        	<label for="title">Title</label>
-	                            <input v-model="form.title" type="text" name="title" placeholder="Title" class="form-control" :class="{ 'has-error':form.errors.has('title') }" id="title" required>
-	                            <has-error :form="form" field="title"></has-error>
-	                        </div>
-		                    <div class="form-group">
-	                        	<label for="description">Description</label>
-	                            <textarea class="form-control w-100" rows="5" v-model="form.description" name="description" placeholder="Describe your service" :class="{ 'has-error':form.errors.has('description') }" id="description" required></textarea>
-	                            <has-error :form="form" field="description"></has-error>
-		                    </div>
-		                    <div class="form-group">
-	                        	<div class="input-group">
-	                            	<div class="input-group-addon">₦</div>
-	                            	<input type="number" name="price" v-model="form.price" min="500.00" id="price" placeholder="5000.00" class="form-control" :class="{ 'has-error':form.errors.has('price') }" aria-describedby="addon-price" required>
-	                            </div>
-	                            <has-error :form="form" field="price"></has-error>
-		                    </div>
-		                    <div class="form-group">
 		                    	<div class="row">
 			                        <div class="col-md-6">
 			                        	<label for="category">Category</label>
@@ -50,6 +33,29 @@
 			                        	<has-error :form="form" field="service.id"></has-error>
 			                        </div>
 			                    </div>
+		                    </div>
+		                    <div class="form-group">
+	                        	<label for="title">Title</label>
+	                            <input v-model="form.title" type="text" name="title" placeholder="Title" class="form-control" :class="{ 'has-error':form.errors.has('title') }" id="title" required>
+	                            <has-error :form="form" field="title"></has-error>
+	                        </div>
+		                    <div class="form-group">
+	                        	<label for="description">Description</label>
+	                            <textarea class="form-control w-100" rows="5" v-model="form.description" name="description" placeholder="Describe your service" :class="{ 'has-error':form.errors.has('description') }" id="description" required></textarea>
+	                            <has-error :form="form" field="description"></has-error>
+		                    </div>
+		                    <div class="form-group">
+		                    	<label for="address">Address</label>
+	                            <input type="text" name="address" v-model="form.address" id="address" placeholder="Descriptive address where you intend to offer this service" class="form-control" :class="{ 'has-error':form.errors.has('address') }" required>
+	                            <has-error :form="form" field="address"></has-error>
+		                    </div>
+		                    <div class="form-group">
+		                    	<label for="price">Starting Price</label>
+	                        	<div class="input-group">
+	                            	<div class="input-group-addon">₦</div>
+	                            	<input type="number" name="price" v-model="form.price" min="500.00" id="price" placeholder="5000.00" class="form-control" :class="{ 'has-error':form.errors.has('price') }" aria-describedby="addon-price" required>
+	                            </div>
+	                            <has-error :form="form" field="price"></has-error>
 		                    </div>
 		                </div>
 		                <div class="col-md-5">
@@ -109,6 +115,7 @@
 					image_1: '',
 					image_2: '',
 					image_3: '',
+					address: '',
 					service: {
 						id: '',
 						category: {

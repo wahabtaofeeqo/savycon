@@ -39,6 +39,7 @@ class UserRequestController extends Controller
     	$userRequest->title = $request->title;
     	$userRequest->description = $request->description;
     	$userRequest->price = $request->price;
+        $userRequest->address = $request->address;
     	$userRequest->save();
 
     	return response($userRequest, 200);
@@ -67,6 +68,7 @@ class UserRequestController extends Controller
         $userRequest->title = $request->title;
         $userRequest->description = $request->description;
         $userRequest->price = $request->price;
+        $userRequest->address = $request->address;
         $userRequest->save();
 
         return response($userRequest, 200);
