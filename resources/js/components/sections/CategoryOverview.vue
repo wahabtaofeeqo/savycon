@@ -13,7 +13,7 @@
 						<div class="row">
 							<div class="col-md-8 col-lg-9 p-b-80">
 								<div class="alert alert-info" v-show="services.length < 1">
-						    		There are no services in this category at the moment.<br>
+						    		There are no services <mark>{{ search ? 'for your search' : 'in this category'}}</mark> at the moment.<br>
 						    		Please check back later.
 						    	</div>
 

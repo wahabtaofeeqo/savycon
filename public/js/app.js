@@ -3069,6 +3069,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3077,7 +3078,8 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       servicesURL: '/api/services',
       categoriesURL: '/api/category',
-      search: ''
+      search: '',
+      search_address: ''
     };
   },
   methods: {
@@ -3156,7 +3158,7 @@ __webpack_require__.r(__webpack_exports__);
       var loader = this.$loading.show({
         container: this.$refs.serviceContainer
       });
-      axios.get('/api/findService/' + this.search).then(function (response) {
+      axios.get('/api/findService/' + this.search + '/' + this.search_address).then(function (response) {
         _this4.services = response.data.data;
 
         _this4.makePagination(response.data);
@@ -3172,6 +3174,7 @@ __webpack_require__.r(__webpack_exports__);
 
     Fire.$on('searching', function () {
       _this5.search = _this5.$parent.global_search;
+      _this5.search_address = _this5.$parent.global_search_address;
 
       _this5.searchServices();
 
@@ -47537,9 +47540,15 @@ var render = function() {
                     staticClass: "alert alert-info"
                   },
                   [
-                    _vm._v(
-                      "\n\t\t\t\t\t    \t\tThere are no services in this category at the moment."
-                    ),
+                    _vm._v("\n\t\t\t\t\t    \t\tThere are no services "),
+                    _c("mark", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.search ? "for your search" : "in this category"
+                        )
+                      )
+                    ]),
+                    _vm._v(" at the moment."),
                     _c("br"),
                     _vm._v(
                       "\n\t\t\t\t\t    \t\tPlease check back later.\n\t\t\t\t\t    \t"
@@ -48835,6 +48844,43 @@ var render = function() {
                         _vm.search = $event.target.value
                       }
                     }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search_address,
+                        expression: "search_address"
+                      }
+                    ],
+                    staticClass: "mtext-107 cl2 size-114 plh2 p-r-15",
+                    attrs: { type: "text", name: "", placeholder: "Location" },
+                    domProps: { value: _vm.search_address },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.searchServices($event)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.search_address = $event.target.value
+                      }
+                    }
                   })
                 ])
               ]
@@ -48857,7 +48903,9 @@ var render = function() {
             [
               _vm._v("\n\t\t\t\t\tNo service was found "),
               _c("mark", [
-                _vm._v(_vm._s(_vm.search ? _vm.search : "in this category"))
+                _vm._v(
+                  _vm._s(_vm.search ? "for your search" : "in this category")
+                )
               ])
             ]
           ),
@@ -49072,9 +49120,15 @@ var render = function() {
                     staticClass: "alert alert-info"
                   },
                   [
-                    _vm._v(
-                      "\n\t\t\t\t\t    \t\tThere are no services in this category at the moment."
-                    ),
+                    _vm._v("\n\t\t\t\t\t    \t\tThere are no services "),
+                    _c("mark", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.search ? "for your search" : "in this category"
+                        )
+                      )
+                    ]),
+                    _vm._v(" at the moment."),
                     _c("br"),
                     _vm._v(
                       "\n\t\t\t\t\t    \t\tPlease check back later.\n\t\t\t\t\t    \t"
@@ -66092,12 +66146,16 @@ var app = new Vue({
   el: '#app',
   router: router,
   data: {
-    global_search: ''
+    global_search: '',
+    global_search_address: ''
   },
   methods: {
     searchServices: function searchServices() {
-      // window.location.hash = "services_overview"
       Fire.$emit('searching');
+    },
+    getMyLocation: function getMyLocation() {
+      $('#location_search_button').css('color', '#1ba285');
+      console.log('Use my location');
     }
   },
   components: {

@@ -41,12 +41,13 @@
 							</button>
 
 							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search" @keyup.enter="searchServices" name="search-service" placeholder="Search">
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search_address" @keyup.enter="searchServices" name="" placeholder="Location">
 						</div>	
 					</div>
 				</div>
 
 				<div class="alert alert-info" v-show="services.length < 1">
-					No service was found <mark>{{ search ? search : 'in this category'}}</mark>
+					No service was found <mark>{{ search ? 'for your search' : 'in this category'}}</mark>
 				</div>
 
 				<div class="row isotope-grid" ref="serviceContainer" v-show="services.length > 0">
@@ -102,6 +103,7 @@
 				categoriesURL: '/api/category',
 
 				search: '',
+				search_address: '',
 			}
 		},
 		methods: {
@@ -184,7 +186,7 @@
 					container: this.$refs.serviceContainer
 				})
 
-				axios.get('/api/findService/'+this.search)
+				axios.get('/api/findService/'+this.search+'/'+this.search_address)
 				.then((response) => {
 					this.services = response.data.data
 
@@ -200,6 +202,8 @@
 		created() {
 			Fire.$on('searching', () => {
 				this.search = this.$parent.global_search				
+				this.search_address = this.$parent.global_search_address		
+
 				this.searchServices()
 
 				window.location.hash = "search"

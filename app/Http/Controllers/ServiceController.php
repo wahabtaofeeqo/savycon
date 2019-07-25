@@ -52,12 +52,20 @@ class ServiceController extends Controller
     	return response($service, 200);
     }
 
-    public function search($text)
+    public function search($text = null, $address = null)
     {
-        $services = UserService::inRandomOrder()->where('title', 'LIKE', '%'.$text.'%')
-        ->orWhere('description', 'LIKE', '%'.$text.'%')
-        ->orderBy('created_at', 'ASC')
-        ->paginate(15);
+        if ($address) {
+            $services = UserService::where([
+                    ['address', 'LIKE', '%'.$address.'%'],
+                    ['title', 'LIKE', '%'.$text.'%'],
+                    ['description', 'LIKE', '%'.$text.'%'],
+                ])
+                ->paginate(15);
+        } else {
+            $services = UserService::where('title', 'LIKE', '%'.$text.'%')
+                ->orWhere('description', 'LIKE', '%'.$text.'%')
+                ->paginate(15);
+        }
 
         return response($services, 200);
     }

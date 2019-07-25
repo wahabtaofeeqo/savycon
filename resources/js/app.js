@@ -137,12 +137,17 @@ const app = new Vue({
     el: '#app',
     router,
     data: {
-    	global_search: ''
+    	global_search: '',
+    	global_search_address: '',
     },
     methods: {
     	searchServices() {
-    		// window.location.hash = "services_overview"
     		Fire.$emit('searching')
+    	},
+    	getMyLocation() {
+    		$('#location_search_button').css('color', '#1ba285')
+
+    		console.log('Use my location')
     	}
     },
     components: {

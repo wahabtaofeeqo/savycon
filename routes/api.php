@@ -25,7 +25,10 @@ Route::apiResources([
 	'message' => 'MessageController',
 ]);
 
-Route::get('/findService/{query}', 'ServiceController@search')->where('/query', '([A-Za-z0-9])\w+')->name('search');
+Route::get('/findService/{text?}/{location?}', 'ServiceController@search')->where([
+	'/text', '.*',
+	'/location', '.*',
+])->name('search');
 
 Route::get('/user-requests', 'UserRequestController@userRequests');
 
