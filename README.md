@@ -38,9 +38,9 @@ A platform where people find and post services for direct contact.
 		- [x] Ban
 		- [ ] Suspend
 			- Open a modal to set datetime for suspension
-	- [ ] Vendors
-		- [ ] View Vendor Services
-		- [x] Delete user
+	- [x] Vendors
+		- [x] View Vendor Services
+		- [x] Delete vendor
 	- [x] Users
 		- [x] Delete user
 	- [x] Subscribers

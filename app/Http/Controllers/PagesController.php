@@ -65,9 +65,11 @@ class PagesController extends Controller
 
     public function userServices($id) 
     {
-        $services = UserService::where('user_id', $id)->paginate(20);
+        $user = User::findOrFail($id);
+        $services = UserService::where('user_id', $id)->paginate(1);
 
         return view('pages.services.user')->with([
+            'user' => $user,
             'services' => $services
         ]);
     }
