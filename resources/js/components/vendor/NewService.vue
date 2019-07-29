@@ -66,27 +66,47 @@
 			                		<li>Must be less than 2MB in size</li>
 			                	</ul>
 			                </div>
-		                	<div class="form-group">
-			                	<label for="image_1">Image 1</label>
-			                	<input type="file" name="image_1" class="form-control" id="image_1" accept="image/*" @change="updateImage1">
-			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
-			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
-			                	<has-error :form="form" field="image_1"></has-error>
-			                </div>
-			                <div class="form-group">
-			                	<label for="image_2">Image 2</label>
-			                	<input type="file" name="image_2" class="form-control" id="image_2" accept="image/*" @change="updateImage2">
-			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
-			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
-			                	<has-error :form="form" field="image_2"></has-error>
-			                </div>
-			                <div class="form-group">
-			                	<label for="image_3">Image 3</label>
-			                	<input type="file" name="image_3" class="form-control" id="image_3" accept="image/*" @change="updateImage3">
-			                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
-			                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
-			                	<has-error :form="form" field="image_3"></has-error>
-			                </div>
+		                	<div class="row">
+			                	<div class="col-md-4">
+				                	<div class="form-group">
+					                	<label for="image_1">Image 1</label>
+					                	<div class="dropzone">
+					                		<input type="file" name="image_1" class="form-control dropzone-file" id="image_1" accept="image/*" @change="updateImage1">
+					                		<img src="" alt="Drag or Click to Upload" id="dropzone-image1" class="dropzone-image">
+					                	</div>
+					                	
+					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
+					                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
+					                	<has-error :form="form" field="image_1"></has-error>
+					                </div>
+					            </div>
+					            <div class="col-md-4">
+				                	<div class="form-group">
+					                	<label for="image_2">Image 2</label>
+					                	<div class="dropzone">
+					                		<input type="file" name="image_2" class="form-control dropzone-file" id="image_2" accept="image/*" @change="updateImage2">
+					                		<img src="" alt="Drag or Click to Upload" id="dropzone-image2" class="dropzone-image">
+					                	</div>
+					                	
+					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
+					                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
+					                	<has-error :form="form" field="image_2"></has-error>
+					                </div>
+					            </div>
+					            <div class="col-md-4">
+				                	<div class="form-group">
+					                	<label for="image_3">Image 3</label>
+					                	<div class="dropzone">
+					                		<input type="file" name="image_3" class="form-control dropzone-file" id="image_3" accept="image/*" @change="updateImage3">
+					                		<img src="" alt="Drag or Click to Upload" id="dropzone-image3" class="dropzone-image">
+					                	</div>
+					                	
+					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
+					                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
+					                	<has-error :form="form" field="image_3"></has-error>
+					                </div>
+					            </div>
+					        </div>
 		                </div>
 		            </div>
 
@@ -185,6 +205,8 @@
                 if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
                     reader.onloadend = (file) => {
                         this.form.image_1 = reader.result;
+
+                        $('#dropzone-image1').attr('src', reader.result)
                     }
                     reader.readAsDataURL(file);
                 } else {
@@ -202,6 +224,8 @@
                 if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
                     reader.onloadend = (file) => {
                         this.form.image_2 = reader.result;
+
+                        $('#dropzone-image2').attr('src', reader.result)
                     }
                     reader.readAsDataURL(file);
                 } else {
@@ -219,6 +243,8 @@
                 if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
                     reader.onloadend = (file) => {
                         this.form.image_3 = reader.result;
+
+                        $('#dropzone-image3').attr('src', reader.result)
                     }
                     reader.readAsDataURL(file);
                 } else {
@@ -241,7 +267,8 @@
 
 					this.form.reset();
 					loader.hide()
-					Fire.$emit('refreshServices');
+
+					window.location.reload()
 				})
 				.catch(() => {
 					Swal.fire({
@@ -295,3 +322,24 @@
 		}
 	}
 </script>
+
+<style scoped>
+	.dropzone {
+		height: 150px;
+		width: 150px;
+		background: lightgray;
+		border-radius: 10px;
+	}
+	.dropzone-file {
+		opacity: 0;
+		position: absolute;
+		height: 150px;
+		width: 150px;
+	}
+	.dropzone-image {
+		height: 150px;
+		width: 150px;
+		background: lightgray;
+		border-radius: 10px;
+	}
+</style>

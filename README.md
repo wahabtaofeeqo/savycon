@@ -57,4 +57,4 @@ A platform where people find and post services for direct contact.
 - [x] Messages on Services
 - [x] Random view services
 - [x] Featured Services design
-- [ ] Create your own dropzone for service image uploads
+- [x] Create your own dropzone for service image uploads
