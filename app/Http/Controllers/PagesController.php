@@ -14,7 +14,15 @@ class PagesController extends Controller
 {
     public function index()
     {
-    	return view('pages.index');
+        $featured_services = UserService::inRandomOrder()->where('featured', '1')->with([
+            'user',
+            'service',
+            'service.category'
+        ])->where('active', 1)->latest()->get();
+
+    	return view('pages.index', [
+            'featured_services' => $featured_services
+        ]);
     }
 
     public function services()
