@@ -27,20 +27,27 @@ A platform where people find and post services for direct contact.
 #### [Admin Dashboard](http://savycon.com/admin/dashboard)
 - [x] Create middleware for admin
 - [x] Seed admin details into database
-- [ ] Write all features to add
-	- [ ] Unfound Search
+- [ ] Features
+	- [x] State
+	- [x] City
 	- [ ] Services and 'Add New' (from Vendor)
-		- View
-		- Edit
-		- Delete
-		- Featured
-		- Ban
-		- Suspend
+		- [x] View
+		- [x] Edit
+		- [x] Delete
+		- [x] Featured
+		- [x] Ban
+		- [ ] Suspend
 			- Open a modal to set datetime for suspension
 	- [ ] Vendors
-	- [ ] Users
-	- [ ] Subscribers
-	- [ ] Unresolved messages
+		- [ ] View Vendor Services
+		- [x] Delete user
+	- [x] Users
+		- [x] Delete user
+	- [x] Subscribers
+	- [x] Unresolved messages
+	- [x] Unfound Search
+	- [x] Contacts
+	- [ ] Buyer's Requests
 
 #### General Additions
 - [x] Average on reviews of user services
@@ -49,3 +56,5 @@ A platform where people find and post services for direct contact.
 - [x] Random view of services
 - [x] Messages on Services
 - [x] Random view services
+- [ ] Featured Services design
+- [ ] Create your own dropzone for service image uploads
