@@ -57,6 +57,86 @@
 			            </div>
 
 			            <ul class="nav">
+			            	@can('isAdmin')
+				            	<li>
+				            		<router-link :to="{ name: 'AdminDashboard' }">
+				            			<i class="pe-7s-home"></i>
+				            			<p>Dashboard</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminStates' }">
+				            			<i class="pe-7s-map"></i>
+				            			<p>States</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminCities' }">
+				            			<i class="pe-7s-map-2"></i>
+				            			<p>Cities</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminServices' }">
+				            			<i class="pe-7s-portfolio"></i>
+				            			<p>Services</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminNewService' }">
+				            			<i class="pe-7s-plug"></i>
+				            			<p>Add New Service</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminVendors' }">
+				            			<i class="pe-7s-users"></i>
+				            			<p>Vendors</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminUsers' }">
+				            			<i class="pe-7s-users"></i>
+				            			<p>Buyers</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminSubscribers' }">
+				            			<i class="pe-7s-news-paper"></i>
+				            			<p>Subscribers</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminMessages' }">
+				            			<i class="pe-7s-chat"></i>
+				            			<p>Messages</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminContactMessages' }">
+				            			<i class="pe-7s-phone"></i>
+				            			<p>Contact Messages</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminUnfoundSearches' }">
+				            			<i class="pe-7s-search"></i>
+				            			<p>Unfound Searches</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminBuyerRequests' }">
+				            			<i class="pe-7s-speaker"></i>
+				            			<p>Buyer Requests</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'AdminProfile' }">
+				            			<i class="pe-7s-user"></i>
+				            			<p>Profile</p>
+				            		</router-link>
+				            	</li>
+				            @endcan
 			            	@can('isVendor')
 				            	<li>
 				            		<router-link :to="{ name: 'VendorDashboard' }">

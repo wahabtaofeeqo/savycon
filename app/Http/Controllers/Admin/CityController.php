@@ -1,15 +1,21 @@
 <?php
 
-namespace SavyCon\Http\Controllers\General;
+namespace SavyCon\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\ContactEnquiry;
-use SavyCon\Http\Requests\StoreNewContactEnquiry;
+use SavyCon\Models\City;
 
-class ContactEnquiryController extends Controller
+use SavyCon\Http\Requests\StoreCityData;
+
+class CityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +23,13 @@ class ContactEnquiryController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth:api');
+        $cities = City::with([
+            'state'
+        ])
+        ->orderBy('name', 'ASC')
+        ->paginate(20);
 
-        $contacts = ContactEnquiry::latest()->get();
-
-        return response($contacts, 200);
+        return response($cities, 200);
     }
 
     /**
@@ -30,18 +38,16 @@ class ContactEnquiryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewContactEnquiry $request)
+    public function store(StoreCityData $request)
     {
         $validated = $request->validated();
 
-        $enquiry = new ContactEnquiry();
-        $enquiry->name = $request->name;
-        $enquiry->email = $request->email;
-        $enquiry->phone = $request->phone;
-        $enquiry->message = $request->message;
-        $enquiry->save();
+        $city = new City();
+        $city->name = $request->name;
+        $city->state_id = $request->input('state.id');
+        $city->save();
 
-        return redirect()->route('contact')->with('status', 'Message was submitted successfully');
+        return response($city, 200);
     }
 
     /**
@@ -62,9 +68,16 @@ class ContactEnquiryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCityData $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $city = City::findOrFail($id);
+        $city->name = $request->name;
+        $city->state_id = $request->input('state.id');
+        $city->save();
+
+        return response($city, 200);
     }
 
     /**
@@ -75,8 +88,8 @@ class ContactEnquiryController extends Controller
      */
     public function destroy($id)
     {
-        $contact = ContactEnquiry::findOrFail($id);
-        $contact->delete();
+        $city = City::findOrFail($id);
+        $city->delete();
 
         return response([
             'message' => 'Delete Complete'

@@ -51,7 +51,7 @@
 					<div class="tab-content p-t-43">
 						<div class="tab-pane fade show active" id="generalprovisions" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									1.1. This Privacy Policy specifies the manner in which the Resource Administration may collect, use, or disclose data related to Resource Users and to information posted by the Resource Users.<br>
 									1.2. This Privacy Policy describes the order of processing of personal data collected by means of www.savycon.com web site, savycon.com mobile application and associated tools and services, which enable users to log in the Resource, post announcements or review already posted announcements in real-time mode, or use any other Savycon.com service connected with the above stated. In all mentioned cases the Resource Administration will treat users’ data solely in the scope of applicable legal requirements.<br>
 									1.3. The User should not exploit the Resource, if he/she does not agree with the provisions of the Privacy Policy, or he/she is under age legally stipulated for the User to be able to make agreements with the Resource Administration, or he/she is not a company’s designated official.<br>
@@ -63,7 +63,7 @@
 						</div>
 						<div class="tab-pane fade show" id="descriptionofservice" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									This policy is of Savycon.com, it depicts how Savycon.com (We) collects, uses, manages, shares and safeguards data on its platform, applications, and all other links and technical relationship it has with any company, platform or advertiser, and as well, the methods we use in reaching out to our users, customers, advertisers, or affiliations as the case may be.<br>
 									It is pertinent that you read this to be understand how we relate with customers and what we use their data to achieve as time unfolds. Reading this will make you understand the does and don’ts and give you insights of our protection system, has dictated by online privacy policy.<br>
 									It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.
@@ -72,14 +72,14 @@
 						</div>
 						<div class="tab-pane fade show" id="featuredads" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Savycon.com makes use of your actually identifiable data to give you items, administrations, and information, including more relevant list items and promotion and to make an offering to others speedier and less demanding, while at the same time empowering you to keep up control of that sharing.
 								</p>
 							</div>
 						</div>
 						<div class="tab-pane fade show" id="datasecurity" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									We reserve the right to share your actually identifiable data with outsiders in a few circumstances, for example, in case you choose to speak with an organization that publicizes through our application or we intended using your info for better customer relationship to build our platform without affecting your status.<br>
 									Savycon.com and all her affiliation are focused on working with you to achieve the correct usable data that we gather, utilize, and share, by furnishing you with approaches to control data that we collect, through our systems.<br>
 									We take sensible measures to secure your delicate by and by identifiable data, however, we cannot guarantee, and you ought not to expect, that your identifiable data will stay safe in all conditions.
@@ -88,7 +88,7 @@
 						</div>
 						<div class="tab-pane fade show" id="whatdatadowecollect" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									When Savycon.com utilizes the word information we are alluding to both by and by identifiable data and non-by and by identifiable data that we collect about you.<br>
 									By and by identifiable data, we are pointing to data that actually recognizes you, or can sensibly be connected to you by us. Actually identifiable data can either be delicate or non-touchy.<br>
 									Touchy by and by identifiable data refers to data that is, for the most part, viewed as secret, for example, your financial record number, charging data, government-managed savings number, and exact area.<br>
@@ -99,7 +99,7 @@
 						</div>
 						<div class="tab-pane fade show" id="howdoweutilize" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Our basic role in gathering data about you is to furnish you with items, administrations, data, and promotions that match your interests and inclinations.<br>
 									For instance, we may utilize this data to satisfy your request, react to your request, oversee your record, send promoting, survey your necessities and premiums keeping in mind the end goal to better tailor offers and additionally publicizing, enhance our site and advertising, lead look into, show content in view of your interests, enable you to seek data on our site, as well as show you in our pursuit and catalog administrations.<br>
 									We do this for the benefit of ourselves and the organizations which we promote or promote us.<br>
@@ -109,7 +109,7 @@
 						</div>
 						<div class="tab-pane fade show" id="howwegather" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									We gather data from you by asking or getting it from what you give to us on-line as part of your application processes or using different means that we did not speak of.<br>
 									We likewise gather data when you talk to us or when you use our administrations to talk to various clients of our policies or with the organizations who publicize with us.<br>
 									We likewise gather data about your collaborations with outside sites and applications that utilize our innovations and may join the data we collect about you with other statistic and intrigue based information from outside suppliers. This is not limited to your identity, or any data you provided or linked to you.<br>
@@ -122,14 +122,14 @@
 						</div>
 						<div class="tab-pane fade show" id="howtouse" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									You can sign into our site utilizing sign-in administrations, for example, Facebook Associate or an Open ID supplier. These officials will validate your character and give you a choice to share individual actually identifiable data with us, for example, your name and email delivery to pre-populate our joint shape or to present data for you.
 								</p>
 							</div>
 						</div>
 						<div class="tab-pane fade show" id="whataboutip" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									While we record your IP, we do not attribute anything shady to it. We use it in identifying that someone is accessing or had accessed this platform through the said IP.
 								</p>
 							</div>

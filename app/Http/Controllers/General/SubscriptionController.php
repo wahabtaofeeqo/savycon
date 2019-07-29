@@ -20,4 +20,11 @@ class SubscriptionController extends Controller
 
         return redirect($request->page)->with('status', 'Thank you for subscribing');
     }
+
+    public function index()
+    {
+    	$list = Subscription::latest()->get();
+
+    	return response($list, 200);
+    }
 }

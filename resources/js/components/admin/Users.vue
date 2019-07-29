@@ -2,35 +2,34 @@
 	<div>
 		<div class="card">
 			<div class="header">
-				<h4 class="card-title">Services</h4>
-				<p class="category">All your services</p>
+				<h4 class="card-title">Buyers <span class="badge badge-primary">{{ users.length }}</span></h4>
+				<p class="category">All your buyers</p>
 			</div>
 			<div class="content">
-				<div class="alert alert-danger" v-show="services.length < 1">
-					You have no services yet
+				<div class="alert alert-danger" v-show="users.length < 1">
+					There are no buyers yet
 				</div>
-				<div class="table-responsive table-full-width" v-show="services.length > 0">
+				<div class="table-responsive table-full-width" v-show="users.length > 0">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th></th>
-								<th>Title</th>
-								<th>Price (₦)</th>
-								<th>Category</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Phone number</th>
+								<th>State</th>
+								<th>City</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="service in services">
+							<tr v-for="user in users">
+								<td>{{ user.name }}</td>
+								<td>{{ user.email }}</td>
+								<td>+234{{ user.phone }}</td>
+								<td>{{ user.city.state.name }}</td>
+								<td>{{ user.city.name }}</td>
 								<td>
-									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
-								</td>
-								<td>{{ service.title }}</td>
-								<td>{{ service.price }}</td>
-								<td>{{ service.service.category.name }} <br> > {{ service.service.name }}</td>
-								<td>
-									<router-link :to="{ name: 'VendorNewService', params: { id: service.id } }" class="btn btn-sm btn-info btn-fill">Edit</router-link>
-									<button class="btn btn-sm btn-danger btn-fill" @click="deleteService(service.id)">Delete</button>
+									<button class="btn btn-sm btn-danger btn-fill" @click="deleteUser(user.id)">Delete</button>
 								</td>
 							</tr>
 						</tbody>
@@ -45,19 +44,20 @@
 	export default {
 		data() {
 			return {
-				services: [],
+				users: [],
 				pagination: {},
 
-				url: '/api/service',
+				url: '/api/user/',
+				loadURL: '/api/users/user',
 			}
 		},
 		methods: {
-			loadServices() {
+			loadUsers() {
 				const loader = this.$loading.show();
 
-				axios.get(this.url)
+				axios.get(this.loadURL)
 				.then((response) => {
-					this.services = response.data.data
+					this.users = response.data.data
 
 					this.makePagination(response.data)
 
@@ -67,7 +67,7 @@
 					Swal.fire({
 						type: 'error',
 						title: 'Oops!',
-						text: 'We could not load your services at the moment'
+						text: 'We could not load the users at the moment'
 					})
 
 					loader.hide();
@@ -85,10 +85,10 @@
                 this.pagination = pagination;
             }, 
             fetchPaginateServices(url) {
-                this.url = url;
-                this.loadServices();
+                this.loadURL = url;
+                this.loadUsers();
             },
-			deleteService(id) {
+			deleteUser(id) {
 				Swal.fire({
 					title: 'Are you sure?',
 					text: 'This action cannot be reverted',
@@ -104,17 +104,17 @@
 						.then(() => {
 							Swal.fire({
 								type: 'success',
-								title: 'Service was deleted successfully'
+								title: 'User was deleted successfully'
 							})
 
 							loader.hide()
-							Fire.$emit('refreshServices')
+							Fire.$emit('refreshUsers')
 						})
 						.catch(() => {
 							Swal.fire({
 								type: 'error',
 								title: 'Oops...',
-								html: 'We could not delete the service.<br>Please try again later'
+								html: 'We could not delete the user.<br>Please try again later'
 							})
 
 							loader.hide()
@@ -122,15 +122,12 @@
 					}
 				})
 			},
-			viewService(id) {
-            	return '/service/'+id;
-            },
 		},
 		created() {
-			this.loadServices();
+			this.loadUsers();
 
-			Fire.$on('refreshServices', () => {
-				this.loadServices();
+			Fire.$on('refreshUsers', () => {
+				this.loadUsers();
 			})
 		},
 		mounted() {

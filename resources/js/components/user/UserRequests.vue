@@ -48,8 +48,8 @@
 	export default {
 		data() {
 			return {
-				requests: {},
-				pagination: [],
+				requests: [],
+				pagination: {},
 
 				url: '/api/request'
 			}

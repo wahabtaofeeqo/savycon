@@ -19,11 +19,25 @@ use Illuminate\Http\Request;
 
 Route::apiResources([
 	'service' => 'Vendor\ServiceController',
+	'userService' => 'Admin\ServiceController',
 	'request' => 'User\UserRequestController',
 	'profile' => 'ProfileController',
-	'rating' => 'RatingController',
-	'message' => 'MessageController',
+	'rating' => 'General\RatingController',
+	'message' => 'General\MessageController',
+	'user' => 'Admin\UserController',
+	'state' => 'Admin\StateController',
+	'city' => 'Admin\CityController',
+	'search' => 'Admin\SearchController',
+	'contact' => 'General\ContactEnquiryController',
 ]);
+
+// Admin Usage
+Route::get('/subscribers', 'General\SubscriptionController@index');
+Route::get('/messages', 'General\MessageController@index');
+Route::get('/users/vendor', 'Admin\UserController@vendors');
+Route::get('/users/user', 'Admin\UserController@users');
+Route::get('/ban/service/{id}', 'Admin\ServiceController@alterBan')->where('id', '([0-9]+)');
+Route::get('/feature/service/{id}', 'Admin\ServiceController@alterFeature')->where('id', '([0-9]+)');
 
 Route::get('/findService/{text?}/{location?}', 'ServiceController@search')->where([
 	'/text', '.*',

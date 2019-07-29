@@ -40,6 +40,20 @@ Vue.use(Loading, {
 window.Fire = new Vue();
 
 // Components
+import AdminDashboard from './components/admin/Dashboard.vue';
+import AdminProfile from './components/Profile.vue';
+import AdminStates from './components/admin/States.vue';
+import AdminCities from './components/admin/Cities.vue';
+import AdminServices from './components/admin/Services.vue';
+import AdminNewService from './components/admin/NewService.vue';
+import AdminVendors from './components/admin/Vendors.vue';
+import AdminUsers from './components/admin/Users.vue';
+import AdminSubscribers from './components/admin/Subscribers.vue';
+import AdminMessages from './components/admin/Messages.vue';
+import AdminUnfoundSearches from './components/admin/UnfoundSearches.vue';
+import AdminContactMessages from './components/admin/Contacts.vue';
+import AdminBuyerRequests from './components/admin/BuyerRequests.vue';
+
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
 import VendorServices from './components/vendor/Services.vue';
@@ -55,6 +69,74 @@ import ErrorPage from './components/404.vue';
 
 // Routes
 const routes = [
+	// Admin
+	{
+		name: 'AdminDashboard',
+		path: '/admin/',
+		component: AdminDashboard
+	},
+	{
+		name: 'AdminServices',
+		path: '/admin/services',
+		component: AdminServices
+	},
+	{
+		name: 'AdminStates',
+		path: '/admin/states',
+		component: AdminStates
+	},
+	{
+		name: 'AdminCities',
+		path: '/admin/cities',
+		component: AdminCities
+	},
+	{
+		name: 'AdminNewService',
+		path: '/admin/services/new/:id?',
+		component: AdminNewService
+	},
+	{
+		name: 'AdminVendors',
+		path: '/admin/vendors',
+		component: AdminVendors
+	},
+	{
+		name: 'AdminUsers',
+		path: '/admin/users',
+		component: AdminUsers
+	},
+	{
+		name: 'AdminSubscribers',
+		path: '/admin/subscribers',
+		component: AdminSubscribers
+	},
+	{
+		name: 'AdminMessages',
+		path: '/admin/messages',
+		component: AdminMessages
+	},
+	{
+		name: 'AdminUnfoundSearches',
+		path: '/admin/unfound-searches',
+		component: AdminUnfoundSearches
+	},
+	{
+		name: 'AdminContactMessages',
+		path: '/admin/contact-messages',
+		component: AdminContactMessages
+	},
+	{
+		name: 'AdminProfile',
+		path: '/admin/profile',
+		component: AdminProfile
+	},
+	{
+		name: 'AdminBuyerRequests',
+		path: '/admin/buyer-requests',
+		component: AdminBuyerRequests
+	},
+
+	// Vendors
 	{
 		name: 'VendorDashboard',
 		path: '/vendor/',
@@ -80,6 +162,8 @@ const routes = [
 		path: '/vendor/buyer-requests',
 		component: BuyerRequests
 	},
+
+	// Users
 	{
 		name: 'UserDashboard',
 		path: '/user/',
@@ -102,6 +186,10 @@ const routes = [
 	},
 
 	// Error page
+	{
+		path: '/admin/*',
+		component: ErrorPage
+	},
 	{
 		path: '/vendor/*',
 		component: ErrorPage

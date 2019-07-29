@@ -7,30 +7,41 @@
 			</div>
 			<div class="content">
 				<div class="alert alert-danger" v-show="services.length < 1">
-					You have no services yet
+					There are no services yet
 				</div>
 				<div class="table-responsive table-full-width" v-show="services.length > 0">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th></th>
 								<th>Title</th>
 								<th>Price (₦)</th>
-								<th>Category</th>
+								<th>Address</th>
+								<th>Location</th>
+								<th>Owner</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr v-for="service in services">
-								<td>
-									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
-								</td>
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
+								<td>{{ service.address }}</td>
 								<td>{{ service.service.category.name }} <br> > {{ service.service.name }}</td>
+								<td>{{ service.user.name }}</td>
 								<td>
-									<router-link :to="{ name: 'VendorNewService', params: { id: service.id } }" class="btn btn-sm btn-info btn-fill">Edit</router-link>
+									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
+									<router-link :to="{ name: 'AdminNewService', params: { id: service.id } }" class="btn btn-sm btn-info btn-fill">Edit</router-link>
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteService(service.id)">Delete</button>
+									<hr style="margin: 5px;">
+
+									<button class="btn btn-sm btn-success btn-fill" @click="featureService(service.id)" v-if="service.featured == 0">Feature</button>
+									<button class="btn btn-sm btn-warning btn-fill" @click="featureService(service.id)" v-else>Unfeature</button>
+
+									<button class="btn btn-sm btn-danger btn-fill" @click="banService(service.id)" v-if="service.active == 1">Ban</button>
+									<button class="btn btn-sm btn-primary btn-fill" @click="banService(service.id)" v-else>Unban</button>
+
+									<button class="btn btn-sm btn-warning btn-fill" @click="suspendService(service.id)">Suspend</button>
+									
 								</td>
 							</tr>
 						</tbody>
@@ -48,7 +59,7 @@
 				services: [],
 				pagination: {},
 
-				url: '/api/service',
+				url: '/api/userService',
 			}
 		},
 		methods: {
@@ -124,6 +135,47 @@
 			},
 			viewService(id) {
             	return '/service/'+id;
+            },
+            featureService(id) {
+            	const loader = this.$loading.show()
+
+            	axios.get('/api/feature/service/'+id)
+            	.then(() => {
+            		loader.hide()
+
+            		Fire.$emit('refreshServices')
+            	})
+            	.catch(() => {
+            		Swal.fire({
+            			type: 'error',
+            			title: 'Oops...',
+            			text: 'We could not feature the service at the moment'
+            		})
+
+            		loader.hide()
+            	})
+            },
+            banService(id) {
+            	const loader = this.$loading.show()
+
+            	axios.get('/api/ban/service/'+id)
+            	.then(() => {
+            		loader.hide()
+
+            		Fire.$emit('refreshServices')
+            	})
+            	.catch(() => {
+            		Swal.fire({
+            			type: 'error',
+            			title: 'Oops...',
+            			text: 'We could not ban the service at the moment'
+            		})
+
+            		loader.hide()
+            	})
+            },
+            suspendService(id) {
+            	console.log('Suspend Service '+id)
             },
 		},
 		created() {

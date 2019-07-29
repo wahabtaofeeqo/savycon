@@ -5,10 +5,10 @@ namespace SavyCon\Http\Controllers\General;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\ContactEnquiry;
-use SavyCon\Http\Requests\StoreNewContactEnquiry;
+use SavyCon\Models\UserServiceMessage;
+use SavyCon\Http\Requests\StoreMessage;
 
-class ContactEnquiryController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,14 @@ class ContactEnquiryController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth:api');
+        $messages = UserServiceMessage::with([
+            'userService',
+            'userService.service',
+            'userService.service.category',
+        ])
+        ->latest()->get();
 
-        $contacts = ContactEnquiry::latest()->get();
-
-        return response($contacts, 200);
+        return response($messages, 200);
     }
 
     /**
@@ -30,18 +33,19 @@ class ContactEnquiryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewContactEnquiry $request)
+    public function store(StoreMessage $request)
     {
         $validated = $request->validated();
 
-        $enquiry = new ContactEnquiry();
-        $enquiry->name = $request->name;
-        $enquiry->email = $request->email;
-        $enquiry->phone = $request->phone;
-        $enquiry->message = $request->message;
-        $enquiry->save();
+        $message = new UserServiceMessage();
+        $message->name = $request->name;
+        $message->email = $request->email;
+        $message->phone = $request->phone;
+        $message->message = $request->message;
+        $message->user_service_id = $request->service_id;
+        $message->save();
 
-        return redirect()->route('contact')->with('status', 'Message was submitted successfully');
+        return response($message, 200);
     }
 
     /**
@@ -75,8 +79,8 @@ class ContactEnquiryController extends Controller
      */
     public function destroy($id)
     {
-        $contact = ContactEnquiry::findOrFail($id);
-        $contact->delete();
+        $message = UserServiceMessage::findOrFail($id);
+        $message->delete();
 
         return response([
             'message' => 'Delete Complete'

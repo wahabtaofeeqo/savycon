@@ -1,15 +1,21 @@
 <?php
 
-namespace SavyCon\Http\Controllers\General;
+namespace SavyCon\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\ContactEnquiry;
-use SavyCon\Http\Requests\StoreNewContactEnquiry;
+use SavyCon\Models\State;
 
-class ContactEnquiryController extends Controller
+use SavyCon\Http\Requests\StoreStateData;
+
+class StateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +23,11 @@ class ContactEnquiryController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth:api');
+        $states = State::withCount([
+            'cities', 
+        ])->paginate(20);
 
-        $contacts = ContactEnquiry::latest()->get();
-
-        return response($contacts, 200);
+        return response($states, 200);
     }
 
     /**
@@ -30,18 +36,15 @@ class ContactEnquiryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewContactEnquiry $request)
+    public function store(StoreStateData $request)
     {
         $validated = $request->validated();
 
-        $enquiry = new ContactEnquiry();
-        $enquiry->name = $request->name;
-        $enquiry->email = $request->email;
-        $enquiry->phone = $request->phone;
-        $enquiry->message = $request->message;
-        $enquiry->save();
+        $state = new State();
+        $state->name = $request->name;
+        $state->save();
 
-        return redirect()->route('contact')->with('status', 'Message was submitted successfully');
+        return response($state, 200);
     }
 
     /**
@@ -62,9 +65,15 @@ class ContactEnquiryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreStateData $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $state = State::findOrFail($id);
+        $state->name = $request->name;
+        $state->save();
+
+        return response($state, 200);
     }
 
     /**
@@ -75,8 +84,8 @@ class ContactEnquiryController extends Controller
      */
     public function destroy($id)
     {
-        $contact = ContactEnquiry::findOrFail($id);
-        $contact->delete();
+        $state = State::findOrFail($id);
+        $state->delete();
 
         return response([
             'message' => 'Delete Complete'

@@ -5,6 +5,8 @@ namespace SavyCon\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
+use SavyCon\Models\UserService;
+
 class ServiceController extends Controller
 {
     public function __construct()
@@ -19,7 +21,13 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $services = UserService::with([
+            'user',
+            'service',
+            'service.category'
+        ])->orderBy('id', 'ASC')->paginate(15);
+
+        return response($services, 200);
     }
 
     /**
@@ -64,6 +72,45 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $service = UserService::findOrFail($id);
+        $service->delete();
+
+        return response([
+            'message' => 'Delete Complete'
+        ], 200);
+    }
+
+    public function alterBan($id)
+    {
+        $service = UserService::findOrFail($id);
+
+        if ($service->active == 0) {
+            $service->active = 1;
+        } else {
+            $service->active = 0;
+        }
+
+        $service->save();
+
+        return response([
+            'message' => 'Success'
+        ], 200);
+    }
+
+    public function alterFeature($id)
+    {
+        $service = UserService::findOrFail($id);
+
+        if ($service->featured == 0) {
+            $service->featured = 1;
+        } else {
+            $service->featured = 0;
+        }
+
+        $service->save();
+
+        return response([
+            'message' => 'Success'
+        ], 200);
     }
 }

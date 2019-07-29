@@ -5,6 +5,7 @@ namespace SavyCon\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SavyCon\Models\UserService;
+use SavyCon\Models\Search;
 
 class ServiceController extends Controller
 {
@@ -14,7 +15,7 @@ class ServiceController extends Controller
     		'user',
     		'service',
     		'service.category'
-    	])->latest()->paginate(15);
+    	])->where('active', 1)->latest()->paginate(15);
 
     	return response($services, 200);
     }
@@ -25,7 +26,7 @@ class ServiceController extends Controller
     		'user',
     		'service',
     		'service.category'
-    	])->latest()->paginate(20);
+    	])->where('active', 1)->latest()->paginate(20);
 
     	return response($services, 200);
     }
@@ -36,7 +37,7 @@ class ServiceController extends Controller
             'user',
             'service',
             'service.category'
-        ])->latest()->limit($count)->get();
+        ])->where('active', 1)->latest()->limit($count)->get();
 
         return response($services, 200);
     }
@@ -56,15 +57,37 @@ class ServiceController extends Controller
     {
         if ($address) {
             $services = UserService::where([
-                    ['address', 'LIKE', '%'.$address.'%'],
-                    ['title', 'LIKE', '%'.$text.'%'],
-                    ['description', 'LIKE', '%'.$text.'%'],
-                ])
-                ->paginate(15);
+                ['address', 'LIKE', '%'.$address.'%'],
+                ['title', 'LIKE', '%'.$text.'%'],
+                ['active', '1'],
+            ])
+            ->orWhere([
+                ['address', 'LIKE', '%'.$address.'%'],
+                ['description', 'LIKE', '%'.$text.'%'],
+                ['active', '1'],
+            ])
+            ->paginate(15);
         } else {
-            $services = UserService::where('title', 'LIKE', '%'.$text.'%')
-                ->orWhere('description', 'LIKE', '%'.$text.'%')
-                ->paginate(15);
+            $services = UserService::where([
+                ['title', 'LIKE', '%'.$text.'%'],
+                ['active', '1'],
+            ])
+            ->orWhere([
+                ['description', 'LIKE', '%'.$text.'%'],
+                ['active', '1'],
+            ])
+            ->paginate(15);
+        }
+
+        if (empty($service->data)) {
+            $unfound = new Search();
+            $unfound->text = $text;
+
+            if ($address) {
+                $unfound->address = $address;
+            }
+
+            $unfound->save();
         }
 
         return response($services, 200);

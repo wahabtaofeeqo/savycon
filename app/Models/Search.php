@@ -4,9 +4,9 @@ namespace SavyCon\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ContactEnquiry extends Model
+class Search extends Model
 {
     protected $fillable = [
-    	'name', 'email', 'phone', 'message'
+        'text', 'address'
     ];
 }

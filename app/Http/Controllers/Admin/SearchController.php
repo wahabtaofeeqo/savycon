@@ -1,14 +1,19 @@
 <?php
 
-namespace SavyCon\Http\Controllers;
+namespace SavyCon\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\UserServiceMessage;
-use SavyCon\Http\Requests\StoreMessage;
+use SavyCon\Models\Search;
 
-class MessageController extends Controller
+class SearchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,9 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $searches = Search::latest()->get();
+
+        return response($searches, 200);
     }
 
     /**
@@ -25,19 +32,9 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMessage $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-
-        $message = new UserServiceMessage();
-        $message->name = $request->name;
-        $message->email = $request->email;
-        $message->phone = $request->phone;
-        $message->message = $request->message;
-        $message->user_service_id = $request->service_id;
-        $message->save();
-
-        return response($message, 200);
+        //
     }
 
     /**
@@ -71,6 +68,11 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $search = Search::findOrFail($id);
+        $search->delete();
+
+        return response([
+            'message' => 'Delete Complete'
+        ], 200);
     }
 }

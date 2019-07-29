@@ -57,6 +57,15 @@
                         .invalid-feedback {
                                 display: block;
                         }
+                        .phone::before {
+                                content: "+234";
+                                font-weight: 900;
+                                font-size: 80%;
+                        }
+                        .phone {
+                                top: calc(42% - 9px);
+                                left: 18px;
+                        }
                 </style>
         </head>
         <body class="animsition">
@@ -86,6 +95,18 @@
                                                                         <li class="@yield('activeContact')">
                                                                                 <a href="{{ route('contact') }}">Contact</a>
                                                                         </li>
+                                                                        @auth
+                                                                        <li class="">
+                                                                                <a href="{{ route('home') }}">My Dashboard</a>
+                                                                        </li>
+                                                                        @else
+                                                                        <li class="@yield('activeLogin')">
+                                                                                <a href="{{ route('login') }}">Sign In</a>
+                                                                        </li>
+                                                                        <li class="@yield('activeRegister')">
+                                                                                <a href="{{ route('register') }}">Register</a>
+                                                                        </li>
+                                                                        @endauth
                                                                 </ul>
                                                         </div>  
 
@@ -447,7 +468,7 @@
                 <script src="{{ asset('js/app.js') }}"></script>
 
                 <!-- Core -->
-                <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}" async defer></script>
+                <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}"></script>
 
                 <script src="{{ asset('main/vendor/select2/select2.min.js') }}"></script>
                 <script>

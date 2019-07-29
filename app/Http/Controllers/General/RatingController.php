@@ -5,10 +5,10 @@ namespace SavyCon\Http\Controllers\General;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\ContactEnquiry;
-use SavyCon\Http\Requests\StoreNewContactEnquiry;
+use SavyCon\Models\UserService;
+use SavyCon\Models\UserServiceRating;
 
-class ContactEnquiryController extends Controller
+class RatingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,7 @@ class ContactEnquiryController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth:api');
-
-        $contacts = ContactEnquiry::latest()->get();
-
-        return response($contacts, 200);
+        // 
     }
 
     /**
@@ -30,18 +26,21 @@ class ContactEnquiryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewContactEnquiry $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
+        $this->validate($request, [
+            'stars' => 'required|integer',
+            'comment' => 'required',
+        ]);
 
-        $enquiry = new ContactEnquiry();
-        $enquiry->name = $request->name;
-        $enquiry->email = $request->email;
-        $enquiry->phone = $request->phone;
-        $enquiry->message = $request->message;
-        $enquiry->save();
+        $rating = new UserServiceRating();
+        $rating->user_id = auth('api')->user()->id;
+        $rating->user_service_id = $request->service_id;
+        $rating->stars = $request->stars;
+        $rating->comment = $request->comment;
+        $rating->save();
 
-        return redirect()->route('contact')->with('status', 'Message was submitted successfully');
+        return response($rating, 200);
     }
 
     /**
@@ -52,7 +51,11 @@ class ContactEnquiryController extends Controller
      */
     public function show($id)
     {
-        //
+        $ratings = UserService::findOrFail($id)->ratings()->with([
+            'user',
+        ])->latest()->paginate(5);
+
+        return response($ratings, 200);
     }
 
     /**
@@ -75,11 +78,6 @@ class ContactEnquiryController extends Controller
      */
     public function destroy($id)
     {
-        $contact = ContactEnquiry::findOrFail($id);
-        $contact->delete();
-
-        return response([
-            'message' => 'Delete Complete'
-        ], 200);
+        //
     }
 }

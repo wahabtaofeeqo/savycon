@@ -1,14 +1,19 @@
 <?php
 
-namespace SavyCon\Http\Controllers;
+namespace SavyCon\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\UserService;
-use SavyCon\Models\UserServiceRating;
+use SavyCon\Models\User;
 
-class RatingController extends Controller
+class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,7 @@ class RatingController extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -27,19 +32,7 @@ class RatingController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'stars' => 'required|integer',
-            'comment' => 'required',
-        ]);
-
-        $rating = new UserServiceRating();
-        $rating->user_id = auth('api')->user()->id;
-        $rating->user_service_id = $request->service_id;
-        $rating->stars = $request->stars;
-        $rating->comment = $request->comment;
-        $rating->save();
-
-        return response($rating, 200);
+        //
     }
 
     /**
@@ -50,11 +43,7 @@ class RatingController extends Controller
      */
     public function show($id)
     {
-        $ratings = UserService::findOrFail($id)->ratings()->with([
-            'user',
-        ])->latest()->paginate(5);
-
-        return response($ratings, 200);
+        //
     }
 
     /**
@@ -77,6 +66,40 @@ class RatingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response([
+            'message' => 'Delete Complete'
+        ], 200);
+    }
+
+    /**
+     * Load all the vendors
+    */
+    public function vendors()
+    {
+        $vendors = User::withCount([
+            'userServices'
+        ])
+        ->with([
+            'city',
+            'city.state'
+        ])->where('role', 'vendor')->paginate(10);
+
+        return response($vendors, 200);
+    }
+
+    /**
+     * Load all the users
+    */
+    public function users()
+    {
+        $users = User::with([
+            'city',
+            'city.state'
+        ])->where('role', 'user')->paginate(10);
+
+        return response($users, 200);
     }
 }

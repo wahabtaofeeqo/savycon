@@ -48,21 +48,21 @@
 					<div class="tab-content p-t-43">
 						<div class="tab-pane fade show active" id="acceptance" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									We welcome you to Savycon.com, a ground for outsourcing and finding works based on whay you need and your profession. The following terms and conditions (these "Terms of Service"), are binding on those who access the site, outsource or find someone to achieve their desired work. The platform is managed by Savycon.com owners through www.savycon.com (the "website"), and it remains so, until otherwise stated. Find time to peruse the Terms of Service carefully before you start doing anything on the site.
 								</p>
 							</div>
 						</div>
 						<div class="tab-pane fade show" id="eligibility" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									The site is not for people under 13. By using this site, you attest to the fact that you are above that age, sane and not in anyway hindered to the extent that you cannot achieve what you agreed to do. We warn that if you are not within this range, do not use our site as strict penalty awaits intruders (those not eligible). We have a customer support team, available all around the clock.
 								</p>
 							</div>
 						</div>
 						<div class="tab-pane fade show" id="keyterms" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									You must agree to do the service first on our site. Sellers and buyers are to agree to perform on the services and most not enter into what is not contained in the statement of service.
 									<ul>
 										<li>Whatever is not stated in the statement of service should not be implemented, what so ever.</li>
@@ -75,7 +75,7 @@
 						</div>
 						<div class="tab-pane fade show" id="conduct" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Users who needed service(s) of Freelancers is shall be entitled to post announcement based on his/her needs upon confirmation that he/she is a registered user.
 									<ul>
 										<li>After registration, users can post ads using necessary quota, view adds, and accept the pitch of a freelancer/ artisan who indicated interest in fulfilling the demand of the outsourcer.</li>
@@ -95,14 +95,14 @@
 						</div>
 						<div class="tab-pane fade show" id="unacceptedservices" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Please do not go into services that are adult oriented, pornography, Inappropriate/Obscene services, spam, nonsense, or violent orders/ services that is against the law of the country, misleading orders or services, and intentional attempt to dupe or molest users is frown at and may involve us taking strict legal action.
 								</p>
 							</div>
 						</div>
 						<div class="tab-pane fade show" id="agreementtoperformaservice" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Ones you agree to perform a service, it is unacceptable to leave it undone or start joking with the services after a specified time is allotted.
 									<ul>
 										<li>Note that Savycon.com retains the right to alter the Terms of Service without informing you, however, we may decide to do based on our digression.</li>
@@ -113,7 +113,7 @@
 						</div>
 						<div class="tab-pane fade show" id="securityoftransaction" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Whatever happens between the clients is not savycon.com’s responsibility.
 									<ul>
 										<li>Savycon.com is not responsible for any form of price change, nonpayment of agreed price after finishing the work.</li>
@@ -124,7 +124,7 @@
 						</div>
 						<div class="tab-pane fade show" id="tipsforsafetransaction" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
-								<p class="stext-102 cl6">
+								<p class="stext-102 cl6" style="text-align: justify !important;">
 									Every work done gotten is at user’s risk. This is why we advise users to confirm the credibility of clients through reviews.
 									<ul>
 										<li>Why review may not absolutely guarantee users credibility, this makes allowing freelancer finish work before payment important.</li>

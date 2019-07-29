@@ -210,15 +210,3 @@
 		}
 	}
 </script>
-
-<style scoped>
-	.phone::before {
-		content: "+234";
-		font-weight: 900;
-		font-size: 80%;
-	}
-	.phone {
-		top: calc(42% - 9px);
-		left: 18px;
-	}
-</style>

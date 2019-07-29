@@ -42,7 +42,7 @@
 
 						<div class="bor8 m-b-20 how-pos4-parent">
 							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="name" placeholder="Your Name" value="{{ old('name') }}" autocomplete="name" autofocus="on" required>
-							<img class="how-pos4 pointer-none" src="{{ asset('main/images/icons/icon-heart-01.png') }}" alt="ICON">
+							<i class="how-pos4 pointer-none fa fa-user"></i>
 
 							@error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -53,9 +53,20 @@
 
 						<div class="bor8 m-b-20 how-pos4-parent">
 							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="email" placeholder="Your Email Address" inputmode="email" value="{{ old('email') }}" autocomplete="email" required>
-							<img class="how-pos4 pointer-none" src="{{ asset('main/images/icons/icon-email.png') }}" alt="ICON">
+							<i class="how-pos4 pointer-none fa fa-envelope"></i>
 
 							@error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+						</div>
+
+						<div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="tel" name="phone" placeholder="Your Phone number" inputmode="phone" value="{{ old('phone') }}" autocomplete="phone" minlength="10" maxlength="10" required>
+							<span class="how-pos4 pointer-none phone"></span>
+
+							@error('phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
