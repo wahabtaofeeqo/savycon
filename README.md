@@ -27,7 +27,7 @@ A platform where people find and post services for direct contact.
 #### [Admin Dashboard](http://savycon.com/admin/dashboard)
 - [x] Create middleware for admin
 - [x] Seed admin details into database
-- [ ] Features
+- [x] Features
 	- [x] State
 	- [x] City
 	- [x] Services and 'Add New' (from Vendor)
@@ -46,7 +46,7 @@ A platform where people find and post services for direct contact.
 	- [x] Unresolved messages
 	- [x] Unfound Search
 	- [x] Contacts
-	- [ ] Buyer's Requests
+	- [x] Buyer's Requests
 
 #### General Additions
 - [x] Average on reviews of user services
@@ -57,3 +57,4 @@ A platform where people find and post services for direct contact.
 - [x] Random view services
 - [x] Featured Services design
 - [x] Create your own dropzone for service image uploads
+- [ ] Pagination

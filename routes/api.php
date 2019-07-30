@@ -34,18 +34,20 @@ Route::apiResources([
 // Admin Usage
 Route::get('/subscribers', 'General\SubscriptionController@index');
 Route::get('/messages', 'General\MessageController@index');
+
 Route::get('/users/vendor', 'Admin\UserController@vendors');
 Route::get('/users/user', 'Admin\UserController@users');
+Route::get('/user-requests', 'General\UserRequestController@userRequests');
+
+Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where('id', '([0-9]+)');
 Route::get('/ban/service/{id}', 'Admin\ServiceController@alterBan')->where('id', '([0-9]+)');
 Route::get('/feature/service/{id}', 'Admin\ServiceController@alterFeature')->where('id', '([0-9]+)');
-Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where('id', '([0-9]+)');
 
+// Search
 Route::get('/findService/{text?}/{location?}', 'ServiceController@search')->where([
 	'/text', '.*',
 	'/location', '.*',
 ])->name('search');
-
-Route::get('/user-requests', 'UserRequestController@userRequests');
 
 Route::get('/category', 'CategoryController@index');
 Route::get('/category/limited', 'CategoryController@limitedIndex');
