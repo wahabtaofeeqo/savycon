@@ -3156,7 +3156,9 @@ __webpack_require__.r(__webpack_exports__);
         _this7.form.reset();
 
         loader.hide();
-        window.location.reload();
+        setTimeout(function () {
+          window.location.reload();
+        }, 3000);
       })["catch"](function () {
         Swal.fire({
           title: 'Oops!',
@@ -3214,9 +3216,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -3371,9 +3370,6 @@ __webpack_require__.r(__webpack_exports__);
         });
         loader.hide();
       });
-    },
-    suspendService: function suspendService(id) {
-      console.log('Suspend Service ' + id);
     }
   },
   created: function created() {
@@ -3976,6 +3972,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4015,7 +4014,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.pagination = pagination;
     },
-    fetchPaginateServices: function fetchPaginateServices(url) {
+    fetchPaginateUsers: function fetchPaginateUsers(url) {
       this.loadURL = url;
       this.loadUsers();
     },
@@ -4052,6 +4051,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     showUserServices: function showUserServices(id) {
       return '/services/user/' + id;
+    },
+    suspendUser: function suspendUser(id) {
+      var loader = this.$loading.show();
+      axios.get('/api/suspend/user/' + id).then(function () {
+        Swal.fire({
+          type: 'success',
+          title: 'Suspension altered!'
+        });
+        loader.hide();
+        Fire.$emit('refreshUsers');
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'We could not suspend the vendor at the moment'
+        });
+        loader.hide();
+      });
     }
   },
   created: function created() {
@@ -5603,12 +5620,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      user: {},
+      url: '/api/profile'
+    };
   },
-  methods: {},
-  created: function created() {},
+  methods: {
+    getUserData: function getUserData() {
+      var _this = this;
+
+      var loader = this.$loading.show();
+      axios.get(this.url).then(function (response) {
+        _this.user = response.data;
+        loader.hide();
+      })["catch"](function () {
+        loader.hide();
+      });
+    }
+  },
+  created: function created() {
+    this.getUserData();
+  },
   mounted: function mounted() {}
 });
 
@@ -5881,7 +5922,9 @@ __webpack_require__.r(__webpack_exports__);
         _this7.form.reset();
 
         loader.hide();
-        window.location.reload();
+        setTimeout(function () {
+          window.location.reload();
+        }, 3000);
       })["catch"](function () {
         Swal.fire({
           title: 'Oops!',
@@ -50963,20 +51006,7 @@ var render = function() {
                                 }
                               },
                               [_vm._v("Unban")]
-                            ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-warning btn-fill",
-                            on: {
-                              click: function($event) {
-                                return _vm.suspendService(service.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Suspend")]
-                        )
+                            )
                       ],
                       1
                     )
@@ -51764,7 +51794,33 @@ var render = function() {
                           }
                         },
                         [_vm._v("Delete")]
-                      )
+                      ),
+                      _vm._v(" "),
+                      user.active == 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-warning btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.suspendUser(user.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Suspend")]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-primary btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.suspendUser(user.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Unsuspend")]
+                          )
                     ])
                   ])
                 }),
@@ -54443,9 +54499,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\tDashboard\n")])
+  return _c("div", [
+    _c("div", { staticClass: "page-header" }, [_vm._v("Dashboard")]),
+    _vm._v(" "),
+    _vm.user.active == 0
+      ? _c("blockquote", [
+          _c("h1", [_vm._v("Your account has been suspended!")]),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      : _c("div")
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [
+      _vm._v("Please "),
+      _c("a", { attrs: { href: "/contact", target: "__blank" } }, [
+        _vm._v("submit a query")
+      ]),
+      _vm._v(" for the administrator")
+    ])
+  }
+]
 render._withStripped = true
 
 

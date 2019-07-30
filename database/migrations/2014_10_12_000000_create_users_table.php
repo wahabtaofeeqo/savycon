@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->integer('city_id')->default(1);
             $table->string('role')->default('user');
+            $table->boolean('active')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -38,6 +38,7 @@ Route::get('/users/vendor', 'Admin\UserController@vendors');
 Route::get('/users/user', 'Admin\UserController@users');
 Route::get('/ban/service/{id}', 'Admin\ServiceController@alterBan')->where('id', '([0-9]+)');
 Route::get('/feature/service/{id}', 'Admin\ServiceController@alterFeature')->where('id', '([0-9]+)');
+Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where('id', '([0-9]+)');
 
 Route::get('/findService/{text?}/{location?}', 'ServiceController@search')->where([
 	'/text', '.*',

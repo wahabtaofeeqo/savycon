@@ -30,17 +30,16 @@ A platform where people find and post services for direct contact.
 - [ ] Features
 	- [x] State
 	- [x] City
-	- [ ] Services and 'Add New' (from Vendor)
+	- [x] Services and 'Add New' (from Vendor)
 		- [x] View
 		- [x] Edit
 		- [x] Delete
 		- [x] Featured
 		- [x] Ban
-		- [ ] Suspend
-			- Open a modal to set datetime for suspension
 	- [x] Vendors
 		- [x] View Vendor Services
 		- [x] Delete vendor
+		- [x] Suspend
 	- [x] Users
 		- [x] Delete user
 	- [x] Subscribers

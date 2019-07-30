@@ -38,10 +38,7 @@
 									<button class="btn btn-sm btn-warning btn-fill" @click="featureService(service.id)" v-else>Unfeature</button>
 
 									<button class="btn btn-sm btn-danger btn-fill" @click="banService(service.id)" v-if="service.active == 1">Ban</button>
-									<button class="btn btn-sm btn-primary btn-fill" @click="banService(service.id)" v-else>Unban</button>
-
-									<button class="btn btn-sm btn-warning btn-fill" @click="suspendService(service.id)">Suspend</button>
-									
+									<button class="btn btn-sm btn-primary btn-fill" @click="banService(service.id)" v-else>Unban</button>							
 								</td>
 							</tr>
 						</tbody>
@@ -173,9 +170,6 @@
 
             		loader.hide()
             	})
-            },
-            suspendService(id) {
-            	console.log('Suspend Service '+id)
             },
 		},
 		created() {

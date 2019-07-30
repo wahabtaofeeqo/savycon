@@ -33,6 +33,9 @@
 								<td>
 									<a :href="showUserServices(user.id)" target="__blank" class="btn btn-sm btn-primary btn-fill" v-if="user.user_services_count > 0">View Services</a>
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteUser(user.id)">Delete</button>
+
+									<button class="btn btn-sm btn-warning btn-fill" @click="suspendUser(user.id)" v-if="user.active == 1">Suspend</button>
+									<button class="btn btn-sm btn-primary btn-fill" @click="suspendUser(user.id)" v-else>Unsuspend</button>	
 								</td>
 							</tr>
 						</tbody>
@@ -87,7 +90,7 @@
 
                 this.pagination = pagination;
             }, 
-            fetchPaginateServices(url) {
+            fetchPaginateUsers(url) {
                 this.loadURL = url;
                 this.loadUsers();
             },
@@ -127,6 +130,30 @@
 			},
 			showUserServices(id) {
 				return '/services/user/'+id
+			},
+			suspendUser(id) {
+				const loader = this.$loading.show()
+
+            	axios.get('/api/suspend/user/'+id)
+            	.then(() => {
+            		Swal.fire({
+            			type: 'success',
+            			title: 'Suspension altered!'
+            		})
+
+            		loader.hide()
+
+            		Fire.$emit('refreshUsers')
+            	})
+            	.catch(() => {
+            		Swal.fire({
+            			type: 'error',
+            			title: 'Oops...',
+            			text: 'We could not suspend the vendor at the moment'
+            		})
+
+            		loader.hide()
+            	})
 			},
 		},
 		created() {

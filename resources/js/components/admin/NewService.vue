@@ -268,7 +268,9 @@
 					this.form.reset();
 					loader.hide()
 
-					window.location.reload()
+					setTimeout(() => {
+						window.location.reload()
+					}, 3000)
 				})
 				.catch(() => {
 					Swal.fire({

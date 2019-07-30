@@ -102,4 +102,21 @@ class UserController extends Controller
 
         return response($users, 200);
     }
+
+    public function alterSuspension($id)
+    {
+        $user = User::findOrFail($id);
+        
+        if ($user->active == 0) {
+            $user->active = 1;
+        } else {
+            $user->active = 0;
+        }
+
+        $user->save();
+
+        return response([
+            'message' => 'Success'
+        ], 200);
+    }
 }

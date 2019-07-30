@@ -36,10 +36,12 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role === 'vendor';
         });
 
+        Gate::define('isVendorActive', function($user) {
+            return $user->active === 1;
+        });
+
         Gate::define('isUser', function($user) {
             return $user->role === 'user';
         });
-
-        
     }
 }

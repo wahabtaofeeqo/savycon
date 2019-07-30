@@ -19,6 +19,8 @@ class ServiceController extends Controller
 
     public function index()
     {
+        $this->authorize('isVendorActive');
+
     	$services = auth()->user()->userServices()->with([
             'service',
             'service.category'
@@ -29,6 +31,8 @@ class ServiceController extends Controller
 
     public function store(StoreVendorService $request)
     {
+        $this->authorize('isVendorActive');
+
     	$validated = $request->validated();
 
         if ($request->image_1) {
@@ -81,6 +85,8 @@ class ServiceController extends Controller
 
     public function update(UpdateVendorService $request, $id)
     {
+        $this->authorize('isVendorActive');
+
     	$validated = $request->validated();
 
         $service = UserService::findOrFail($id);
@@ -139,6 +145,8 @@ class ServiceController extends Controller
 
     public function delete($id)
     {
+        $this->authorize('isVendorActive');
+        
         $service = UserService::findOrFail($id);
         $service->delete();
 

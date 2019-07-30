@@ -144,6 +144,7 @@
 				            			<p>Dashboard</p>
 				            		</router-link>
 				            	</li>
+				            	@can('isVendorActive')
 				            	<li>
 				            		<router-link :to="{ name: 'VendorServices' }">
 				            			<i class="pe-7s-portfolio"></i>
@@ -162,6 +163,7 @@
 				            			<p>Buyer Requests</p>
 				            		</router-link>
 				            	</li>
+				            	@endcan
 				            	<li>
 				            		<router-link :to="{ name: 'VendorProfile' }">
 				            			<i class="pe-7s-user"></i>
