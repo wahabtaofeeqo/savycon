@@ -24,12 +24,13 @@ A platform where people find and post services for direct contact.
 #### Auto Suggestion of Search keyword
 - [ ] Add HTML datalist to search data
 
-#### [Admin Dashboard](http://savycon.com/admin/dashboard)
+#### Admin Dashboard
 - [x] Create middleware for admin
 - [x] Seed admin details into database
 - [x] Features
 	- [x] State
 	- [x] City
+	- [x] Category & Subs
 	- [x] Services and 'Add New' (from Vendor)
 		- [x] View
 		- [x] Edit
@@ -48,6 +49,9 @@ A platform where people find and post services for direct contact.
 	- [x] Contacts
 	- [x] Buyer's Requests
 
+#### Vendor Dashboard
+- [x] Messages
+
 #### General Additions
 - [x] Average on reviews of user services
 - [x] Register services in different locations
@@ -58,3 +62,4 @@ A platform where people find and post services for direct contact.
 - [x] Featured Services design
 - [x] Create your own dropzone for service image uploads
 - [ ] Pagination
+- [x] Dashboard Content
