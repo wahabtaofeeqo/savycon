@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::apiResources([
 	'service' => 'Vendor\ServiceController',
-	'userService' => 'Admin\ServiceController',
+	'userService' => 'Admin\UserServiceController',
 	'request' => 'User\UserRequestController',
 	'profile' => 'ProfileController',
 	'rating' => 'General\RatingController',
@@ -29,19 +29,22 @@ Route::apiResources([
 	'city' => 'Admin\CityController',
 	'search' => 'Admin\SearchController',
 	'contact' => 'General\ContactEnquiryController',
+	'categories' => 'Admin\CategoryController',
+	'sub-categories' => 'Admin\ServiceController',
 ]);
 
 // Admin Usage
 Route::get('/subscribers', 'General\SubscriptionController@index');
 Route::get('/messages', 'General\MessageController@index');
+Route::get('/vendor/messages', 'General\MessageController@getVendorMessages');
 
 Route::get('/users/vendor', 'Admin\UserController@vendors');
 Route::get('/users/user', 'Admin\UserController@users');
 Route::get('/user-requests', 'General\UserRequestController@userRequests');
 
 Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where('id', '([0-9]+)');
-Route::get('/ban/service/{id}', 'Admin\ServiceController@alterBan')->where('id', '([0-9]+)');
-Route::get('/feature/service/{id}', 'Admin\ServiceController@alterFeature')->where('id', '([0-9]+)');
+Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('id', '([0-9]+)');
+Route::get('/feature/service/{id}', 'Admin\UserServiceController@alterFeature')->where('id', '([0-9]+)');
 
 // Search
 Route::get('/findService/{text?}/{location?}', 'ServiceController@search')->where([
@@ -66,3 +69,39 @@ Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');
 
 Route::get('/states', 'LocationController@states')->name('state.all');
 Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)');
+
+// Counters
+Route::prefix('counter')->group(function() {
+	Route::get('states', 'General\CounterController@totalStates');
+	Route::get('cities', 'General\CounterController@totalCities');
+
+	Route::get('categories', 'General\CounterController@totalCategories');
+	Route::get('sub-categories', 'General\CounterController@totalSubCategories');
+
+	Route::prefix('services')->group(function() {
+		Route::get('/', 'General\CounterController@totalServices');
+		Route::get('featured', 'General\CounterController@featuredServices');
+		Route::get('banned', 'General\CounterController@bannedServices');
+	});
+
+	Route::prefix('vendors')->group(function() {
+		Route::get('/', 'General\CounterController@totalVendors');
+		Route::get('suspended', 'General\CounterController@suspendedVendors');
+	});
+
+	Route::get('buyers', 'General\CounterController@totalBuyers');
+	Route::get('subscribers', 'General\CounterController@totalSubscribers');
+
+	Route::prefix('messages')->group(function() {
+		Route::get('contact', 'General\CounterController@totalContactMessages');
+		Route::get('vendor', 'General\CounterController@totalVendorMessages');
+	});
+
+	Route::get('unfound-searches', 'General\CounterController@totalUnfoundSearches');
+	Route::get('buyer-requests', 'General\CounterController@totalBuyerRequests');
+
+	Route::prefix('vendor')->group(function() {
+		Route::get('services', 'General\CounterController@totalVendorServices');
+		Route::get('rating', 'General\CounterController@averageUserRating');
+	});
+});

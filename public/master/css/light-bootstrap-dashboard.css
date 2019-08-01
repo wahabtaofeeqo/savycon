@@ -2817,3 +2817,37 @@ body > .navbar-collapse {
     overflow-y: hidden;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch; } }
+
+
+
+.card-stats {
+
+}
+.card-stats .card-body {
+  padding: 15px 15px 0px;
+}
+
+.card-stats .card-body .numbers {
+  text-align: right;
+}
+
+.card-stats .card-body .numbers p {
+  margin-bottom: 0;
+}
+
+.card-stats .card-body .numbers h4 {
+  margin-top: 0;
+}
+
+.card-stats .card-footer {
+  padding: 0px 15px 10px 15px;
+}
+
+.card-stats .icon-big {
+  font-size: 3em;
+  min-height: 64px;
+}
+
+.card-stats .icon-big i {
+  line-height: 59px;
+}

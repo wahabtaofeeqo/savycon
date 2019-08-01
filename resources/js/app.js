@@ -44,6 +44,7 @@ import AdminDashboard from './components/admin/Dashboard.vue';
 import AdminProfile from './components/Profile.vue';
 import AdminStates from './components/admin/States.vue';
 import AdminCities from './components/admin/Cities.vue';
+import AdminCategories from './components/admin/Categories.vue';
 import AdminServices from './components/admin/Services.vue';
 import AdminNewService from './components/admin/NewService.vue';
 import AdminVendors from './components/admin/Vendors.vue';
@@ -79,6 +80,11 @@ const routes = [
 		name: 'AdminServices',
 		path: '/admin/services',
 		component: AdminServices
+	},
+	{
+		name: 'AdminCategories',
+		path: '/admin/categories',
+		component: AdminCategories
 	},
 	{
 		name: 'AdminStates',

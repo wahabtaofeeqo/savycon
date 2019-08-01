@@ -23,7 +23,8 @@ class ServiceController extends Controller
 
     	$services = auth()->user()->userServices()->with([
             'service',
-            'service.category'
+            'service.category',
+            'ratings'
         ])->latest()->paginate(10);
 
         return response($services, 200);

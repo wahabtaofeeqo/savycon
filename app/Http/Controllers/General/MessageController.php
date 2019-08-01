@@ -10,6 +10,11 @@ use SavyCon\Http\Requests\StoreMessage;
 
 class MessageController extends Controller
 {
+    public function __construct() 
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -85,5 +90,25 @@ class MessageController extends Controller
         return response([
             'message' => 'Delete Complete'
         ], 200);
+    }
+
+    public function getVendorMessages()
+    {
+        $messages = [];
+
+        $services = auth()->user()->userServices()->get();
+        if (!is_null($services)) {
+            foreach ($services as $service) {
+                if (!is_null($service->messages()->get())) {
+                    array_push($messages, $service->messages()->with([
+                        'userService',
+                        'userService.service',
+                        'userService.service.category',
+                    ])->latest()->get());
+                }
+            }
+        }
+
+        return response($messages, 200);
     }
 }

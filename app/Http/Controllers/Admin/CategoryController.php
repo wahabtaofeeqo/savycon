@@ -5,15 +5,15 @@ namespace SavyCon\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
-use SavyCon\Models\Service;
+use SavyCon\Models\Category;
 
-class ServiceController extends Controller
+class CategoryController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +21,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        // 
+        $categories = Category::orderBy('name', 'ASC')->paginate(20);
+
+        return response($categories, 200);
     }
 
     /**
@@ -32,12 +34,11 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $service = new Service();
-        $service->name = $request->name;
-        $service->category_id = $request->input('category.id');
-        $service->save();
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
 
-        return response($service, 200);
+        return response($category, 200);
     }
 
     /**
@@ -48,11 +49,7 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        $services = Service::with([
-            'category'
-        ])->where('category_id', $id)->get();
-
-        return response($services, 200);
+        //
     }
 
     /**
@@ -64,12 +61,11 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $service = Service::findOrFail($id);
-        $service->name = $request->name;
-        $service->category_id = $request->input('category.id');
-        $service->save();
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->save();
 
-        return response($service, 200);
+        return response($category, 200);
     }
 
     /**
@@ -80,8 +76,8 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        $service = Service::findOrFail($id);
-        $service->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
 
         return response([
             'message' => 'Delete Complete'

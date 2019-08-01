@@ -2182,7 +2182,7 @@ __webpack_require__.r(__webpack_exports__);
         phone: '',
         password: '',
         password_confirmation: '',
-        role: 'user',
+        role: '',
         city: {
           id: '',
           state: {
@@ -2246,9 +2246,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           _this3.form.role = 'vendor';
-        }
+        } else {
+          _this3.form.role = 'user';
+        } // console.log(this.form.role)
 
-        console.log(_this3.form.role);
 
         var loader = _this3.$loading.show();
 
@@ -2379,6 +2380,418 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Categories.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Categories.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      createmode: false,
+      editmode: false,
+      selectedCategory: '',
+      serviceMode: false,
+      serviceCreateMode: false,
+      serviceEditMode: false,
+      categories: [],
+      services: [],
+      form: new Form({
+        id: '',
+        name: ''
+      }),
+      serviceForm: new Form({
+        id: '',
+        name: '',
+        category: {
+          id: ''
+        }
+      }),
+      categoryURL: '/api/categories/',
+      serviceURL: '/api/sub-categories/'
+    };
+  },
+  methods: {
+    loadCategories: function loadCategories() {
+      var _this = this;
+
+      var loader = this.$loading.show();
+      axios.get(this.categoryURL).then(function (response) {
+        _this.categories = response.data.data;
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'We could not retrieve the categories'
+        });
+        loader.hide();
+      });
+    },
+    deleteCategory: function deleteCategory(id) {
+      var _this2 = this;
+
+      $('#showbox').addClass('col-lg-12').removeClass('col-lg-6').css('border', '0');
+      this.serviceMode = false;
+      this.serviceCreateMode = false;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be reverted',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          var loader = _this2.$loading.show();
+
+          axios["delete"](_this2.categoryURL + id).then(function () {
+            Swal.fire({
+              type: 'success',
+              title: 'Category was deleted successfully'
+            });
+            loader.hide();
+            Fire.$emit('refreshCategories');
+          })["catch"](function () {
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              html: 'We could not delete the category.<br>Please try again later'
+            });
+            loader.hide();
+          });
+        }
+      });
+    },
+    editCategory: function editCategory(category) {
+      $('#showbox').addClass('col-lg-12').removeClass('col-lg-6').css('border', '0');
+      this.serviceMode = false;
+      this.serviceCreateMode = false;
+      this.createmode = true;
+      this.editmode = true;
+      this.form.fill(category);
+    },
+    openModal: function openModal() {
+      if (this.createmode) {
+        this.createmode = false;
+      } else {
+        this.createmode = true;
+      }
+
+      this.editmode = false;
+      this.form.reset();
+    },
+    createCategory: function createCategory() {
+      var _this3 = this;
+
+      var loader = this.$loading.show();
+      this.form.post(this.categoryURL).then(function () {
+        Swal.fire({
+          type: 'success',
+          title: 'Category was successfully created'
+        });
+        _this3.createmode = false;
+        Fire.$emit('refreshCategories');
+
+        _this3.form.reset();
+
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong'
+        });
+        loader.hide();
+      });
+    },
+    updateCategory: function updateCategory() {
+      var _this4 = this;
+
+      var loader = this.$loading.show();
+      this.form.put(this.categoryURL + this.form.id).then(function () {
+        Swal.fire({
+          type: 'success',
+          title: 'Category was successfully updated'
+        });
+        _this4.createmode = false;
+
+        _this4.form.reset();
+
+        Fire.$emit('refreshCategories');
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong'
+        });
+        loader.hide();
+      });
+    },
+    showServices: function showServices(category) {
+      $('#showbox').removeClass('col-lg-12').addClass('col-lg-6').css('border-right', '1px solid');
+      this.createmode = false;
+      this.serviceMode = true;
+      this.selectedCategory = category.name;
+      this.serviceForm.reset();
+      this.serviceCreateMode = false;
+      this.serviceEditMode = false;
+      this.serviceForm.category.id = category.id;
+      this.loadServices(category.id);
+    },
+    loadServices: function loadServices(id) {
+      var _this5 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
+      axios.get(this.serviceURL + id).then(function (response) {
+        _this5.services = response.data;
+        loader.hide();
+      })["catch"](function () {
+        loader.hide();
+      });
+    },
+    openServiceModal: function openServiceModal() {
+      if (this.serviceCreateMode) {
+        this.serviceCreateMode = false;
+      } else {
+        this.serviceCreateMode = true;
+      }
+
+      this.serviceEditMode = false;
+      this.serviceForm.reset();
+    },
+    createService: function createService() {
+      var _this6 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
+      this.serviceForm.post(this.serviceURL).then(function () {
+        Swal.fire({
+          type: 'success',
+          title: 'Sub-Category was successfully created'
+        });
+        _this6.serviceCreateMode = false;
+        Fire.$emit('refreshSubCategories');
+
+        _this6.serviceForm.reset();
+
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong'
+        });
+        loader.hide();
+      });
+    },
+    editService: function editService(service) {
+      this.serviceCreateMode = true;
+      this.serviceEditMode = true;
+      this.serviceForm.fill(service);
+    },
+    updateService: function updateService() {
+      var _this7 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
+      this.serviceForm.put(this.serviceURL + this.serviceForm.id).then(function () {
+        Swal.fire({
+          type: 'success',
+          title: 'Sub-Category was successfully updated'
+        });
+        _this7.serviceCreateMode = false;
+        Fire.$emit('refreshSubCategories');
+
+        _this7.serviceForm.reset();
+
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong'
+        });
+        loader.hide();
+      });
+    },
+    deleteService: function deleteService(id) {
+      var _this8 = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'This action cannot be reverted',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          var loader = _this8.$loading.show({
+            container: _this8.$refs.serviceContainer
+          });
+
+          axios["delete"](_this8.serviceURL + id).then(function () {
+            Swal.fire({
+              type: 'success',
+              title: 'Sub-Category was deleted successfully'
+            });
+            loader.hide();
+            Fire.$emit('refreshSubCategories');
+          })["catch"](function () {
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              html: 'We could not delete the Sub-Category.<br>Please try again later'
+            });
+            loader.hide();
+          });
+        }
+      });
+    }
+  },
+  created: function created() {
+    var _this9 = this;
+
+    this.loadCategories();
+    Fire.$on('refreshCategories', function () {
+      _this9.loadCategories();
+    });
+    Fire.$on('refreshSubCategories', function () {
+      _this9.loadServices(_this9.serviceForm.category.id);
+    });
+  },
+  mounted: function mounted() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Cities.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Cities.vue?vue&type=script&lang=js& ***!
@@ -2388,6 +2801,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2751,12 +3165,648 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      total_states: 0,
+      total_states_error: false,
+      total_cities: 0,
+      total_cities_error: false,
+      total_categories: 0,
+      total_categories_error: false,
+      total_sub_categories: 0,
+      total_sub_categories_error: false,
+      total_services: 0,
+      total_services_error: false,
+      featured_services: 0,
+      total_featured_services_error: false,
+      banned_services: 0,
+      total_banned_services_error: false,
+      total_vendors: 0,
+      total_vendors_error: false,
+      suspended_vendors: 0,
+      total_suspended_vendors_error: false,
+      total_buyers: 0,
+      total_buyers_error: false,
+      total_subscribers: 0,
+      total_subscribers_error: false,
+      total_contact_messages: 0,
+      total_contact_messages_error: false,
+      total_vendor_messages: 0,
+      total_vendor_messages_error: false,
+      unfound_searches: 0,
+      total_unfound_searches_error: false,
+      buyers_requests: 0,
+      total_buyer_requests_error: false
+    };
   },
-  methods: {},
-  created: function created() {},
+  methods: {
+    getTotalStates: function getTotalStates() {
+      var _this = this;
+
+      axios.get('/api/counter/states/').then(function (response) {
+        _this.total_states = response.data;
+      })["catch"](function () {
+        _this.total_states_error = true;
+      });
+    },
+    getTotalCities: function getTotalCities() {
+      var _this2 = this;
+
+      axios.get('/api/counter/cities/').then(function (response) {
+        _this2.total_cities = response.data;
+      })["catch"](function () {
+        _this2.total_cities_error = true;
+      });
+    },
+    getTotalCategories: function getTotalCategories() {
+      var _this3 = this;
+
+      axios.get('/api/counter/categories/').then(function (response) {
+        _this3.total_categories = response.data;
+      })["catch"](function () {
+        _this3.total_categories_error = true;
+      });
+    },
+    getTotalSubCategories: function getTotalSubCategories() {
+      var _this4 = this;
+
+      axios.get('/api/counter/sub-categories/').then(function (response) {
+        _this4.total_sub_categories = response.data;
+      })["catch"](function () {
+        _this4.total_sub_categories_error = true;
+      });
+    },
+    getTotalServices: function getTotalServices() {
+      var _this5 = this;
+
+      axios.get('/api/counter/services/').then(function (response) {
+        _this5.total_services = response.data;
+      })["catch"](function () {
+        _this5.total_services_error = true;
+      });
+    },
+    getTotalFeaturedServices: function getTotalFeaturedServices() {
+      var _this6 = this;
+
+      axios.get('/api/counter/services/featured').then(function (response) {
+        _this6.featured_services = response.data;
+      })["catch"](function () {
+        _this6.total_featured_services_error = true;
+      });
+    },
+    getTotalBannedServices: function getTotalBannedServices() {
+      var _this7 = this;
+
+      axios.get('/api/counter/services/banned').then(function (response) {
+        _this7.banned_services = response.data;
+      })["catch"](function () {
+        _this7.total_banned_services_error = true;
+      });
+    },
+    getTotalVendors: function getTotalVendors() {
+      var _this8 = this;
+
+      axios.get('/api/counter/vendors/').then(function (response) {
+        _this8.total_vendors = response.data;
+      })["catch"](function () {
+        _this8.total_vendors_error = true;
+      });
+    },
+    getTotalSuspendedVendors: function getTotalSuspendedVendors() {
+      var _this9 = this;
+
+      axios.get('/api/counter/vendors/suspended').then(function (response) {
+        _this9.suspended_vendors = response.data;
+      })["catch"](function () {
+        _this9.total_suspended_vendors_error = true;
+      });
+    },
+    getTotalBuyers: function getTotalBuyers() {
+      var _this10 = this;
+
+      axios.get('/api/counter/buyers/').then(function (response) {
+        _this10.total_buyers = response.data;
+      })["catch"](function () {
+        _this10.total_buyers_error = true;
+      });
+    },
+    getTotalSubscribers: function getTotalSubscribers() {
+      var _this11 = this;
+
+      axios.get('/api/counter/subscribers/').then(function (response) {
+        _this11.total_subscribers = response.data;
+      })["catch"](function () {
+        _this11.total_subscribers_error = true;
+      });
+    },
+    getTotalContactMessages: function getTotalContactMessages() {
+      var _this12 = this;
+
+      axios.get('/api/counter/messages/contact').then(function (response) {
+        _this12.total_contact_messages = response.data;
+      })["catch"](function () {
+        _this12.total_contact_messages_error = true;
+      });
+    },
+    getTotalVendorMessages: function getTotalVendorMessages() {
+      var _this13 = this;
+
+      axios.get('/api/counter/messages/vendor').then(function (response) {
+        _this13.total_vendor_messages = response.data;
+      })["catch"](function () {
+        _this13.total_vendor_messages_error = true;
+      });
+    },
+    getTotalUnfoundSearches: function getTotalUnfoundSearches() {
+      var _this14 = this;
+
+      axios.get('/api/counter/unfound-searches').then(function (response) {
+        _this14.unfound_searches = response.data;
+      })["catch"](function () {
+        _this14.total_unfound_searches_error = true;
+      });
+    },
+    getTotalBuyerRequests: function getTotalBuyerRequests() {
+      var _this15 = this;
+
+      axios.get('/api/counter/buyer-requests').then(function (response) {
+        _this15.buyers_requests = response.data;
+      })["catch"](function () {
+        _this15.total_buyer_requests_error = true;
+      });
+    }
+  },
+  created: function created() {
+    this.getTotalStates();
+    this.getTotalCities();
+    this.getTotalCategories();
+    this.getTotalSubCategories();
+    this.getTotalServices();
+    this.getTotalFeaturedServices();
+    this.getTotalBannedServices();
+    this.getTotalVendors();
+    this.getTotalSuspendedVendors();
+    this.getTotalBuyers();
+    this.getTotalSubscribers();
+    this.getTotalContactMessages();
+    this.getTotalVendorMessages();
+    this.getTotalUnfoundSearches();
+    this.getTotalBuyerRequests();
+  },
   mounted: function mounted() {}
 });
 
@@ -4814,7 +5864,9 @@ __webpack_require__.r(__webpack_exports__);
     loadServices: function loadServices() {
       var _this2 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
       axios.get(this.servicesURL).then(function (response) {
         _this2.services = response.data.data;
 
@@ -4847,7 +5899,9 @@ __webpack_require__.r(__webpack_exports__);
     switchCategory: function switchCategory(id) {
       var _this3 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
       axios.get(this.categoriesURL + '/' + id).then(function (response) {
         _this3.services = response.data.data;
         loader.hide();
@@ -5627,11 +6681,124 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       user: {},
-      url: '/api/profile'
+      url: '/api/profile',
+      total_services: 0,
+      total_services_error: false,
+      total_rating: 0,
+      total_rating_error: false,
+      messages: [],
+      messagesURL: '/api/vendor/messages/'
     };
   },
   methods: {
@@ -5641,14 +6808,98 @@ __webpack_require__.r(__webpack_exports__);
       var loader = this.$loading.show();
       axios.get(this.url).then(function (response) {
         _this.user = response.data;
+
+        if (_this.user.active === 1) {
+          _this.getTotalServices();
+
+          _this.getAverageRating();
+
+          _this.getMessages();
+        }
+
         loader.hide();
       })["catch"](function () {
+        loader.hide();
+      });
+    },
+    getTotalServices: function getTotalServices() {
+      var _this2 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.totalServicesContainer
+      });
+      axios.get('/api/counter/vendor/services/').then(function (response) {
+        _this2.total_services = response.data;
+        loader.hide();
+      })["catch"](function () {
+        _this2.total_services_error = true;
+        loader.hide();
+      });
+    },
+    getAverageRating: function getAverageRating() {
+      var _this3 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.totalRatingContainer
+      });
+      axios.get('/api/counter/vendor/rating/').then(function (response) {
+        _this3.total_rating = response.data;
+        loader.hide();
+      })["catch"](function () {
+        _this3.total_rating_error = true;
+        loader.hide();
+      });
+    },
+    getMessages: function getMessages() {
+      var _this4 = this;
+
+      var loader = this.$loading.show({
+        container: this.$refs.messageContainer
+      });
+      axios.get(this.messagesURL).then(function (response) {
+        _this4.messages = response.data[0];
+        loader.hide();
+      })["catch"](function () {
+        loader.hide();
+      });
+    },
+    call: function call(phone) {
+      return 'tel:234' + phone;
+    },
+    whatsapp: function whatsapp(phone) {
+      return 'https://api.whatsapp.com/send?phone=234' + phone;
+    },
+    mail: function mail(email) {
+      return 'mailto:' + email;
+    },
+    viewService: function viewService(id) {
+      return '/service/' + id;
+    },
+    resolveMessage: function resolveMessage(id) {
+      var loader = this.$loading.show();
+      axios["delete"]('/api/message/' + id).then(function () {
+        Swal.fire({
+          type: 'success',
+          title: 'Message was resolved successfully'
+        });
+        Fire.$emit('refreshMessages');
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Message could not be resolved'
+        });
         loader.hide();
       });
     }
   },
   created: function created() {
+    var _this5 = this;
+
     this.getUserData();
+    Fire.$on('refreshMessages', function () {
+      _this5.loadMessages();
+    });
   },
   mounted: function mounted() {}
 });
@@ -5982,6 +7233,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -49464,6 +50716,607 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Categories.vue?vue&type=template&id=761c9947&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Categories.vue?vue&type=template&id=761c9947& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _c(
+        "div",
+        { staticClass: "header" },
+        [
+          _c("h4", { staticClass: "card-title" }, [
+            _vm._v("\n\t\t\t\tCategories "),
+            _c("span", { staticClass: "badge badge-primary" }, [
+              _vm._v(_vm._s(_vm.categories.length))
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.createmode,
+                    expression: "!createmode"
+                  }
+                ],
+                staticClass: "pull-right btn btn-primary btn-fill",
+                on: { click: _vm.openModal }
+              },
+              [_vm._v("Add New")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.createmode,
+                    expression: "createmode"
+                  }
+                ],
+                staticClass: "pull-right btn btn-default btn-fill",
+                on: { click: _vm.openModal }
+              },
+              [_vm._v("Close Form")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "category" }, [_vm._v("All categories")]),
+          _vm._v(" "),
+          _c("alert-error", { attrs: { form: _vm.form } }),
+          _vm._v(" "),
+          _c("alert-error", { attrs: { form: _vm.serviceForm } }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.createmode,
+                  expression: "createmode"
+                }
+              ],
+              attrs: { method: "POST", id: "form" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  _vm.editmode ? _vm.updateCategory() : _vm.createCategory()
+                },
+                keydown: function($event) {
+                  return _vm.form.onKeydown($event)
+                }
+              }
+            },
+            [
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.name,
+                          expression: "form.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "has-error": _vm.form.errors.has("name") },
+                      attrs: {
+                        type: "text",
+                        name: "name",
+                        placeholder: "Name",
+                        autofocus: "on",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "name", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-btn" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.editmode,
+                              expression: "!editmode"
+                            }
+                          ],
+                          staticClass: "btn btn-primary btn-fill",
+                          attrs: { type: "submit", disabled: _vm.form.busy }
+                        },
+                        [_vm._v("Create")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.editmode,
+                              expression: "editmode"
+                            }
+                          ],
+                          staticClass: "btn btn-success btn-fill",
+                          attrs: { type: "submit", disabled: _vm.form.busy }
+                        },
+                        [_vm._v("Update")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("has-error", { attrs: { form: _vm.form, field: "name" } })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("hr")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.serviceCreateMode,
+                  expression: "serviceCreateMode"
+                }
+              ],
+              attrs: { method: "POST", id: "serviceForm" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  _vm.serviceEditMode
+                    ? _vm.updateService()
+                    : _vm.createService()
+                },
+                keydown: function($event) {
+                  return _vm.serviceForm.onKeydown($event)
+                }
+              }
+            },
+            [
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.serviceForm.name,
+                          expression: "serviceForm.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "has-error": _vm.serviceForm.errors.has("name")
+                      },
+                      attrs: {
+                        type: "text",
+                        name: "name",
+                        placeholder: "Name",
+                        autofocus: "on",
+                        required: ""
+                      },
+                      domProps: { value: _vm.serviceForm.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.serviceForm, "name", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-addon" }, [
+                      _vm._v("-")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.serviceForm.category.id,
+                            expression: "serviceForm.category.id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "category_id", required: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.serviceForm.category,
+                              "id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Select a category")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.categories, function(category) {
+                          return _c(
+                            "option",
+                            {
+                              key: category.id,
+                              domProps: { value: category.id }
+                            },
+                            [_vm._v(_vm._s(category.name))]
+                          )
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-btn" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.serviceEditMode,
+                              expression: "!serviceEditMode"
+                            }
+                          ],
+                          staticClass: "btn btn-primary btn-fill",
+                          attrs: {
+                            type: "submit",
+                            disabled: _vm.serviceForm.busy
+                          }
+                        },
+                        [_vm._v("Create")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.serviceEditMode,
+                              expression: "serviceEditMode"
+                            }
+                          ],
+                          staticClass: "btn btn-success btn-fill",
+                          attrs: {
+                            type: "submit",
+                            disabled: _vm.serviceForm.busy
+                          }
+                        },
+                        [_vm._v("Update")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.serviceForm, field: "name" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("hr")
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "content" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12", attrs: { id: "showbox" } }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.categories.length < 1,
+                    expression: "categories.length < 1"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tThere are no categories yet\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.categories.length > 0,
+                    expression: "categories.length > 0"
+                  }
+                ],
+                staticClass: "table-responsive table-full-width"
+              },
+              [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.categories, function(category) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(category.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-success btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.showServices(category)
+                                }
+                              }
+                            },
+                            [_vm._v("Show Sub-categories")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-primary btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.editCategory(category)
+                                }
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-danger btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteCategory(category.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.serviceMode,
+                  expression: "serviceMode"
+                }
+              ],
+              ref: "serviceContainer",
+              staticClass: "col-lg-6"
+            },
+            [
+              _c("alert-error", { attrs: { form: _vm.serviceForm } }),
+              _vm._v(" "),
+              _c("div", { staticStyle: { "border-bottom": "1px solid" } }, [
+                _c("h4", [
+                  _vm._v(
+                    "\n\t\t\t\t\t\t\t" + _vm._s(_vm.selectedCategory) + " "
+                  ),
+                  _c("span", { staticClass: "badge badge-primary" }, [
+                    _vm._v(_vm._s(_vm.services.length))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.serviceCreateMode,
+                          expression: "!serviceCreateMode"
+                        }
+                      ],
+                      staticClass: "pull-right btn btn-sm btn-fill btn-primary",
+                      on: { click: _vm.openServiceModal }
+                    },
+                    [_vm._v("Add New Sub-Category")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.serviceCreateMode,
+                          expression: "serviceCreateMode"
+                        }
+                      ],
+                      staticClass: "pull-right btn btn-sm btn-fill btn-default",
+                      on: { click: _vm.openServiceModal }
+                    },
+                    [_vm._v("Close Form")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" })
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.services.length < 1
+                ? _c("div", { staticClass: "alert alert-info" }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\tThere are no sub categories in this category yet!\n\t\t\t\t\t"
+                    )
+                  ])
+                : _c(
+                    "div",
+                    { staticClass: "table-responsive table-full-width" },
+                    [
+                      _c("table", { staticClass: "table table-hover" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.services, function(service, index) {
+                            return _c("tr", [
+                              _c("td", [_vm._v(_vm._s(index + 1))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(service.name))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-primary btn-fill",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.editService(service)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-danger btn-fill",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteService(service.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              ])
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    ]
+                  )
+            ],
+            1
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [_c("th", [_vm._v("Name")]), _vm._v(" "), _c("th")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("S/N")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Cities.vue?vue&type=template&id=0916f174&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/Cities.vue?vue&type=template&id=0916f174& ***!
@@ -49680,6 +51533,8 @@ var render = function() {
                       )
                     ])
                   ]),
+                  _vm._v(" "),
+                  _c("has-error", { attrs: { form: _vm.form, field: "name" } }),
                   _vm._v(" "),
                   _c("has-error", {
                     attrs: { form: _vm.form, field: "state.id" }
@@ -49938,9 +51793,1120 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n\tDashboard\n")])
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c(
+          "div",
+          { ref: "totalStatesContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_states_error,
+                    expression: "total_states_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total States")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_states))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminStates" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" States\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { ref: "totalCitiesContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_cities_error,
+                    expression: "total_cities_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Cities")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_cities))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminCities" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Cities\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { ref: "totalCategoriesContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_categories_error,
+                    expression: "total_categories_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Categories")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_categories))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminCategories" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Categories\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "totalSubCategoriesContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_sub_categories_error,
+                    expression: "total_sub_categories_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Sub Categories")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_sub_categories))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminCategories" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Categories\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { ref: "totalServicesContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_services_error,
+                    expression: "total_services_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Services")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_services))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminServices" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Services\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "featuredServicesContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_featured_services_error,
+                    expression: "total_featured_services_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Featured Services")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.featured_services))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminServices" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Services\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { ref: "bannedServicesContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_banned_services_error,
+                    expression: "total_banned_services_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Banned Services")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.banned_services))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminServices" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Services\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { ref: "totalBuyersContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_buyers_error,
+                    expression: "total_buyers_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Buyers")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_buyers))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("router-link", { attrs: { to: { name: "AdminUsers" } } }, [
+                    _c("div", { staticClass: "stats" }, [
+                      _c("i", { staticClass: "fa fa-link" }),
+                      _vm._v(" Buyers\n                            \t")
+                    ])
+                  ])
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { ref: "totalVendorsContainer", staticClass: "col-lg-4 col-sm-6" },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_vendors_error,
+                    expression: "total_vendors_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Vendors")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_vendors))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminVendors" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Vendors\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "suspendedVendorsContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_suspended_vendors_error,
+                    expression: "total_suspended_vendors_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Suspended Vendors")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.suspended_vendors))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminVendors" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Vendors\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "totalVendorMessagesContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_vendor_messages_error,
+                    expression: "total_vendor_messages_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(10),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Vendor Messages")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_vendor_messages))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminMessages" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Messages\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "totalSubscribersContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_subscribers_error,
+                    expression: "total_subscribers_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(11),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Subscribers")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_subscribers))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminSubscribers" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(" Subscribers\n                            \t")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "totalContactMessagesContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_contact_messages_error,
+                    expression: "total_contact_messages_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(12),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Total Contact Messages")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.total_contact_messages))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminContactMessages" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(
+                          " Contact Messages\n                            \t"
+                        )
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "totalBuyerRequestsContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_buyer_requests_error,
+                    expression: "total_buyer_requests_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(13),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Buyer's Requests")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.buyers_requests))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminBuyerRequests" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(
+                          " Buyer's Requests\n                            \t"
+                        )
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            ref: "totalUnfoundSearchesContainer",
+            staticClass: "col-lg-4 col-sm-6"
+          },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.total_unfound_searches_error,
+                    expression: "total_unfound_searches_error"
+                  }
+                ],
+                staticClass: "alert alert-danger"
+              },
+              [_vm._v("\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-stats" }, [
+              _c("div", { staticClass: "card-body " }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(14),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-9" }, [
+                    _c("div", { staticClass: "numbers" }, [
+                      _c("p", { staticClass: "card-category" }, [
+                        _vm._v("Unfound Searches")
+                      ]),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-title" }, [
+                        _vm._v(_vm._s(_vm.unfound_searches))
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-footer " },
+                [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "AdminUnfoundSearches" } } },
+                    [
+                      _c("div", { staticClass: "stats" }, [
+                        _c("i", { staticClass: "fa fa-link" }),
+                        _vm._v(
+                          " Unfound Searches\n                            \t"
+                        )
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-map text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-map-2 text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-way text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-way text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-portfolio text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-portfolio text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-portfolio text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-users text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-users text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-users text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-chat text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-news-paper text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-phone text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-speaker text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-search text-warning" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -50065,7 +53031,7 @@ var render = function() {
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", [_vm._v("Phone number")]),
                     _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(message.phone))])
+                    _c("p", [_vm._v("0" + _vm._s(message.phone))])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -50520,7 +53486,7 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-4 col-sm-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -50597,7 +53563,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-4 col-sm-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -50674,7 +53640,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-4 col-sm-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -54500,15 +57466,293 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "page-header" }, [_vm._v("Dashboard")]),
-    _vm._v(" "),
     _vm.user.active == 0
       ? _c("blockquote", [
           _c("h1", [_vm._v("Your account has been suspended!")]),
           _vm._v(" "),
           _vm._m(0)
         ])
-      : _c("div")
+      : _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c(
+              "div",
+              {
+                ref: "totalServicesContainer",
+                staticClass: "col-lg-6 col-sm-6"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.total_services_error,
+                        expression: "total_services_error"
+                      }
+                    ],
+                    staticClass: "alert alert-danger"
+                  },
+                  [
+                    _vm._v(
+                      "\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "card card-stats" }, [
+                  _c("div", { staticClass: "card-body " }, [
+                    _c("div", { staticClass: "row" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("div", { staticClass: "numbers" }, [
+                          _c("p", { staticClass: "card-category" }, [
+                            _vm._v("Total Services")
+                          ]),
+                          _vm._v(" "),
+                          _c("h4", { staticClass: "card-title" }, [
+                            _vm._v(_vm._s(_vm.total_services))
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-footer " },
+                    [
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        { attrs: { to: { name: "VendorServices" } } },
+                        [
+                          _c("div", { staticClass: "stats" }, [
+                            _c("i", { staticClass: "fa fa-link" }),
+                            _vm._v(" Services\n                            \t")
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { ref: "totalRatingContainer", staticClass: "col-lg-6 col-sm-6" },
+              [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.total_rating_error,
+                        expression: "total_rating_error"
+                      }
+                    ],
+                    staticClass: "alert alert-danger"
+                  },
+                  [
+                    _vm._v(
+                      "\n\t\t\t\t\t\tWe could not load these data\n\t\t\t\t\t"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "card card-stats" }, [
+                  _c("div", { staticClass: "card-body " }, [
+                    _c("div", { staticClass: "row" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-9" }, [
+                        _c("div", { staticClass: "numbers" }, [
+                          _c("p", { staticClass: "card-category" }, [
+                            _vm._v("Average Rating")
+                          ]),
+                          _vm._v(" "),
+                          _c("h4", { staticClass: "card-title" }, [
+                            _vm._v(_vm._s(_vm.total_rating) + "/5")
+                          ])
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "card-footer " },
+                    [
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        { attrs: { to: { name: "VendorServices" } } },
+                        [
+                          _c("div", { staticClass: "stats" }, [
+                            _c("i", { staticClass: "fa fa-link" }),
+                            _vm._v(" Services\n                            \t")
+                          ])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.messages.length > 0,
+                    expression: "messages.length > 0"
+                  }
+                ],
+                ref: "messageContainer"
+              },
+              [
+                _vm._m(3),
+                _vm._v(" "),
+                _vm._l(_vm.messages, function(message, index) {
+                  return _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c("div", { staticClass: "header" }, [
+                        _c("h4", { staticClass: "title" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t" +
+                              _vm._s(index + 1) +
+                              "\n\t\t\t\t\t\t\t\t\t"
+                          ),
+                          _c("span", { staticClass: "pull-right" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-danger btn-sm btn-fill",
+                                attrs: {
+                                  href: _vm.viewService(
+                                    message.user_service.id
+                                  ),
+                                  target: "__blank",
+                                  title: "View Service"
+                                }
+                              },
+                              [_vm._v("View Service")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-success btn-fill",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.resolveMessage(message.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Resolve")]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "clearfix" })
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "category" }, [
+                          _vm._v(
+                            _vm._s(message.user_service.service.category.name) +
+                              " > " +
+                              _vm._s(message.user_service.service.name)
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "content" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Name")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(message.name))])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Email")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(message.email))])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Phone number")]),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("0" + _vm._s(message.phone))])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Message")]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            { staticStyle: { "white-space": "pre-line" } },
+                            [_vm._v(_vm._s(message.message))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-info btn-fill",
+                            attrs: {
+                              href: _vm.call(message.phone),
+                              target: "__blank",
+                              title: "Call"
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-phone" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-primary btn-fill",
+                            attrs: {
+                              href: _vm.whatsapp(message.phone),
+                              target: "__blank",
+                              title: "Text on WhatsApp"
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-whatsapp" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-success btn-fill",
+                            attrs: {
+                              href: _vm.mail(message.email),
+                              target: "__blank",
+                              title: "Send Mail"
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-envelope" })]
+                        )
+                      ])
+                    ])
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
   ])
 }
 var staticRenderFns = [
@@ -54522,6 +57766,44 @@ var staticRenderFns = [
         _vm._v("submit a query")
       ]),
       _vm._v(" for the administrator")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-portfolio text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "icon-big text-center icon-warning" }, [
+        _c("i", { staticClass: "pe-7s-portfolio text-warning" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("h4", [
+        _vm._v(
+          "Unresolved Messages that was sent from customers for your services."
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "alert alert-info" }, [
+        _vm._v(
+          "\n                \t\t\tPlease resolve as soon as you contact them\n                \t\t"
+        )
+      ])
     ])
   }
 ]
@@ -54920,7 +58202,7 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-4 col-sm-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -54997,7 +58279,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-4 col-sm-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -55074,7 +58356,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-4 col-sm-4" }, [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -55296,21 +58578,9 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.services, function(service) {
+                _vm._l(_vm.services, function(service, index) {
                   return _c("tr", [
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-success btn-fill",
-                          attrs: {
-                            href: _vm.viewService(service.id),
-                            target: "__blank"
-                          }
-                        },
-                        [_vm._v("View")]
-                      )
-                    ]),
+                    _c("td", [_vm._v(_vm._s(index + 1))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(service.title))]),
                     _vm._v(" "),
@@ -55322,9 +58592,23 @@ var render = function() {
                       _vm._v(" > " + _vm._s(service.service.name))
                     ]),
                     _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(service.ratings.length))]),
+                    _vm._v(" "),
                     _c(
                       "td",
                       [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-success btn-fill",
+                            attrs: {
+                              href: _vm.viewService(service.id),
+                              target: "__blank"
+                            }
+                          },
+                          [_vm._v("View")]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "router-link",
                           {
@@ -55382,13 +58666,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th"),
+        _c("th", [_vm._v("S/N")]),
         _vm._v(" "),
         _c("th", [_vm._v("Title")]),
         _vm._v(" "),
         _c("th", [_vm._v("Price (₦)")]),
         _vm._v(" "),
         _c("th", [_vm._v("Category")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No of Reviews")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -70291,29 +73577,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Profile_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue");
 /* harmony import */ var _components_admin_States_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/admin/States.vue */ "./resources/js/components/admin/States.vue");
 /* harmony import */ var _components_admin_Cities_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/admin/Cities.vue */ "./resources/js/components/admin/Cities.vue");
-/* harmony import */ var _components_admin_Services_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/Services.vue */ "./resources/js/components/admin/Services.vue");
-/* harmony import */ var _components_admin_NewService_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/NewService.vue */ "./resources/js/components/admin/NewService.vue");
-/* harmony import */ var _components_admin_Vendors_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/Vendors.vue */ "./resources/js/components/admin/Vendors.vue");
-/* harmony import */ var _components_admin_Users_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/Users.vue */ "./resources/js/components/admin/Users.vue");
-/* harmony import */ var _components_admin_Subscribers_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/Subscribers.vue */ "./resources/js/components/admin/Subscribers.vue");
-/* harmony import */ var _components_admin_Messages_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/Messages.vue */ "./resources/js/components/admin/Messages.vue");
-/* harmony import */ var _components_admin_UnfoundSearches_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/UnfoundSearches.vue */ "./resources/js/components/admin/UnfoundSearches.vue");
-/* harmony import */ var _components_admin_Contacts_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/Contacts.vue */ "./resources/js/components/admin/Contacts.vue");
-/* harmony import */ var _components_admin_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/BuyerRequests.vue */ "./resources/js/components/admin/BuyerRequests.vue");
-/* harmony import */ var _components_vendor_Dashboard_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/vendor/Dashboard.vue */ "./resources/js/components/vendor/Dashboard.vue");
-/* harmony import */ var _components_vendor_Services_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/vendor/Services.vue */ "./resources/js/components/vendor/Services.vue");
-/* harmony import */ var _components_vendor_NewService_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/vendor/NewService.vue */ "./resources/js/components/vendor/NewService.vue");
-/* harmony import */ var _components_vendor_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/vendor/BuyerRequests.vue */ "./resources/js/components/vendor/BuyerRequests.vue");
-/* harmony import */ var _components_user_Dashboard_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/user/Dashboard.vue */ "./resources/js/components/user/Dashboard.vue");
-/* harmony import */ var _components_user_UserRequests_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/user/UserRequests.vue */ "./resources/js/components/user/UserRequests.vue");
-/* harmony import */ var _components_user_PostRequest_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/user/PostRequest.vue */ "./resources/js/components/user/PostRequest.vue");
-/* harmony import */ var _components_404_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/404.vue */ "./resources/js/components/404.vue");
-/* harmony import */ var vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! vue-goodshare/src/providers/Facebook.vue */ "./node_modules/vue-goodshare/src/providers/Facebook.vue");
-/* harmony import */ var vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! vue-goodshare/src/providers/Twitter.vue */ "./node_modules/vue-goodshare/src/providers/Twitter.vue");
-/* harmony import */ var vue_goodshare_src_providers_LinkedIn_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! vue-goodshare/src/providers/LinkedIn.vue */ "./node_modules/vue-goodshare/src/providers/LinkedIn.vue");
-/* harmony import */ var vue_goodshare_src_providers_WhatsApp_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! vue-goodshare/src/providers/WhatsApp.vue */ "./node_modules/vue-goodshare/src/providers/WhatsApp.vue");
-/* harmony import */ var vue_goodshare_src_providers_Telegram_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! vue-goodshare/src/providers/Telegram.vue */ "./node_modules/vue-goodshare/src/providers/Telegram.vue");
-/* harmony import */ var vue_goodshare_src_providers_Email_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! vue-goodshare/src/providers/Email.vue */ "./node_modules/vue-goodshare/src/providers/Email.vue");
+/* harmony import */ var _components_admin_Categories_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/admin/Categories.vue */ "./resources/js/components/admin/Categories.vue");
+/* harmony import */ var _components_admin_Services_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/admin/Services.vue */ "./resources/js/components/admin/Services.vue");
+/* harmony import */ var _components_admin_NewService_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/admin/NewService.vue */ "./resources/js/components/admin/NewService.vue");
+/* harmony import */ var _components_admin_Vendors_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/Vendors.vue */ "./resources/js/components/admin/Vendors.vue");
+/* harmony import */ var _components_admin_Users_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/Users.vue */ "./resources/js/components/admin/Users.vue");
+/* harmony import */ var _components_admin_Subscribers_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/Subscribers.vue */ "./resources/js/components/admin/Subscribers.vue");
+/* harmony import */ var _components_admin_Messages_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/Messages.vue */ "./resources/js/components/admin/Messages.vue");
+/* harmony import */ var _components_admin_UnfoundSearches_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/UnfoundSearches.vue */ "./resources/js/components/admin/UnfoundSearches.vue");
+/* harmony import */ var _components_admin_Contacts_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/Contacts.vue */ "./resources/js/components/admin/Contacts.vue");
+/* harmony import */ var _components_admin_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/admin/BuyerRequests.vue */ "./resources/js/components/admin/BuyerRequests.vue");
+/* harmony import */ var _components_vendor_Dashboard_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/vendor/Dashboard.vue */ "./resources/js/components/vendor/Dashboard.vue");
+/* harmony import */ var _components_vendor_Services_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/vendor/Services.vue */ "./resources/js/components/vendor/Services.vue");
+/* harmony import */ var _components_vendor_NewService_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/vendor/NewService.vue */ "./resources/js/components/vendor/NewService.vue");
+/* harmony import */ var _components_vendor_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/vendor/BuyerRequests.vue */ "./resources/js/components/vendor/BuyerRequests.vue");
+/* harmony import */ var _components_user_Dashboard_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/user/Dashboard.vue */ "./resources/js/components/user/Dashboard.vue");
+/* harmony import */ var _components_user_UserRequests_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/user/UserRequests.vue */ "./resources/js/components/user/UserRequests.vue");
+/* harmony import */ var _components_user_PostRequest_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/user/PostRequest.vue */ "./resources/js/components/user/PostRequest.vue");
+/* harmony import */ var _components_404_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/404.vue */ "./resources/js/components/404.vue");
+/* harmony import */ var vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! vue-goodshare/src/providers/Facebook.vue */ "./node_modules/vue-goodshare/src/providers/Facebook.vue");
+/* harmony import */ var vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! vue-goodshare/src/providers/Twitter.vue */ "./node_modules/vue-goodshare/src/providers/Twitter.vue");
+/* harmony import */ var vue_goodshare_src_providers_LinkedIn_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! vue-goodshare/src/providers/LinkedIn.vue */ "./node_modules/vue-goodshare/src/providers/LinkedIn.vue");
+/* harmony import */ var vue_goodshare_src_providers_WhatsApp_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! vue-goodshare/src/providers/WhatsApp.vue */ "./node_modules/vue-goodshare/src/providers/WhatsApp.vue");
+/* harmony import */ var vue_goodshare_src_providers_Telegram_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! vue-goodshare/src/providers/Telegram.vue */ "./node_modules/vue-goodshare/src/providers/Telegram.vue");
+/* harmony import */ var vue_goodshare_src_providers_Email_vue__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! vue-goodshare/src/providers/Email.vue */ "./node_modules/vue-goodshare/src/providers/Email.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // Form
@@ -70370,6 +73657,7 @@ window.Fire = new Vue(); // Components
 
 
 
+
  // Routes
 
 var routes = [// Admin
@@ -70380,7 +73668,11 @@ var routes = [// Admin
 }, {
   name: 'AdminServices',
   path: '/admin/services',
-  component: _components_admin_Services_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_admin_Services_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+}, {
+  name: 'AdminCategories',
+  path: '/admin/categories',
+  component: _components_admin_Categories_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   name: 'AdminStates',
   path: '/admin/states',
@@ -70392,31 +73684,31 @@ var routes = [// Admin
 }, {
   name: 'AdminNewService',
   path: '/admin/services/new/:id?',
-  component: _components_admin_NewService_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_admin_NewService_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   name: 'AdminVendors',
   path: '/admin/vendors',
-  component: _components_admin_Vendors_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_admin_Vendors_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
 }, {
   name: 'AdminUsers',
   path: '/admin/users',
-  component: _components_admin_Users_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+  component: _components_admin_Users_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
 }, {
   name: 'AdminSubscribers',
   path: '/admin/subscribers',
-  component: _components_admin_Subscribers_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+  component: _components_admin_Subscribers_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
 }, {
   name: 'AdminMessages',
   path: '/admin/messages',
-  component: _components_admin_Messages_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _components_admin_Messages_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
 }, {
   name: 'AdminUnfoundSearches',
   path: '/admin/unfound-searches',
-  component: _components_admin_UnfoundSearches_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+  component: _components_admin_UnfoundSearches_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
 }, {
   name: 'AdminContactMessages',
   path: '/admin/contact-messages',
-  component: _components_admin_Contacts_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+  component: _components_admin_Contacts_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
 }, {
   name: 'AdminProfile',
   path: '/admin/profile',
@@ -70424,20 +73716,20 @@ var routes = [// Admin
 }, {
   name: 'AdminBuyerRequests',
   path: '/admin/buyer-requests',
-  component: _components_admin_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+  component: _components_admin_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
 }, // Vendors
 {
   name: 'VendorDashboard',
   path: '/vendor/',
-  component: _components_vendor_Dashboard_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+  component: _components_vendor_Dashboard_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
 }, {
   name: 'VendorServices',
   path: '/vendor/services',
-  component: _components_vendor_Services_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
+  component: _components_vendor_Services_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
 }, {
   name: 'VendorNewService',
   path: '/vendor/services/new/:id?',
-  component: _components_vendor_NewService_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+  component: _components_vendor_NewService_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
 }, {
   name: 'VendorProfile',
   path: '/vendor/profile',
@@ -70445,20 +73737,20 @@ var routes = [// Admin
 }, {
   name: 'BuyerRequests',
   path: '/vendor/buyer-requests',
-  component: _components_vendor_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
+  component: _components_vendor_BuyerRequests_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
 }, // Users
 {
   name: 'UserDashboard',
   path: '/user/',
-  component: _components_user_Dashboard_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
+  component: _components_user_Dashboard_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
 }, {
   name: 'UserRequests',
   path: '/user/requests',
-  component: _components_user_UserRequests_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
+  component: _components_user_UserRequests_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
 }, {
   name: 'PostRequest',
   path: '/user/post-request/:id?',
-  component: _components_user_PostRequest_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
+  component: _components_user_PostRequest_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
 }, {
   name: 'UserProfile',
   path: '/user/profile',
@@ -70466,13 +73758,13 @@ var routes = [// Admin
 }, // Error page
 {
   path: '/admin/*',
-  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
+  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
 }, {
   path: '/vendor/*',
-  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
+  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
 }, {
   path: '/user/*',
-  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
+  component: _components_404_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
@@ -70511,12 +73803,12 @@ var app = new Vue({
     }
   },
   components: {
-    VueGoodshareFacebook: vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
-    VueGoodshareTwitter: vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
-    VueGoodshareLinkedIn: vue_goodshare_src_providers_LinkedIn_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
-    VueGoodshareWhatsApp: vue_goodshare_src_providers_WhatsApp_vue__WEBPACK_IMPORTED_MODULE_31__["default"],
-    VueGoodshareTelegram: vue_goodshare_src_providers_Telegram_vue__WEBPACK_IMPORTED_MODULE_32__["default"],
-    VueGoodshareEmail: vue_goodshare_src_providers_Email_vue__WEBPACK_IMPORTED_MODULE_33__["default"]
+    VueGoodshareFacebook: vue_goodshare_src_providers_Facebook_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
+    VueGoodshareTwitter: vue_goodshare_src_providers_Twitter_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
+    VueGoodshareLinkedIn: vue_goodshare_src_providers_LinkedIn_vue__WEBPACK_IMPORTED_MODULE_31__["default"],
+    VueGoodshareWhatsApp: vue_goodshare_src_providers_WhatsApp_vue__WEBPACK_IMPORTED_MODULE_32__["default"],
+    VueGoodshareTelegram: vue_goodshare_src_providers_Telegram_vue__WEBPACK_IMPORTED_MODULE_33__["default"],
+    VueGoodshareEmail: vue_goodshare_src_providers_Email_vue__WEBPACK_IMPORTED_MODULE_34__["default"]
   }
 });
 
@@ -70922,6 +74214,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyerRequests_vue_vue_type_template_id_21acf63c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BuyerRequests_vue_vue_type_template_id_21acf63c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/Categories.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/admin/Categories.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Categories_vue_vue_type_template_id_761c9947___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Categories.vue?vue&type=template&id=761c9947& */ "./resources/js/components/admin/Categories.vue?vue&type=template&id=761c9947&");
+/* harmony import */ var _Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Categories.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/Categories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Categories_vue_vue_type_template_id_761c9947___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Categories_vue_vue_type_template_id_761c9947___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/Categories.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/Categories.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/admin/Categories.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Categories.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Categories.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/Categories.vue?vue&type=template&id=761c9947&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/admin/Categories.vue?vue&type=template&id=761c9947& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_template_id_761c9947___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Categories.vue?vue&type=template&id=761c9947& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Categories.vue?vue&type=template&id=761c9947&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_template_id_761c9947___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Categories_vue_vue_type_template_id_761c9947___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
