@@ -3,10 +3,13 @@
         <head>
                 <meta charset="utf-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
                 <meta name="description" content="@yield('description', 'Hire a vendor for your project')">
                 <meta name="author" content="Adeyinka M. Adefolurin">
-                <meta name="keywords" content="freelance, jobs, career, service, vendor, worker">
+                <meta name="robots" content="index, follow">
+                <meta name="language" content="English">
+                <meta name="keywords" content="freelance,jobs,career,service,vendor,worker">
 
                 <!-- Open Graph / Facebook -->
                 <meta property="og:type" content="website">
