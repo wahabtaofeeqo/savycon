@@ -59,27 +59,6 @@ Auth::routes(['verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['role:vendor'])->group(function () {
-	Route::prefix('vendor')->group(function () {		
-		Route::get('/', 'VendorController@index')->name('vendor');
-
-		Route::get('/{path}', 'VendorController@index')->where([
-			'/path' => '([A-Z\d-\/_.]+)?',
-		]);
-
-		Route::get('/{path}/{pathTwo}', 'VendorController@index')->where([
-			'/path' => '([A-Z\d-\/_.]+)?',
-			'/pathTwo' => '([A-Z\d-\/_.]+)?',
-		]);
-
-		Route::get('/{path}/{pathTwo}/{id}', 'VendorController@index')->where([
-			'/path' => '([A-Z\d-\/_.]+)?',
-			'/pathTwo' => '([A-Z\d-\/_.]+)?',
-			'/id' => '([0-9]+)?',
-		]);
-	});
-});
-
 Route::middleware(['role:admin'])->group(function () {
 	Route::prefix('admin')->group(function () {		
 		Route::get('/', 'AdminController@index')->name('admin');
@@ -94,6 +73,27 @@ Route::middleware(['role:admin'])->group(function () {
 		]);
 
 		Route::get('/{path}/{pathTwo}/{id}', 'AdminController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+			'/pathTwo' => '([A-Z\d-\/_.]+)?',
+			'/id' => '([0-9]+)?',
+		]);
+	});
+});
+
+Route::middleware(['role:vendor'])->group(function () {
+	Route::prefix('vendor')->group(function () {		
+		Route::get('/', 'VendorController@index')->name('vendor');
+
+		Route::get('/{path}', 'VendorController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+		]);
+
+		Route::get('/{path}/{pathTwo}', 'VendorController@index')->where([
+			'/path' => '([A-Z\d-\/_.]+)?',
+			'/pathTwo' => '([A-Z\d-\/_.]+)?',
+		]);
+
+		Route::get('/{path}/{pathTwo}/{id}', 'VendorController@index')->where([
 			'/path' => '([A-Z\d-\/_.]+)?',
 			'/pathTwo' => '([A-Z\d-\/_.]+)?',
 			'/id' => '([0-9]+)?',
