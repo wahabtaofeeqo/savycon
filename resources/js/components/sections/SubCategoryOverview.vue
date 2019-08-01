@@ -17,7 +17,7 @@
 						    		Please check back later.
 						    	</div>
 
-						    	<div class="row isotope-grid" v-show="services.length > 0">
+						    	<div class="row isotope-grid" v-show="services.length > 0" ref="serviceContainer">
 									<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 										<div class="block2">
 											<div class="block2-pic hov-img0">
@@ -80,7 +80,7 @@
 									</div>
 
 									<!-- Featured Services -->
-									<div class="p-t-65">
+									<div class="p-t-65" ref="featuredContainer">
 										<h4 class="mtext-112 cl2 p-b-33">
 											Featured Services
 										</h4>
@@ -139,7 +139,9 @@
 		},
 		methods: {
 			getSubCategory() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
 
 				axios.get(this.subCategoryURL+this.sub_category_id)
 				.then((response) => {
@@ -152,7 +154,9 @@
 				})
 			},
 			loadFeaturedServices() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.featuredContainer
+				})
 
 				axios.get(this.featuredServicesURL)
 				.then((response) => {
@@ -165,7 +169,9 @@
 				})
 			},
 			loadServices() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
 
 				axios.get(this.url+this.sub_category_id)
 				.then((response) => {

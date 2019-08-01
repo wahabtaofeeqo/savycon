@@ -5303,7 +5303,9 @@ __webpack_require__.r(__webpack_exports__);
     getCategory: function getCategory() {
       var _this = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.categoryContainer
+      });
       axios.get(this.categoryURL + this.category_id).then(function (response) {
         _this.category = response.data;
         loader.hide();
@@ -5314,7 +5316,9 @@ __webpack_require__.r(__webpack_exports__);
     loadCategories: function loadCategories() {
       var _this2 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.categoryContainer
+      });
       axios.get(this.categoriesURL).then(function (response) {
         _this2.categories = response.data;
         loader.hide();
@@ -5325,7 +5329,9 @@ __webpack_require__.r(__webpack_exports__);
     loadSubCategories: function loadSubCategories() {
       var _this3 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.subCategoriesContainer
+      });
       axios.get(this.subCategoriesURL + this.category_id).then(function (response) {
         _this3.subCategories = response.data;
         loader.hide();
@@ -5336,7 +5342,9 @@ __webpack_require__.r(__webpack_exports__);
     loadFeaturedServices: function loadFeaturedServices() {
       var _this4 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.featuredContainer
+      });
       axios.get(this.featuredServicesURL).then(function (response) {
         _this4.featuredServices = response.data;
         loader.hide();
@@ -5347,7 +5355,9 @@ __webpack_require__.r(__webpack_exports__);
     loadServices: function loadServices() {
       var _this5 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
       axios.get(this.url + this.category_id).then(function (response) {
         _this5.services = response.data.data;
 
@@ -5829,6 +5839,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5838,7 +5855,9 @@ __webpack_require__.r(__webpack_exports__);
       servicesURL: '/api/services',
       categoriesURL: '/api/category',
       search: '',
-      search_address: ''
+      search_address: '',
+      allServices: [],
+      allCities: []
     };
   },
   methods: {
@@ -5930,23 +5949,33 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function () {
         loader.hide();
       });
+    },
+    loadAllServices: function loadAllServices() {
+      var _this5 = this;
+
+      axios.get('/api/services/all/').then(function (response) {
+        _this5.allServices = response.data;
+      });
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     Fire.$on('searching', function () {
-      _this5.search = _this5.$parent.global_search;
-      _this5.search_address = _this5.$parent.global_search_address;
+      _this6.search = _this6.$parent.global_search;
+      _this6.search_address = _this6.$parent.global_search_address;
 
-      _this5.searchServices();
+      _this6.searchServices();
 
       window.location.hash = "search";
       $('.modal-search-header').removeClass('show-modal-search');
       $('.js-show-modal-search').css('opacity', '1');
     });
+  },
+  mounted: function mounted() {
     this.loadCategories();
     this.loadServices();
+    this.loadAllServices();
   }
 });
 
@@ -6097,7 +6126,9 @@ __webpack_require__.r(__webpack_exports__);
     getSubCategory: function getSubCategory() {
       var _this = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
       axios.get(this.subCategoryURL + this.sub_category_id).then(function (response) {
         _this.subCategory = response.data;
         loader.hide();
@@ -6108,7 +6139,9 @@ __webpack_require__.r(__webpack_exports__);
     loadFeaturedServices: function loadFeaturedServices() {
       var _this2 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.featuredContainer
+      });
       axios.get(this.featuredServicesURL).then(function (response) {
         _this2.featuredServices = response.data;
         loader.hide();
@@ -6119,7 +6152,9 @@ __webpack_require__.r(__webpack_exports__);
     loadServices: function loadServices() {
       var _this3 = this;
 
-      var loader = this.$loading.show();
+      var loader = this.$loading.show({
+        container: this.$refs.serviceContainer
+      });
       axios.get(this.url + this.sub_category_id).then(function (response) {
         _this3.services = response.data.data;
 
@@ -6788,6 +6823,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6821,6 +6859,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function () {
         loader.hide();
       });
+    },
+    openServices: function openServices() {
+      return '/services/user/' + this.user.id;
     },
     getTotalServices: function getTotalServices() {
       var _this2 = this;
@@ -55084,230 +55125,244 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "p-t-50" }, [
-                    _c("h4", { staticClass: "mtext-112 cl2 p-b-27" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\t\t\tSub-Categories\n\t\t\t\t\t\t\t\t\t"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.subCategories.length < 1,
-                            expression: "subCategories.length < 1"
-                          }
-                        ],
-                        staticClass: "alert alert-info"
-                      },
-                      [
+                  _c(
+                    "div",
+                    { ref: "subCategoriesContainer", staticClass: "p-t-50" },
+                    [
+                      _c("h4", { staticClass: "mtext-112 cl2 p-b-27" }, [
                         _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          "\n\t\t\t\t\t\t\t\t\t\tSub-Categories\n\t\t\t\t\t\t\t\t\t"
                         )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.subCategories.length > 0,
-                            expression: "subCategories.length > 0"
-                          }
-                        ],
-                        staticClass: "flex-w m-r--5"
-                      },
-                      _vm._l(_vm.subCategories, function(sub) {
-                        return _c(
-                          "a",
-                          {
-                            key: sub.id,
-                            staticClass:
-                              "flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5",
-                            attrs: { href: _vm.openSubCategory(sub.id) }
-                          },
-                          [
-                            _vm._v(
-                              "\n\t\t\t\t\t\t\t\t\t\t\t" +
-                                _vm._s(sub.name.toUpperCase()) +
-                                "\n\t\t\t\t\t\t\t\t\t\t"
-                            )
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "p-t-55" }, [
-                    _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\t\t\tOther Categories\n\t\t\t\t\t\t\t\t\t"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.categories.length < 1,
-                            expression: "categories.length < 1"
-                          }
-                        ],
-                        staticClass: "alert alert-info"
-                      },
-                      [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "ul",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.categories.length > 0,
-                            expression: "categories.length > 0"
-                          }
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.subCategories.length < 1,
+                              expression: "subCategories.length < 1"
+                            }
+                          ],
+                          staticClass: "alert alert-info"
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          )
                         ]
-                      },
-                      _vm._l(_vm.categories, function(category) {
-                        return _c("li", { staticClass: "bor18" }, [
-                          _c(
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.subCategories.length > 0,
+                              expression: "subCategories.length > 0"
+                            }
+                          ],
+                          staticClass: "flex-w m-r--5"
+                        },
+                        _vm._l(_vm.subCategories, function(sub) {
+                          return _c(
                             "a",
                             {
+                              key: sub.id,
                               staticClass:
-                                "dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4",
-                              attrs: { href: _vm.openCategory(category.id) }
+                                "flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5",
+                              attrs: { href: _vm.openSubCategory(sub.id) }
                             },
                             [
                               _vm._v(
-                                "\n\t\t\t\t\t\t\t\t\t\t\t\t" +
-                                  _vm._s(category.name) +
-                                  "\n\t\t\t\t\t\t\t\t\t\t\t"
+                                "\n\t\t\t\t\t\t\t\t\t\t\t" +
+                                  _vm._s(sub.name.toUpperCase()) +
+                                  "\n\t\t\t\t\t\t\t\t\t\t"
                               )
                             ]
                           )
-                        ])
-                      }),
-                      0
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "p-t-65" }, [
-                    _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\t\t\tFeatured Services\n\t\t\t\t\t\t\t\t\t"
+                        }),
+                        0
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.featuredServices.length < 1,
-                            expression: "featuredServices.length < 1"
-                          }
-                        ],
-                        staticClass: "alert alert-info"
-                      },
-                      [
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { ref: "categoriesContainer", staticClass: "p-t-55" },
+                    [
+                      _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
                         _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          "\n\t\t\t\t\t\t\t\t\t\tOther Categories\n\t\t\t\t\t\t\t\t\t"
                         )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "ul",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.featuredServices.length > 0,
-                            expression: "featuredServices.length > 0"
-                          }
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.categories.length < 1,
+                              expression: "categories.length < 1"
+                            }
+                          ],
+                          staticClass: "alert alert-info"
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          )
                         ]
-                      },
-                      _vm._l(_vm.featuredServices, function(service) {
-                        return _c(
-                          "li",
-                          { staticClass: "flex-w flex-t p-b-30" },
-                          [
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.categories.length > 0,
+                              expression: "categories.length > 0"
+                            }
+                          ]
+                        },
+                        _vm._l(_vm.categories, function(category) {
+                          return _c("li", { staticClass: "bor18" }, [
                             _c(
                               "a",
                               {
                                 staticClass:
-                                  "wrao-pic-w size-214 hov-ovelay1 m-r-20",
-                                attrs: { href: _vm.openService(service.id) }
+                                  "dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4",
+                                attrs: { href: _vm.openCategory(category.id) }
                               },
                               [
-                                _c("img", {
-                                  attrs: {
-                                    src: _vm.getPhoto(service.image_1),
-                                    alt: "SERVICE"
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "size-215 flex-col-t p-t-8" },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "stext-116 cl8 hov-cl1 trans-04",
-                                    attrs: { href: _vm.openService(service.id) }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(service.title) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "stext-116 cl6 p-t-20" },
-                                  [
-                                    _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t\t\t₦" +
-                                        _vm._s(service.price) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                    )
-                                  ]
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                    _vm._s(category.name) +
+                                    "\n\t\t\t\t\t\t\t\t\t\t\t"
                                 )
                               ]
                             )
-                          ]
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { ref: "featuredContainer", staticClass: "p-t-65" },
+                    [
+                      _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t\t\t\tFeatured Services\n\t\t\t\t\t\t\t\t\t"
                         )
-                      }),
-                      0
-                    )
-                  ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.featuredServices.length < 1,
+                              expression: "featuredServices.length < 1"
+                            }
+                          ],
+                          staticClass: "alert alert-info"
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.featuredServices.length > 0,
+                              expression: "featuredServices.length > 0"
+                            }
+                          ]
+                        },
+                        _vm._l(_vm.featuredServices, function(service) {
+                          return _c(
+                            "li",
+                            { staticClass: "flex-w flex-t p-b-30" },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "wrao-pic-w size-214 hov-ovelay1 m-r-20",
+                                  attrs: { href: _vm.openService(service.id) }
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src: _vm.getPhoto(service.image_1),
+                                      alt: "SERVICE"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "size-215 flex-col-t p-t-8" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "stext-116 cl8 hov-cl1 trans-04",
+                                      attrs: {
+                                        href: _vm.openService(service.id)
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(service.title) +
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "stext-116 cl6 p-t-20" },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t\t₦" +
+                                          _vm._s(service.price) +
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
                 ])
               ])
             ])
@@ -55996,7 +56051,8 @@ var render = function() {
                     attrs: {
                       type: "text",
                       name: "search-service",
-                      placeholder: "Search"
+                      placeholder: "Search",
+                      list: "available_services"
                     },
                     domProps: { value: _vm.search },
                     on: {
@@ -56024,6 +56080,17 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
+                  _c(
+                    "datalist",
+                    { attrs: { id: "available_services" } },
+                    _vm._l(_vm.allServices, function(service) {
+                      return _c("option", {
+                        domProps: { value: service.title }
+                      })
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -56034,7 +56101,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "mtext-107 cl2 size-114 plh2 p-r-15",
-                    attrs: { type: "text", name: "", placeholder: "Location" },
+                    attrs: {
+                      type: "text",
+                      name: "",
+                      placeholder: "Location",
+                      list: "available_cities"
+                    },
                     domProps: { value: _vm.search_address },
                     on: {
                       keyup: function($event) {
@@ -56059,7 +56131,16 @@ var render = function() {
                         _vm.search_address = $event.target.value
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "datalist",
+                    { attrs: { id: "available_cities" } },
+                    _vm._l(_vm.allServices, function(city) {
+                      return _c("option", { domProps: { value: city.address } })
+                    }),
+                    0
+                  )
                 ])
               ]
             )
@@ -56325,6 +56406,7 @@ var render = function() {
                         expression: "services.length > 0"
                       }
                     ],
+                    ref: "serviceContainer",
                     staticClass: "row isotope-grid"
                   },
                   _vm._l(_vm.services, function(service) {
@@ -56543,106 +56625,112 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "p-t-65" }, [
-                    _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\t\t\tFeatured Services\n\t\t\t\t\t\t\t\t\t"
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.featuredServices.length < 1,
-                            expression: "featuredServices.length < 1"
-                          }
-                        ],
-                        staticClass: "alert alert-info"
-                      },
-                      [
+                  _c(
+                    "div",
+                    { ref: "featuredContainer", staticClass: "p-t-65" },
+                    [
+                      _c("h4", { staticClass: "mtext-112 cl2 p-b-33" }, [
                         _vm._v(
-                          "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          "\n\t\t\t\t\t\t\t\t\t\tFeatured Services\n\t\t\t\t\t\t\t\t\t"
                         )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "ul",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.featuredServices.length > 0,
-                            expression: "featuredServices.length > 0"
-                          }
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.featuredServices.length < 1,
+                              expression: "featuredServices.length < 1"
+                            }
+                          ],
+                          staticClass: "alert alert-info"
+                        },
+                        [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\t\t\tNONE AT THE MOMENT\n\t\t\t\t\t\t\t\t\t"
+                          )
                         ]
-                      },
-                      _vm._l(_vm.featuredServices, function(service) {
-                        return _c(
-                          "li",
-                          { staticClass: "flex-w flex-t p-b-30" },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "wrao-pic-w size-214 hov-ovelay1 m-r-20",
-                                attrs: { href: _vm.openService(service.id) }
-                              },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: _vm.getPhoto(service.image_1),
-                                    alt: "SERVICE"
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "size-215 flex-col-t p-t-8" },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "stext-116 cl8 hov-cl1 trans-04",
-                                    attrs: { href: _vm.openService(service.id) }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t\t\t" +
-                                        _vm._s(service.title) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "stext-116 cl6 p-t-20" },
-                                  [
-                                    _vm._v(
-                                      "\n\t\t\t\t\t\t\t\t\t\t\t\t\t₦" +
-                                        _vm._s(service.price) +
-                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t"
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.featuredServices.length > 0,
+                              expression: "featuredServices.length > 0"
+                            }
                           ]
-                        )
-                      }),
-                      0
-                    )
-                  ])
+                        },
+                        _vm._l(_vm.featuredServices, function(service) {
+                          return _c(
+                            "li",
+                            { staticClass: "flex-w flex-t p-b-30" },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "wrao-pic-w size-214 hov-ovelay1 m-r-20",
+                                  attrs: { href: _vm.openService(service.id) }
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src: _vm.getPhoto(service.image_1),
+                                      alt: "SERVICE"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "size-215 flex-col-t p-t-8" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "stext-116 cl8 hov-cl1 trans-04",
+                                      attrs: {
+                                        href: _vm.openService(service.id)
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t\t" +
+                                          _vm._s(service.title) +
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "stext-116 cl6 p-t-20" },
+                                    [
+                                      _vm._v(
+                                        "\n\t\t\t\t\t\t\t\t\t\t\t\t\t₦" +
+                                          _vm._s(service.price) +
+                                          "\n\t\t\t\t\t\t\t\t\t\t\t\t"
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
                 ])
               ])
             ])
@@ -57474,11 +57562,22 @@ var render = function() {
         ])
       : _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "container-fluid" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-lg btn-fill btn-primary",
+                  attrs: { href: _vm.openServices(), target: "__blank" }
+                },
+                [_vm._v("Open Services Profile")]
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "div",
               {
                 ref: "totalServicesContainer",
-                staticClass: "col-lg-6 col-sm-6"
+                staticClass: "col-lg-4 col-sm-6"
               },
               [
                 _c(
@@ -57545,7 +57644,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { ref: "totalRatingContainer", staticClass: "col-lg-6 col-sm-6" },
+              { ref: "totalRatingContainer", staticClass: "col-lg-4 col-sm-6" },
               [
                 _c(
                   "div",
@@ -57784,7 +57883,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-3" }, [
       _c("div", { staticClass: "icon-big text-center icon-warning" }, [
-        _c("i", { staticClass: "pe-7s-portfolio text-warning" })
+        _c("i", { staticClass: "pe-7s-like2 text-warning" })
       ])
     ])
   },
@@ -57793,10 +57892,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-12" }, [
-      _c("h4", [
-        _vm._v(
-          "Unresolved Messages that was sent from customers for your services."
-        )
+      _c("h4", { staticClass: "page-header" }, [
+        _vm._v("Your customers are trying to connect...")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "alert alert-info" }, [

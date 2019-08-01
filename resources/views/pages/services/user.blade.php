@@ -25,6 +25,46 @@
 	@else
 		<section class="bg0 p-t-23 p-b-15">
 			<div class="container">
+				<div class="text-center m-b-20">
+					<vue-goodshare-facebook style="color: white;" 
+						title_social="Facebook"
+						has_counter
+						has_icon
+						has_square_edges>
+					</vue-goodshare-facebook>
+
+					<vue-goodshare-twitter style="color: white;" 
+						title_social="Twitter"
+						has_icon
+						has_square_edges>
+					</vue-goodshare-twitter>
+
+					<vue-goodshare-linked-in style="color: white;" 
+						title_social="LinkedIn"
+						has_counter
+						has_icon
+						has_square_edges>
+					</vue-goodshare-linked-in>
+
+					<vue-goodshare-whats-app style="color: white;" 
+						title_social="WhatsApp"
+						has_icon
+						has_square_edges>
+					</vue-goodshare-whats-app>
+
+					<vue-goodshare-telegram style="color: white;" 
+						title_social="Telegram"
+						has_icon
+						has_square_edges>
+					</vue-goodshare-telegram>
+
+					<vue-goodshare-email style="color: white;" 
+						title_social="Mail"
+						has_icon
+						has_square_edges>
+					</vue-goodshare-email>
+				</div>
+
 				<div class="row isotope-grid">
 					@foreach($services as $service)
 						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">

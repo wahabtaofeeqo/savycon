@@ -40,8 +40,15 @@
 								<i class="zmdi zmdi-search"></i>
 							</button>
 
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search" @keyup.enter="searchServices" name="search-service" placeholder="Search">
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search_address" @keyup.enter="searchServices" name="" placeholder="Location">
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search" @keyup.enter="searchServices" name="search-service" placeholder="Search" list="available_services">
+							<datalist id="available_services">
+								<option :value="service.title" v-for="service in allServices"></option>
+							</datalist>
+
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search_address" @keyup.enter="searchServices" name="" placeholder="Location" list="available_cities">
+							<datalist id="available_cities">
+								<option :value="city.address" v-for="city in allServices"></option>
+							</datalist>
 						</div>	
 					</div>
 				</div>
@@ -104,6 +111,9 @@
 
 				search: '',
 				search_address: '',
+
+				allServices: [],
+				allCities: [],
 			}
 		},
 		methods: {
@@ -201,6 +211,12 @@
 				.catch(() => {
 					loader.hide()
 				})
+			},
+			loadAllServices() {
+				axios.get('/api/services/all/')
+				.then((response) => {
+					this.allServices = response.data
+				})
 			}
 		},
 		created() {
@@ -214,9 +230,11 @@
 				$('.modal-search-header').removeClass('show-modal-search');
         		$('.js-show-modal-search').css('opacity','1');
 			})
-
+		},
+		mounted() {
 			this.loadCategories()
 			this.loadServices()
+			this.loadAllServices()
 		}
 	}	
 </script>

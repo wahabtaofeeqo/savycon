@@ -22,7 +22,7 @@ A platform where people find and post services for direct contact.
 - [x] Address field in search
 
 #### Auto Suggestion of Search keyword
-- [ ] Add HTML datalist to search data
+- [x] Add HTML datalist to search data
 
 #### Admin Dashboard
 - [x] Create middleware for admin

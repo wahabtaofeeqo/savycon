@@ -66,7 +66,7 @@
 									</div>
 
 									<!-- Sub Categories -->
-									<div class="p-t-50">
+									<div class="p-t-50" ref="subCategoriesContainer">
 										<h4 class="mtext-112 cl2 p-b-27">
 											Sub-Categories
 										</h4>
@@ -82,7 +82,7 @@
 									</div>
 
 									<!-- Other Categories -->
-									<div class="p-t-55">
+									<div class="p-t-55" ref="categoriesContainer">
 										<h4 class="mtext-112 cl2 p-b-33">
 											Other Categories
 										</h4>
@@ -100,7 +100,7 @@
 									</div>
 
 									<!-- Featured Services -->
-									<div class="p-t-65">
+									<div class="p-t-65" ref="featuredContainer">
 										<h4 class="mtext-112 cl2 p-b-33">
 											Featured Services
 										</h4>
@@ -163,7 +163,9 @@
 		},
 		methods: {
 			getCategory() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.categoryContainer
+				})
 
 				axios.get(this.categoryURL+this.category_id)
 				.then((response) => {
@@ -176,7 +178,9 @@
 				})
 			},
 			loadCategories() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.categoryContainer
+				})
 
 				axios.get(this.categoriesURL)
 				.then((response) => {
@@ -189,7 +193,9 @@
 				})
 			},
 			loadSubCategories() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.subCategoriesContainer
+				})
 
 				axios.get(this.subCategoriesURL+this.category_id)
 				.then((response) => {
@@ -202,7 +208,9 @@
 				})
 			},
 			loadFeaturedServices() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.featuredContainer
+				})
 
 				axios.get(this.featuredServicesURL)
 				.then((response) => {
@@ -215,7 +223,9 @@
 				})
 			},
 			loadServices() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
 
 				axios.get(this.url+this.category_id)
 				.then((response) => {

@@ -63,6 +63,7 @@ Route::get('/sub-category/{id}', 'CategoryController@showUserServicesFromSub')->
 Route::get('/sub-category/show/{id}', 'CategoryController@showSub')->where('id', '([0-9]+)');
 
 Route::get('/services', 'ServiceController@index')->name('services');
+Route::get('/services/all', 'ServiceController@allServices');
 Route::get('/services/featured', 'ServiceController@featured');
 Route::get('/services/featured/{count}', 'ServiceController@limitedFeatured')->where('count', '([0-9]+)');
 Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');

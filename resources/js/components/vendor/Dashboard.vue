@@ -7,7 +7,10 @@
 
 		<div class="row" v-else>
 			<div class="container-fluid">
-				<div class="col-lg-6 col-sm-6" ref="totalServicesContainer">
+				<div class="col-lg-4">
+					<a :href="openServices()" target="__blank" class="btn btn-lg btn-fill btn-primary">Open Services Profile</a>
+				</div>
+				<div class="col-lg-4 col-sm-6" ref="totalServicesContainer">
 					<div class="alert alert-danger" v-show="total_services_error">
 						We could not load these data
 					</div>
@@ -37,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-6" ref="totalRatingContainer">
+                <div class="col-lg-4 col-sm-6" ref="totalRatingContainer">
 					<div class="alert alert-danger" v-show="total_rating_error">
 						We could not load these data
 					</div>
@@ -46,7 +49,7 @@
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="icon-big text-center icon-warning">
-                                        <i class="pe-7s-portfolio text-warning"></i>
+                                        <i class="pe-7s-like2 text-warning"></i>
                                     </div>
                                 </div>
                                 <div class="col-sm-9">
@@ -70,7 +73,7 @@
 
                 <div v-show="messages.length > 0" ref="messageContainer">
                 	<div class="col-md-12">
-                		<h4>Unresolved Messages that was sent from customers for your services.</h4>
+                		<h4 class="page-header">Your customers are trying to connect...</h4>
                 		<div class="alert alert-info">
                 			Please resolve as soon as you contact them
                 		</div>
@@ -154,6 +157,9 @@
 				.catch(() => {
 					loader.hide()
 				})
+			},
+			openServices() {
+				return '/services/user/'+this.user.id
 			},
 
 			getTotalServices() {

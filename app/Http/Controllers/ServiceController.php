@@ -92,4 +92,11 @@ class ServiceController extends Controller
 
         return response($services, 200);
     }
+
+    public function allServices()
+    {
+        $services = UserService::orderBy('title', 'ASC')->where('active', 1)->get();
+
+        return response($services, 200);
+    }
 }
