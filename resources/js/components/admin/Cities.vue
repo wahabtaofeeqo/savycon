@@ -27,6 +27,7 @@
 								<button type="submit" :disabled="form.busy" class="btn btn-success btn-fill" v-show="editmode">Update</button>
 							</div>
 						</div>
+						<has-error :form="form" field="name"></has-error>
 						<has-error :form="form" field="state.id"></has-error>
 					</div>
 					<hr>

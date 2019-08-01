@@ -127,7 +127,9 @@
 				return '.'+name.toLowerCase().trim()
 			},
 			loadServices() {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
 
 				axios.get(this.servicesURL)
 				.then((response) => {
@@ -163,7 +165,9 @@
                 this.loadServices();
             },
 			switchCategory(id) {
-				const loader = this.$loading.show()
+				const loader = this.$loading.show({
+					container: this.$refs.serviceContainer
+				})
 
 				axios.get(this.categoriesURL+'/'+id)
 				.then((response) => {			

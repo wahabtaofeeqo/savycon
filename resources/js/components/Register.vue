@@ -104,7 +104,7 @@
 					phone: '',
 					password: '',
 					password_confirmation: '',
-					role: 'user',
+					role: '',
 					city: {
 						id: '',
 						state: {
@@ -172,10 +172,13 @@
 				.then((result) => {
 					if (result.value) {
 						this.form.role = 'vendor'
+					} else {
+						this.form.role = 'user'
 					}
-					console.log(this.form.role)
+					// console.log(this.form.role)
 
 					const loader = this.$loading.show()
+
 					this.form.city_id = this.form.city.id
 
 					this.form.post(this.url)

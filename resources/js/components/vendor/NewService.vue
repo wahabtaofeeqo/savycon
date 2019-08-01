@@ -67,7 +67,7 @@
 			                	</ul>
 			                </div>
 		                	<div class="row">
-			                	<div class="col-md-4">
+			                	<div class="col-md-4 col-sm-4">
 				                	<div class="form-group">
 					                	<label for="image_1">Image 1</label>
 					                	<div class="dropzone">
@@ -80,7 +80,7 @@
 					                	<has-error :form="form" field="image_1"></has-error>
 					                </div>
 					            </div>
-					            <div class="col-md-4">
+					            <div class="col-md-4 col-sm-4">
 				                	<div class="form-group">
 					                	<label for="image_2">Image 2</label>
 					                	<div class="dropzone">
@@ -93,7 +93,7 @@
 					                	<has-error :form="form" field="image_2"></has-error>
 					                </div>
 					            </div>
-					            <div class="col-md-4">
+					            <div class="col-md-4 col-sm-4">
 				                	<div class="form-group">
 					                	<label for="image_3">Image 3</label>
 					                	<div class="dropzone">

@@ -39,7 +39,6 @@
                 <link rel="stylesheet" href="{{ asset('main/vendor/animate/animate.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/vendor/css-hamburgers/hamburgers.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/vendor/animsition/css/animsition.min.css') }}">
-                <link rel="stylesheet" href="{{ asset('main/vendor/select2/select2.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/vendor/slick/slick.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/vendor/MagnificPopup/magnific-popup.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/vendor/perfect-scrollbar/perfect-scrollbar.css') }}">
@@ -469,16 +468,6 @@
 
                 <!-- Core -->
                 <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}"></script>
-
-                <script src="{{ asset('main/vendor/select2/select2.min.js') }}"></script>
-                <script>
-                        $(".js-select2").each(function(){
-                                $(this).select2({
-                                        minimumResultsForSearch: 20,
-                                        dropdownParent: $(this).next('.dropDownSelect2')
-                                });
-                        })
-                </script>
 
                 <!-- For slider -->
                 <script src="{{ asset('main/vendor/slick/slick.min.js') }}"></script>

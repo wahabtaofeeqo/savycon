@@ -32,7 +32,7 @@
 							</div>
 							<div class="form-group">
 								<label>Phone number</label>
-								<p>{{ message.phone }}</p>
+								<p>0{{ message.phone }}</p>
 							</div>
 							<div class="form-group">
 								<label>Message</label>

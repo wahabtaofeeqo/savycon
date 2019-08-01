@@ -43,52 +43,64 @@
 				opacity: 1;
 				background: rgba(255, 255, 255, 0.23) !important;
         	}
+        	.navbar-right li .btn {
+        		color: white !important;
+        	}
+        	.navbar-right li .btn-fill:hover {
+        		color: black !important;
+        	}
+        	.navbar-right li .router-link-exact-active.router-link-active {
+        		color: black !important;
+        	}
         </style>
 	</head>
 	<body>
 		<div id="app">
 			<div class="wrapper">
-				<div class="sidebar" data-color="green" data-image="{{ asset('master/img/sidebar-4.jpg') }}">
+				<div class="sidebar" data-color="green" data-image="{{ asset('master/img/sidebar-'.rand(1,5).'.jpg') }}">
 					<div class="sidebar-wrapper">
+						<a class="logo-tim" href="{{ route('index') }}" style="border: 0; background: white; position: absolute; margin: 7px 20px; width: 45px; height: 45px;">
+							<img src="{{ asset('logo.png') }}" style="width: 45px; height: 45px;">
+						</a>
 						<div class="logo">
-			                <a href="{{ route('index') }}" class="simple-text">
+			                <a class="simple-text" href="{{ route('index') }}" style="text-transform: none; font-weight: bold; letter-spacing: 1px;">
 			                    SavyCon
 			                </a>
 			            </div>
 
 			            <ul class="nav">
 			            	@can('isAdmin')
-				            	<li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminDashboard' }">
 				            			<i class="pe-7s-home"></i>
 				            			<p>Dashboard</p>
 				            		</router-link>
 				            	</li>
-				            	<li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminStates' }">
 				            			<i class="pe-7s-map"></i>
 				            			<p>States</p>
 				            		</router-link>
 				            	</li>
-				            	<li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminCities' }">
 				            			<i class="pe-7s-map-2"></i>
 				            			<p>Cities</p>
 				            		</router-link>
 				            	</li>
-				            	<li>
+				            	<li class="nav-item">
+				            		<router-link :to="{ name: 'AdminCategories' }">
+				            			<i class="pe-7s-way"></i>
+				            			<p>Categories</p>
+				            		</router-link>
+				            	</li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminServices' }">
 				            			<i class="pe-7s-portfolio"></i>
 				            			<p>Services</p>
 				            		</router-link>
 				            	</li>
-				            	<li>
-				            		<router-link :to="{ name: 'AdminNewService' }">
-				            			<i class="pe-7s-plug"></i>
-				            			<p>Add New Service</p>
-				            		</router-link>
-				            	</li>
-				            	<li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminVendors' }">
 				            			<i class="pe-7s-users"></i>
 				            			<p>Vendors</p>
@@ -215,6 +227,14 @@
 			                </div>
 			                <div class="collapse navbar-collapse">
 			                    <ul class="nav navbar-nav navbar-right">
+			                    	@can('isActiveVendorOrAdmin')
+			                    	<li>
+			                    		<router-link :to="{ name: 'AdminNewService' }" class="btn btn-fill btn-primary" style="text-transform: uppercase;">
+					            			<i class="pe-7s-plug"></i>
+					            			Add New Service
+					            		</router-link>
+			                    	</li>
+			                    	@endcan
 			                        <li>
 			                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
 			                             document.getElementById('logout-form').submit();">

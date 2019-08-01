@@ -13,22 +13,23 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th></th>
+								<th>S/N</th>
 								<th>Title</th>
 								<th>Price (₦)</th>
 								<th>Category</th>
+								<th>No of Reviews</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="service in services">
-								<td>
-									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
-								</td>
+							<tr v-for="(service, index) in services">
+								<td>{{ index+1 }}</td>
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
 								<td>{{ service.service.category.name }} <br> > {{ service.service.name }}</td>
+								<td>{{ service.ratings.length }}</td>
 								<td>
+									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
 									<router-link :to="{ name: 'VendorNewService', params: { id: service.id } }" class="btn btn-sm btn-info btn-fill">Edit</router-link>
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteService(service.id)">Delete</button>
 								</td>
