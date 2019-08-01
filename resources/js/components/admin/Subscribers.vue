@@ -2,7 +2,7 @@
 	<div>
 		<div class="card">
 			<div class="header">
-				<h4 class="card-title">Subscribers <span class="badge badge-primary">{{ subscribers.length }}</span></h4>
+				<h4 class="card-title">Subscribers <span class="badge badge-primary">{{ pagination.total_items }}</span></h4>
 				<p class="category">All your email subscriptions</p>
 			</div>
 			<div class="content">
@@ -25,6 +25,19 @@
 						</tbody>
 					</table>
 				</div>
+
+				<!-- Pagination -->
+				<div class="paginator">
+					<button class="btn btn-fill btn-primary" @click="fetchPaginateSubscribers(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
+						<i class="fa fa-arrow-left"></i> Prev
+					</button>
+
+					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateSubscribers(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+						Next <i class="fa fa-arrow-right"></i>
+					</button>
+
+					<div class="clearfix"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -35,6 +48,7 @@
 		data() {
 			return {
 				subscribers: [],
+				pagination: {},
 
 				url: '/api/subscribers/',
 			}
@@ -45,7 +59,9 @@
 
 				axios.get(this.url)
 				.then((response) => {
-					this.subscribers = response.data
+					this.subscribers = response.data.data
+
+					this.makePagination(response.data)
 
 					loader.hide();
 				})
@@ -59,6 +75,21 @@
 					loader.hide();
 				})
 			},
+			makePagination(data) {
+                let pagination = {
+                    current_page: data.current_page,
+                    last_page: data.last_page,
+                    next_page_url: data.next_page_url,
+                    prev_page_url: data.prev_page_url,
+                    total_items: data.total,
+                };
+
+                this.pagination = pagination;
+            }, 
+            fetchPaginateSubscribers(url) {
+                this.url = url;
+                this.loadSubscribers();
+            },
 		},
 		created() {
 			this.loadSubscribers();

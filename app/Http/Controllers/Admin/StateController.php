@@ -25,7 +25,7 @@ class StateController extends Controller
     {
         $states = State::withCount([
             'cities', 
-        ])->paginate(20);
+        ])->paginate(10);
 
         return response($states, 200);
     }

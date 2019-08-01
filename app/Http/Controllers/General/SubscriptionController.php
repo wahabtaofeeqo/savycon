@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
 
     public function index()
     {
-    	$list = Subscription::latest()->get();
+    	$list = Subscription::latest()->paginate(30);
 
     	return response($list, 200);
     }

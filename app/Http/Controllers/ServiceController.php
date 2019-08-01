@@ -15,7 +15,7 @@ class ServiceController extends Controller
     		'user',
     		'service',
     		'service.category'
-    	])->where('active', 1)->latest()->paginate(15);
+    	])->where('active', 1)->latest()->paginate(20);
 
     	return response($services, 200);
     }
@@ -66,7 +66,7 @@ class ServiceController extends Controller
                 ['description', 'LIKE', '%'.$text.'%'],
                 ['active', '1'],
             ])
-            ->paginate(15);
+            ->paginate(20);
         } else {
             $services = UserService::where([
                 ['title', 'LIKE', '%'.$text.'%'],
@@ -76,7 +76,7 @@ class ServiceController extends Controller
                 ['description', 'LIKE', '%'.$text.'%'],
                 ['active', '1'],
             ])
-            ->paginate(15);
+            ->paginate(20);
         }
 
         if (empty($service->data)) {

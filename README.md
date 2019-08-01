@@ -61,5 +61,5 @@ A platform where people find and post services for direct contact.
 - [x] Random view services
 - [x] Featured Services design
 - [x] Create your own dropzone for service image uploads
-- [ ] Pagination
+- [x] Pagination
 - [x] Dashboard Content

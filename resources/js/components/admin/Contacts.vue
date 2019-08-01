@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<h1 class="page-header">Contact Us Messages</h1>
+		<h1 class="page-header">
+			Contact Us Messages
+			<span class="badge badge-primary">{{ pagination.total_items }}</span>
+		</h1>
 
 		<div class="alert alert-danger" v-show="messages.length < 1">
 			<p>There are no unresolved contact messages.</p>
@@ -40,6 +43,21 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="col-md-12">
+					<!-- Pagination -->
+					<div class="paginator">
+						<button class="btn btn-fill btn-primary" @click="fetchPaginateContact(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
+							<i class="fa fa-arrow-left"></i> Prev
+						</button>
+
+						<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateContact(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+							Next <i class="fa fa-arrow-right"></i>
+						</button>
+
+						<div class="clearfix"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -50,6 +68,7 @@
 		data() {
 			return {
 				messages: [],
+				pagination: {},
 
 				url: '/api/contact/',
 			}
@@ -60,7 +79,9 @@
 
 				axios.get(this.url)
 				.then((response) => {
-					this.messages = response.data
+					this.messages = response.data.data
+
+					this.makePagination(response.data)
 
 					loader.hide();
 				})
@@ -74,10 +95,25 @@
 					loader.hide();
 				})
 			},
+			makePagination(data) {
+                let pagination = {
+                    current_page: data.current_page,
+                    last_page: data.last_page,
+                    next_page_url: data.next_page_url,
+                    prev_page_url: data.prev_page_url,
+                    total_items: data.total,
+                };
+
+                this.pagination = pagination;
+            }, 
+            fetchPaginateContact(url) {
+                this.url = url;
+                this.loadCities();
+            },
 			resolveMessage(id) {
 				const loader = this.$loading.show()
 
-				axios.delete(this.url+id)
+				axios.delete('/api/contact/'+id)
 				.then(() => {
 					Swal.fire({
 						type: 'success',

@@ -19,7 +19,7 @@ class ContactEnquiryController extends Controller
     {
         $this->middleware('auth:api');
 
-        $contacts = ContactEnquiry::latest()->get();
+        $contacts = ContactEnquiry::latest()->paginate(10);
 
         return response($contacts, 200);
     }

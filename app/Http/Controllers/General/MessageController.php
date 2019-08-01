@@ -27,7 +27,7 @@ class MessageController extends Controller
             'userService.service',
             'userService.service.category',
         ])
-        ->latest()->get();
+        ->latest()->paginate(10);
 
         return response($messages, 200);
     }

@@ -3,7 +3,7 @@
 		<div class="card">
 			<div class="header">
 				<h4 class="card-title">
-					Cities <span class="badge badge-primary">{{ cities.length }}</span>
+					Cities <span class="badge badge-primary">{{ pagination.total_items }}</span>
 					<button class="pull-right btn btn-primary btn-fill" @click="openModal" v-show="!createmode">Add New</button>
 					<button class="pull-right btn btn-default btn-fill" @click="openModal" v-show="createmode">Close Form</button>
 					<div class="clearfix"></div>
@@ -58,6 +58,19 @@
 						</tbody>
 					</table>
 				</div>
+
+				<!-- Pagination -->
+				<div class="paginator">
+					<button class="btn btn-fill btn-primary" @click="fetchPaginateCities(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
+						<i class="fa fa-arrow-left"></i> Prev
+					</button>
+
+					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateCities(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+						Next <i class="fa fa-arrow-right"></i>
+					</button>
+
+					<div class="clearfix"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -82,12 +95,12 @@
 					}
 				}),
 
-				url: '/api/city',
+				url: '/api/city/',
 			}
 		},
 		methods: {
 			loadStates() {
-				axios.get('/api/states')
+				axios.get('/api/states/')
 				.then((response) => {
 					this.states = response.data
 				})
@@ -126,7 +139,7 @@
                     last_page: data.last_page,
                     next_page_url: data.next_page_url,
                     prev_page_url: data.prev_page_url,
-                    total_pages: data.total,
+                    total_items: data.total,
                 };
 
                 this.pagination = pagination;
@@ -147,7 +160,7 @@
 					if (result.value) {
 						const loader = this.$loading.show();
 
-						axios.delete(this.url+'/'+id)
+						axios.delete('/api/city/'+id)
 						.then(() => {
 							Swal.fire({
 								type: 'success',
@@ -214,7 +227,7 @@
 			updateCity() {
 				const loader = this.$loading.show()
 
-				this.form.put(this.url+'/'+this.form.id)
+				this.form.put('/api/city/'+this.form.id)
 				.then(() => {
 					Swal.fire({
 						type: 'success',

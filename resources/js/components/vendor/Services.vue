@@ -2,7 +2,10 @@
 	<div>
 		<div class="card">
 			<div class="header">
-				<h4 class="card-title">Services</h4>
+				<h4 class="card-title">
+					Services
+					<span class="badge badge-primary">{{ pagination.total_items }}</span>
+				</h4>
 				<p class="category">All your services</p>
 			</div>
 			<div class="content">
@@ -37,6 +40,19 @@
 						</tbody>
 					</table>
 				</div>
+
+				<!-- Pagination -->
+				<div class="paginator">
+					<button class="btn btn-fill btn-primary" @click="fetchPaginateContact(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
+						<i class="fa fa-arrow-left"></i> Prev
+					</button>
+
+					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateContact(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+						Next <i class="fa fa-arrow-right"></i>
+					</button>
+
+					<div class="clearfix"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -49,7 +65,7 @@
 				services: [],
 				pagination: {},
 
-				url: '/api/service',
+				url: '/api/service/',
 			}
 		},
 		methods: {
@@ -101,7 +117,7 @@
 					if (result.value) {
 						const loader = this.$loading.show();
 
-						axios.delete(this.url+'/'+id)
+						axios.delete('/api/service/'+id)
 						.then(() => {
 							Swal.fire({
 								type: 'success',

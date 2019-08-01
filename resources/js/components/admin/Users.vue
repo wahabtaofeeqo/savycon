@@ -2,7 +2,7 @@
 	<div>
 		<div class="card">
 			<div class="header">
-				<h4 class="card-title">Buyers <span class="badge badge-primary">{{ users.length }}</span></h4>
+				<h4 class="card-title">Buyers <span class="badge badge-primary">{{ pagination.total_items }}</span></h4>
 				<p class="category">All your buyers</p>
 			</div>
 			<div class="content">
@@ -34,6 +34,19 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>
+
+				<!-- Pagination -->
+				<div class="paginator">
+					<button class="btn btn-fill btn-primary" @click="fetchPaginateUsers(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
+						<i class="fa fa-arrow-left"></i> Prev
+					</button>
+
+					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateUsers(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+						Next <i class="fa fa-arrow-right"></i>
+					</button>
+
+					<div class="clearfix"></div>
 				</div>
 			</div>
 		</div>
@@ -79,12 +92,12 @@
                     last_page: data.last_page,
                     next_page_url: data.next_page_url,
                     prev_page_url: data.prev_page_url,
-                    total_pages: data.total,
+                    total_items: data.total,
                 };
 
                 this.pagination = pagination;
             }, 
-            fetchPaginateServices(url) {
+            fetchPaginateUsers(url) {
                 this.loadURL = url;
                 this.loadUsers();
             },
@@ -100,7 +113,7 @@
 					if (result.value) {
 						const loader = this.$loading.show();
 
-						axios.delete(this.url+'/'+id)
+						axios.delete(this.url+id)
 						.then(() => {
 							Swal.fire({
 								type: 'success',
