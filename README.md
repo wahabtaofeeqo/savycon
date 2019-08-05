@@ -47,7 +47,6 @@ A platform where people find and post services for direct contact.
 	- [x] Unresolved messages
 	- [x] Unfound Search
 	- [x] Contacts
-	- [x] Buyer's Requests
 
 #### Vendor Dashboard
 - [x] Messages
@@ -63,3 +62,20 @@ A platform where people find and post services for direct contact.
 - [x] Create your own dropzone for service image uploads
 - [x] Pagination
 - [x] Dashboard Content
+
+### Things to Collect
+- Database Access
+	Study and create seeds for;
+		- [ ] Users
+		- [ ] Services
+		- [ ] Requests
+		- [ ] States
+		- [ ] Cities
+		- [ ] Categories & Subs
+- [ ] Google Tag Manager (SEO)
+- [ ] Socialite (CLIENT_ID, CLIENT_SECRET)
+	- [ ] Facebook
+	- [ ] Twitter
+	- [ ] Google
+	- [ ] Github
+	- [ ] LinkedIn
