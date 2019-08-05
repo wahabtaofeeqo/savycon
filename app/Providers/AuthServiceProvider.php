@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'SavyCon\Models\UserService' => 'SavyCon\Policies\UserServicePolicy',
+        'SavyCon\Models\UserRequest' => 'SavyCon\Policies\UserRequestPolicy',
     ];
 
     /**
@@ -42,6 +43,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isActiveVendorOrAdmin', function($user) {
             return $user->role === 'admin' || ($user->role === 'vendor' && $user->active === 1);
+        });
+
+        Gate::define('isActiveVendorOrAdminOrOwner', function($user, $userRequest) {
+            return ($user->role === 'admin') || ($user->role === 'vendor' && $user->active === 1) || ($user->id === $userRequest->user_id);
         });
 
         Gate::define('isUser', function($user) {

@@ -45,8 +45,9 @@
 	                            <has-error :form="form" field="description"></has-error>
 		                    </div>
 		                    <div class="form-group">
-		                    	<label for="address">Address</label>
+		                    	<label for="address">In which places do you offer this service?</label>
 	                            <input type="text" name="address" v-model="form.address" id="address" placeholder="Descriptive address where you intend to offer this service" class="form-control" :class="{ 'has-error':form.errors.has('address') }" required>
+	                            <small class="help-block text-primary">You can separate different locations with a comma for a better search pop-up</small>
 	                            <has-error :form="form" field="address"></has-error>
 		                    </div>
 		                    <div class="form-group">
@@ -262,11 +263,11 @@
 				.then(() => {
 					Swal.fire({
 						type: 'success',
-						title: 'Service was added successfully'
+						title: 'Service was added successfully',
+						text: 'We will reload the page now...'
 					})
 
 					this.form.reset();
-					loader.hide()
 
 					setTimeout(() => {
 						window.location.reload()

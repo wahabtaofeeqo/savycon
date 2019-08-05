@@ -140,12 +140,6 @@
 				            		</router-link>
 				            	</li>
 				            	<li>
-				            		<router-link :to="{ name: 'AdminBuyerRequests' }">
-				            			<i class="pe-7s-speaker"></i>
-				            			<p>Buyer Requests</p>
-				            		</router-link>
-				            	</li>
-				            	<li>
 				            		<router-link :to="{ name: 'AdminProfile' }">
 				            			<i class="pe-7s-user"></i>
 				            			<p>Profile</p>
@@ -170,12 +164,6 @@
 				            		<router-link :to="{ name: 'VendorNewService' }">
 				            			<i class="pe-7s-plug"></i>
 				            			<p>Add New Service</p>
-				            		</router-link>
-				            	</li>
-				            	<li>
-				            		<router-link :to="{ name: 'BuyerRequests' }">
-				            			<i class="pe-7s-speaker"></i>
-				            			<p>Buyer Requests</p>
 				            		</router-link>
 				            	</li>
 				            	@endcan
@@ -232,10 +220,17 @@
 			                    <ul class="nav navbar-nav navbar-right">
 			                    	@can('isActiveVendorOrAdmin')
 			                    	<li>
-			                    		<router-link :to="{ name: 'AdminNewService' }" class="btn btn-fill btn-primary" style="text-transform: uppercase;">
+			                    		@if(Auth::user()->role === 'vendor')
+			                    		<router-link :to="{ name: 'VendorNewService' }" class="btn btn-fill btn-primary" style="text-transform: uppercase;">
 					            			<i class="pe-7s-plug"></i>
 					            			Add New Service
 					            		</router-link>
+					            		@else
+					            		<router-link :to="{ name: 'AdminNewService' }" class="btn btn-fill btn-primary" style="text-transform: uppercase;">
+					            			<i class="pe-7s-plug"></i>
+					            			Add New Service
+					            		</router-link>
+					            		@endif
 			                    	</li>
 			                    	@endcan
 			                        <li>

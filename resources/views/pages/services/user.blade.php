@@ -25,7 +25,8 @@
 	@else
 		<section class="bg0 p-t-23 p-b-15">
 			<div class="container">
-				<div class="text-center m-b-20">
+				<div class="text-center m-b-30">
+					<h3 class="m-b-10">Share Profile Page</h3>
 					<vue-goodshare-facebook style="color: white;" 
 						title_social="Facebook"
 						has_counter
@@ -64,6 +65,8 @@
 						has_square_edges>
 					</vue-goodshare-email>
 				</div>
+
+				<hr>
 
 				<div class="row isotope-grid">
 					@foreach($services as $service)

@@ -414,11 +414,11 @@
                         </div>
                         <div class="card-footer ">
                             <hr>
-                        	<router-link :to="{ name: 'AdminBuyerRequests' }">
+                        	<a href="/buyers-requests/" target="__blank">
                             	<div class="stats">
                             		<i class="fa fa-link"></i> Buyer's Requests
                             	</div>
-                            </router-link>
+                            </a>
                         </div>
                     </div>
                 </div>

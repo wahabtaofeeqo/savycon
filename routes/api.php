@@ -40,7 +40,6 @@ Route::get('/vendor/messages', 'General\MessageController@getVendorMessages');
 
 Route::get('/users/vendor', 'Admin\UserController@vendors');
 Route::get('/users/user', 'Admin\UserController@users');
-Route::get('/user-requests', 'General\UserRequestController@userRequests');
 
 Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where('id', '([0-9]+)');
 Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('id', '([0-9]+)');

@@ -88,8 +88,11 @@
                                                                         <li class="@yield('activeHome')">
                                                                                 <a href="{{ route('index') }}">Home</a>
                                                                         </li>
-                                                                        <li class="@yield('activeServices') label1" data-label1="hot">
+                                                                        <li class="@yield('activeServices')">
                                                                                 <a href="{{ route('services') }}">Services</a>
+                                                                        </li>
+                                                                        <li class="@yield('activeRequests') label1" data-label1="hot">
+                                                                                <a href="{{ route('buyerRequests') }}">Buyers' Requests</a>
                                                                         </li>
                                                                         <li class="@yield('activeAbout')">
                                                                                 <a href="{{ route('about') }}">About</a>
@@ -178,6 +181,9 @@
                                                 </li>
                                                 <li>
                                                         <a href="{{ route('services') }}">Services</a>
+                                                </li>
+                                                <li>
+                                                        <a href="{{ route('buyerRequests') }}">Buyers' Requests</a>
                                                 </li>
                                                 <li>
                                                         <a href="{{ route('about') }}">About</a>

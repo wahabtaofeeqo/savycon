@@ -89,8 +89,8 @@
 					
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
-						@can('update', $service)
-						<a href="{{ url('/vendor/services/new/'.$service->id) }}" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8">Edit</a>
+						@can('updateService', $service)
+						<a href="{{ url('/'.Auth::user()->role.'/services/new/'.$service->id) }}" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8">Edit</a>
 						@endcan
 
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
@@ -117,7 +117,7 @@
                                 <div class="header-cart-buttons flex-w w-full">
 									<a href="mailto:{{ $service->user->email }}" class="flex-c-m stext-101 cl2 size-107 bg2 bor2 hov-btn1 p-lr-15 trans-04 m-b-10 m-r-8">Mail</a>
 									<a href="tel:+234{{ $service->user->phone }}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10 m-r-8">Call</a>
-									<a href="https://api.whatsapp.com?send?phone={{ $service->user->phone }}" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8">WhatsApp</a>
+									<a href="https://api.whatsapp.com/send?phone={{ $service->user->phone }}" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8">WhatsApp</a>
 								</div>
 							</div>
 							@else
@@ -128,14 +128,14 @@
 							<button class="js-show-cart flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">Click to login</button>
 							@endauth
 
-							@cannot('update', $service)
+							@cannot('updateService', $service)
 							<div class="alert alert-success">
 								You can <a href="#message-tab">drop a message</a> below for the vendor if you would like
 							</div>
 							@endcan
 
 							<div class="m-t-40">
-								<span class="mtext-106">Share</span>
+								<span class="mtext-106">Share Page</span>
 								<div class="clearfix"></div>
 
 								<!-- vue-goodshare -->
@@ -225,7 +225,7 @@
 										<!-- If user is uthenticated -->
 										@auth	
 											<!-- If auth:user owns service -->
-											@can('update', $service)
+											@can('updateService', $service)
 												<service-review can_comment="yes" service_id="{{ $service->id }}" can_user_review="no" can_really_comment="no"></service-review>
 											@else
 												@if($alreadyReviewed == null)
@@ -246,7 +246,7 @@
 						<div class="tab-pane fade" id="message" role="tabpanel" ref="messageContainer">
 							<div class="how-pos2 p-lr-15-md">
 								<p class="stext-102 cl6">
-									@cannot('update', $service)
+									@cannot('updateService', $service)
 										@auth
 										<message name="{{ Auth::user()->name }}" phone="{{ Auth::user()->phone }}" email="{{ Auth::user()->email }}" service_id="{{ $service->id }}"></message>
 										@else

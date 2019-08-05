@@ -53,13 +53,11 @@ import AdminSubscribers from './components/admin/Subscribers.vue';
 import AdminMessages from './components/admin/Messages.vue';
 import AdminUnfoundSearches from './components/admin/UnfoundSearches.vue';
 import AdminContactMessages from './components/admin/Contacts.vue';
-import AdminBuyerRequests from './components/admin/BuyerRequests.vue';
 
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
 import VendorServices from './components/vendor/Services.vue';
 import VendorNewService from './components/vendor/NewService.vue';
-import BuyerRequests from './components/vendor/BuyerRequests.vue';
 
 import UserDashboard from './components/user/Dashboard.vue';
 import UserRequests from './components/user/UserRequests.vue';
@@ -136,11 +134,6 @@ const routes = [
 		path: '/admin/profile',
 		component: AdminProfile
 	},
-	{
-		name: 'AdminBuyerRequests',
-		path: '/admin/buyer-requests',
-		component: AdminBuyerRequests
-	},
 
 	// Vendors
 	{
@@ -162,11 +155,6 @@ const routes = [
 		name: 'VendorProfile',
 		path: '/vendor/profile',
 		component: VendorProfile
-	},
-	{
-		name: 'BuyerRequests',
-		path: '/vendor/buyer-requests',
-		component: BuyerRequests
 	},
 
 	// Users

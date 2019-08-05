@@ -12,10 +12,14 @@
 
 				<div v-show="requests.length > 0">
 					<div class="row">
-						<div class="col-md-4" v-for="(request, index) in requests">
+						<div class="col-md-6" v-for="(request, index) in requests">
 							<div class="card">
 								<div class="header">
-									<h4 class="title">{{ index+1 }}</h4>
+									<h4 class="title">
+										{{ index+1 }}
+										<a :href="openRequest(request.id)" target="__blank" class="btn btn-sm btn-fill btn-success pull-right">View Service</a>
+										<div class="clearfix"></div>
+									</h4>
 									<p class="category">{{ request.service.category.name }} > {{ request.service.name }}</p>
 								</div>
 								<div class="content">
@@ -25,7 +29,12 @@
 									</div>
 									<div class="form-group">
 										<label for="description">Description</label>
-										<p id="description">{{ request.description }}</p>
+										<p id="description">
+											{{ request.description.substring(0, 200) }}
+											<small v-show="request.description.length > 200">
+												<a :href="openRequest(request.id)" target="__blank">read more...</a>
+											</small>
+										</p>
 									</div>
 									<div class="form-group">
 										<label for="price">Budget</label>
@@ -124,6 +133,9 @@
 						})
 					}
 				})
+			},
+			openRequest(id) {
+				return '/buyers-requests/'+id;
 			},
 		},
 		created() {

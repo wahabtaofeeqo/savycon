@@ -5,6 +5,7 @@ namespace SavyCon\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SavyCon\Models\UserService;
+use SavyCon\Models\UserRequest;
 use SavyCon\Models\User;
 use SavyCon\Models\Category;
 use SavyCon\Models\Service;
@@ -71,6 +72,28 @@ class PagesController extends Controller
         return view('pages.services.user')->with([
             'user' => $user,
             'services' => $services
+        ]);
+    }
+
+    public function buyersRequests()
+    {
+        $buyersRequests = UserRequest::with([
+            'user'
+        ])->paginate(20);
+
+        return view('pages.requests.requests')->with([
+            'buyersRequests' => $buyersRequests,
+        ]);
+    }
+
+    public function showBuyersRequest($id)
+    {
+        $buyersRequest = UserRequest::with([
+            'user'
+        ])->findOrFail($id);
+
+        return view('pages.requests.single')->with([
+            'buyersRequest' => $buyersRequest,
         ]);
     }
 

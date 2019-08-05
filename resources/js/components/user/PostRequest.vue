@@ -33,8 +33,8 @@
 					<div class="row">
                         <div class="col-12">
                         	<label for="title">Title</label>
-                            <input type="text" class="form-control" :class="{ 'has-error':form.errors.has('title') }" v-model="form.title" id="title" placeholder="Title your project (Min: 20)" minlength="20" required>
-                            <span class="help-block text-primary">Say what you need in 20 characters or more</span>
+                            <input type="text" class="form-control" :class="{ 'has-error':form.errors.has('title') }" v-model="form.title" id="title" placeholder="Title your project (Min: 10)" minlength="10" required>
+                            <span class="help-block text-primary">Say what you need in 10 characters or more</span>
                             <has-error :form="form" field="title"></has-error>
                         </div>
                     </div>

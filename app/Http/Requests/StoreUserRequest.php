@@ -24,7 +24,7 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:20|string',
+            'title' => 'required|min:10|string',
             'description' => 'required|string|min:100',
             'price' => 'required|numeric|between:1000.00,10000000.00',
             'address' => 'required|string',

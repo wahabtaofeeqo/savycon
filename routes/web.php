@@ -21,6 +21,12 @@ Route::get('/services/user/{id}', 'PagesController@userServices')->where('/id', 
 Route::get('/our-services', 'PagesController@services');
 Route::get('/service/{id}', 'PagesController@showService')->where('/id', '([0-9]+)')->name('service.single');
 
+// Buyers' Requests
+Route::get('/buyers-requests', 'PagesController@buyersRequests')->name('buyerRequests');
+Route::get('/buyers-requests/{id}', 'PagesController@showBuyersRequest')->where('/id', '([0-9]+)')->name('single.buyersRequest');
+Route::get('/requests', 'PagesController@buyersRequests');
+Route::get('/buyersRequests', 'PagesController@buyersRequests');
+
 // Categories & Sub-categories
 Route::get('/category/{id}', 'PagesController@loadCategory')->where('/id', '([0-9]+)')->name('service.category');
 Route::get('/sub-category/{id}', 'PagesController@loadSubCategory')->where('/id', '([0-9]+)')->name('service.service');
