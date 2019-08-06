@@ -19,7 +19,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $this->authorize('isVendorActive');
+        $this->authorize('isVendorActiveOrAdmin');
 
     	$services = auth()->user()->userServices()->with([
             'service',
@@ -32,7 +32,7 @@ class ServiceController extends Controller
 
     public function store(StoreVendorService $request)
     {
-        $this->authorize('isVendorActive');
+        $this->authorize('isVendorActiveOrAdmin');
 
     	$validated = $request->validated();
 
@@ -86,7 +86,7 @@ class ServiceController extends Controller
 
     public function update(UpdateVendorService $request, $id)
     {
-        $this->authorize('isVendorActive');
+        $this->authorize('isVendorActiveOrAdmin');
 
     	$validated = $request->validated();
 
@@ -146,13 +146,32 @@ class ServiceController extends Controller
 
     public function delete($id)
     {
-        $this->authorize('isVendorActive');
+        $this->authorize('isVendorActiveOrAdmin');
         
         $service = UserService::findOrFail($id);
+
+        $this->deleteServiceImages($service);
+
         $service->delete();
 
         return response([
             'message' => 'Delete Complete'
         ], 200);
+    }
+
+    public function deleteServiceImages(UserService $service)
+    {
+        $serviceImage = 'images/services/'.$service->image_1;
+        if (file_exists($serviceImage)) {
+            @unlink($serviceImage);
+        }
+        $serviceImage = 'images/services/'.$service->image_2;
+        if (file_exists($serviceImage)) {
+            @unlink($serviceImage);
+        }
+        $serviceImage = 'images/services/'.$service->image_3;
+        if (file_exists($serviceImage)) {
+            @unlink($serviceImage);
+        }
     }
 }

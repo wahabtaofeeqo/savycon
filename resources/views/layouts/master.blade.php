@@ -34,11 +34,11 @@
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
         <!-- Stylesheets -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{{ asset('master/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('master/css/animate.min.css') }}">
         <link rel="stylesheet" href="{{ asset('master/css/light-bootstrap-dashboard.css') }}">
         <link rel="stylesheet" href="{{ asset('master/css/pe-icon-7-stroke.css') }}">
-        <link rel="stylesheet" href="{{ asset('main/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
 
         <style type="text/css">
         	li .router-link-exact-active.router-link-active {
@@ -56,6 +56,19 @@
         		color: black !important;
         	}
         </style>
+        <!-- Google Tag Manager -->
+		<script>
+			(function(w,d,s,l,i) {
+				w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-TTQVJ4V');
+		</script>
+		<!-- End Google Tag Manager -->
+
+		<!-- Google Tag Manager (noscript) -->
+		<noscript>
+			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TTQVJ4V" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+		</noscript>
+		<!-- End Google Tag Manager (noscript) -->
 	</head>
 	<body>
 		<div id="app">
@@ -95,6 +108,12 @@
 				            		<router-link :to="{ name: 'AdminCategories' }">
 				            			<i class="pe-7s-way"></i>
 				            			<p>Categories</p>
+				            		</router-link>
+				            	</li>
+				            	<li class="nav-item">
+				            		<router-link :to="{ name: 'AdminAdverts' }">
+				            			<i class="pe-7s-signal"></i>
+				            			<p>Adverts</p>
 				            		</router-link>
 				            	</li>
 				            	<li class="nav-item">

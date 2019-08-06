@@ -36,7 +36,7 @@
                 <!-- Stylesheets -->
                 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-                <link rel="stylesheet" href="{{ asset('main/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
                 <link rel="stylesheet" href="{{ asset('main/fonts/iconic/css/material-design-iconic-font.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/fonts/linearicons-v1.0.0/icon-font.min.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/vendor/animate/animate.css') }}">
@@ -69,6 +69,20 @@
                                 left: 18px;
                         }
                 </style>
+
+                <!-- Google Tag Manager -->
+                <script>
+                        (function(w,d,s,l,i) {
+                                w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-TTQVJ4V');
+                </script>
+                <!-- End Google Tag Manager -->
+
+                <!-- Google Tag Manager (noscript) -->
+                <noscript>
+                        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TTQVJ4V" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                </noscript>
+                <!-- End Google Tag Manager (noscript) -->
         </head>
         <body class="animsition">
                 <div id="app">
@@ -80,7 +94,8 @@
                                                 <nav class="limiter-menu-desktop p-l-45">
                                                         <!-- Logo desktop -->           
                                                         <a href="{{ route('index') }}" class="logo">
-                                                                <img src="{{ asset('logo-full.png') }}" alt="IMG-LOGO">
+                                                                <img src="{{ asset('logo.png') }}" alt="IMG-LOGO" style="margin-right: -10px;">
+                                                                <span style="color: #1ba285; font-size: 200%; letter-spacing: 2px;">avy<span style="color: #f2c613;">Con</span></span>
                                                         </a>
                                                         <!-- Menu desktop -->
                                                         <div class="menu-desktop">
@@ -145,7 +160,10 @@
                                 <div class="wrap-header-mobile">
                                         <!-- Logo moblie -->            
                                         <div class="logo-mobile">
-                                                <a href="{{ route('index') }}"><img src="{{ asset('logo-full.png') }}" alt="IMG-LOGO"></a>
+                                                <a href="{{ route('index') }}">
+                                                        <img src="{{ asset('logo.png') }}" alt="IMG-LOGO">
+                                                        <span style="color: #1ba285; padding-left: 28px; font-size: 130%; letter-spacing: 2px;">avy<span style="color: #f2c613;">Con</span></span>
+                                                </a>
                                         </div>
                                         <!-- Icon header -->
                                         <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
