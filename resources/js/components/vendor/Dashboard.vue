@@ -116,6 +116,32 @@
 						</div>
 					</div>
                 </div>
+
+                <!-- Adverts -->
+                <div class="row" v-show="adverts.length > 0" ref="advertsContainer">
+                	<div class="col-sm-12">
+                		<h4 class="text-primary">Featured Adverts</h4>
+                	</div>
+                    <div class="col-md-4 col-lg-4" v-for="advert in adverts">
+                        <div class="card card-user">
+                            <div class="card-image">
+                                <a :href="advert.URL">
+                                	<img :src="viewAdvertImage(advert.image)" alt="..." width="100%" height="auto">
+                                </a>
+                            </div>
+                            <div class="card-body" style="padding: 10px;">
+                                <div class="author" style="text-align: left;">
+                                    <a :href="advert.URL">
+                                        <h4 class="title">{{ advert.title }}</h4>
+                                    </a>
+                                </div>
+                                <p class="description">
+                                    {{ advert.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 		</div>
 	</div>
@@ -136,6 +162,9 @@
 
 				messages: [],
 				messagesURL: '/api/vendor/messages/',
+
+				adverts: [],
+				advertURL: '/api/adverts/dashboard/6'
 			}
 		},
 		methods: {
@@ -246,17 +275,31 @@
 
 					loader.hide()
 				})
+			},
+
+			loadAdverts() {
+				const loader = this.$loading.show({
+					container: this.$refs.advertsContainer
+				})
+
+				axios.get(this.advertURL)
+				.then((response) => {
+					this.adverts = response.data
+
+					loader.hide()
+				})
+			},
+			viewAdvertImage(image) {
+				return '/images/adverts/'+image
 			}
 		},
 		created() {
 			this.getUserData()
+			this.loadAdverts()
 
 			Fire.$on('refreshMessages', () => {
 				this.loadMessages()
 			})	
 		},
-		mounted() {
-
-		}
 	}
 </script>

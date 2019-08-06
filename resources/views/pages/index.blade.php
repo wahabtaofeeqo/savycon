@@ -100,6 +100,42 @@
 	    </div>
 	</section>
 
+	@if($adverts->count() > 0)
+	<div class="sec-banner bg0 p-t-95 p-b-55">
+		<div class="container">
+			<div class="row">
+				@foreach($adverts as $advert)
+					<div class="col-lg-4 col-md-6 p-b-30 m-lr-auto">
+						<div class="block1 wrap-pic-w">
+							<img src="{{ asset('images/adverts/'.$advert->image) }}" alt="IMG-ADVERT">
+
+							<a href="{{ $advert->URL }}" target="__blank" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+								<div class="block1-txt-child1 flex-col-l">
+									<span class="block1-name ltext-102 trans-04 p-b-8">
+										{{ $advert->title }}
+									</span>
+
+									<span class="block1-info stext-102 trans-04">
+										{{ $advert->description }}
+									</span>
+								</div>
+
+								<div class="block1-txt-child2 p-b-4 trans-05">
+									<div class="block1-link stext-101 cl0 trans-09">
+										View
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+	<hr>
+	@endif
+
+	<!-- Featured Services -->
 	<section class="sec-product bg0 p-t-100 p-b-50">
 		<div class="container">
 			<div class="p-b-32">

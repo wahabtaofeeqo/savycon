@@ -53,6 +53,7 @@ import AdminSubscribers from './components/admin/Subscribers.vue';
 import AdminMessages from './components/admin/Messages.vue';
 import AdminUnfoundSearches from './components/admin/UnfoundSearches.vue';
 import AdminContactMessages from './components/admin/Contacts.vue';
+import AdminAdverts from './components/admin/Adverts.vue';
 
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
@@ -128,6 +129,11 @@ const routes = [
 		name: 'AdminContactMessages',
 		path: '/admin/contact-messages',
 		component: AdminContactMessages
+	},
+	{
+		name: 'AdminAdverts',
+		path: '/admin/adverts',
+		component: AdminAdverts
 	},
 	{
 		name: 'AdminProfile',

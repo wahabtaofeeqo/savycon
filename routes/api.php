@@ -31,6 +31,7 @@ Route::apiResources([
 	'contact' => 'General\ContactEnquiryController',
 	'categories' => 'Admin\CategoryController',
 	'sub-categories' => 'Admin\ServiceController',
+	'advert' => 'Admin\AdvertController'
 ]);
 
 // Admin Usage
@@ -69,6 +70,8 @@ Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');
 
 Route::get('/states', 'LocationController@states')->name('state.all');
 Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)');
+
+Route::get('/adverts/dashboard/{limit}', 'General\AdvertController@dashboard')->where('limit', '([0-9]+)');
 
 // Counters
 Route::prefix('counter')->group(function() {

@@ -4,6 +4,7 @@ namespace SavyCon\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use SavyCon\Models\Advert;
 use SavyCon\Models\UserService;
 use SavyCon\Models\UserRequest;
 use SavyCon\Models\User;
@@ -19,10 +20,13 @@ class PagesController extends Controller
             'user',
             'service',
             'service.category'
-        ])->where('active', 1)->latest()->get();
+        ])->where('active', 1)->get();
+
+        $adverts = Advert::inRandomOrder()->where('layer', 'home')->orWhere('layer', 'all')->limit(6)->get();
 
     	return view('pages.index', [
-            'featured_services' => $featured_services
+            'featured_services' => $featured_services,
+            'adverts' => $adverts
         ]);
     }
 
@@ -77,7 +81,7 @@ class PagesController extends Controller
 
     public function buyersRequests()
     {
-        $buyersRequests = UserRequest::with([
+        $buyersRequests = UserRequest::inRandomOrder()->with([
             'user'
         ])->paginate(20);
 
