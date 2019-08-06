@@ -66,16 +66,12 @@ A platform where people find and post services for direct contact.
 ### Things to Collect
 - Database Access
 	Study and create seeds for;
-		- [ ] Users
-		- [ ] Services
-		- [ ] Requests
-		- [ ] States
-		- [ ] Cities
-		- [ ] Categories & Subs
-- [ ] Google Tag Manager (SEO)
+		- [ ] Import Excel
+- [x] Google Tag Manager (SEO)
 - [ ] Socialite (CLIENT_ID, CLIENT_SECRET)
 	- [ ] Facebook
 	- [ ] Twitter
 	- [ ] Google
-	- [ ] Github
 	- [ ] LinkedIn
+- [x] Featured Adverts
+	- Map with user's location for states
