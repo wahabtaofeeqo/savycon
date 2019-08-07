@@ -19,7 +19,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $this->authorize('isVendorActiveOrAdmin');
+        $this->authorize('isActiveVendorOrAdmin');
 
     	$services = auth()->user()->userServices()->with([
             'service',
@@ -32,7 +32,7 @@ class ServiceController extends Controller
 
     public function store(StoreVendorService $request)
     {
-        $this->authorize('isVendorActiveOrAdmin');
+        $this->authorize('isActiveVendorOrAdmin');
 
     	$validated = $request->validated();
 
@@ -86,7 +86,7 @@ class ServiceController extends Controller
 
     public function update(UpdateVendorService $request, $id)
     {
-        $this->authorize('isVendorActiveOrAdmin');
+        $this->authorize('isActiveVendorOrAdmin');
 
     	$validated = $request->validated();
 
@@ -146,7 +146,7 @@ class ServiceController extends Controller
 
     public function delete($id)
     {
-        $this->authorize('isVendorActiveOrAdmin');
+        $this->authorize('isActiveVendorOrAdmin');
         
         $service = UserService::findOrFail($id);
 

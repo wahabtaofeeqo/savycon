@@ -2166,12 +2166,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -50538,474 +50532,426 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-8 p-tb-60" },
-          [
-            _c("alert-error", { attrs: { form: _vm.form } }),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                attrs: { method: "POST" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.registerUser()
+  return _c(
+    "div",
+    [
+      _c("alert-error", { attrs: { form: _vm.form } }),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          attrs: { method: "POST" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.registerUser()
+            },
+            keydown: function($event) {
+              return _vm.form.onKeydown($event)
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "form-group m-b-20" },
+            [
+              _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.name,
+                      expression: "form.name"
+                    }
+                  ],
+                  staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                  class: { "has-error": _vm.form.errors.has("name") },
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    placeholder: "Full name",
+                    id: "name",
+                    autofocus: "on",
+                    required: ""
                   },
-                  keydown: function($event) {
-                    return _vm.form.onKeydown($event)
+                  domProps: { value: _vm.form.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "name", $event.target.value)
+                    }
                   }
-                }
-              },
+                }),
+                _vm._v(" "),
+                _c("i", { staticClass: "how-pos4 pointer-none fa fa-user" })
+              ]),
+              _vm._v(" "),
+              _c("has-error", { attrs: { form: _vm.form, field: "name" } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group m-b-20" },
+            [
+              _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.email,
+                      expression: "form.email"
+                    }
+                  ],
+                  staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                  class: { "has-error": _vm.form.errors.has("email") },
+                  attrs: {
+                    type: "email",
+                    name: "email",
+                    placeholder: "E-mail address",
+                    id: "email",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "email", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("i", { staticClass: "how-pos4 pointer-none fa fa-envelope" })
+              ]),
+              _vm._v(" "),
+              _c("has-error", { attrs: { form: _vm.form, field: "email" } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group m-b-20" },
+            [
+              _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.phone,
+                      expression: "form.phone"
+                    }
+                  ],
+                  staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                  class: { "has-error": _vm.form.errors.has("phone") },
+                  attrs: {
+                    type: "tel",
+                    name: "phone",
+                    placeholder: "Phone number",
+                    id: "phone",
+                    "aria-describedby": "addon-phone",
+                    minlength: "10",
+                    maxlength: "10",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "phone", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "how-pos4 pointer-none phone" })
+              ]),
+              _vm._v(" "),
+              _c("has-error", { attrs: { form: _vm.form, field: "phone" } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group m-b-20 row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
               [
-                _c(
-                  "div",
-                  { staticClass: "form-group m-b-20" },
-                  [
-                    _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.name,
-                            expression: "form.name"
-                          }
-                        ],
-                        staticClass:
-                          "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                        class: { "has-error": _vm.form.errors.has("name") },
-                        attrs: {
-                          type: "text",
-                          name: "name",
-                          placeholder: "Full name",
-                          id: "name",
-                          autofocus: "on",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "name", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "how-pos4 pointer-none fa fa-user"
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("has-error", {
-                      attrs: { form: _vm.form, field: "name" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group m-b-20" },
-                  [
-                    _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.email,
-                            expression: "form.email"
-                          }
-                        ],
-                        staticClass:
-                          "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                        class: { "has-error": _vm.form.errors.has("email") },
-                        attrs: {
-                          type: "email",
-                          name: "email",
-                          placeholder: "E-mail address",
-                          id: "email",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.email },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "email", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "how-pos4 pointer-none fa fa-envelope"
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("has-error", {
-                      attrs: { form: _vm.form, field: "email" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group m-b-20" },
-                  [
-                    _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.phone,
-                            expression: "form.phone"
-                          }
-                        ],
-                        staticClass:
-                          "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                        class: { "has-error": _vm.form.errors.has("phone") },
-                        attrs: {
-                          type: "tel",
-                          name: "phone",
-                          placeholder: "Phone number",
-                          id: "phone",
-                          "aria-describedby": "addon-phone",
-                          minlength: "10",
-                          maxlength: "10",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.phone },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "phone", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "how-pos4 pointer-none phone" })
-                    ]),
-                    _vm._v(" "),
-                    _c("has-error", {
-                      attrs: { form: _vm.form, field: "phone" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group m-b-20 row" }, [
+                _c("div", { staticClass: "bor8 how-pos4-parent" }, [
                   _c(
-                    "div",
-                    { staticClass: "col-md-6" },
-                    [
-                      _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.city.state.id,
-                                expression: "form.city.state.id"
-                              }
-                            ],
-                            staticClass:
-                              "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                            attrs: {
-                              name: "state_id",
-                              id: "state",
-                              required: ""
-                            },
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.form.city.state,
-                                    "id",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                },
-                                function($event) {
-                                  return _vm.loadCities()
-                                }
-                              ]
-                            }
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.city.state.id,
+                          expression: "form.city.state.id"
+                        }
+                      ],
+                      staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                      attrs: { name: "state_id", id: "state", required: "" },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form.city.state,
+                              "id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
                           },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { disabled: "", value: "" } },
-                              [_vm._v("Select your state")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.states, function(state) {
-                              return _c(
-                                "option",
-                                {
-                                  key: state.id,
-                                  domProps: { value: state.id }
-                                },
-                                [_vm._v(_vm._s(state.name))]
-                              )
-                            })
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _c("i", {
-                          staticClass: "how-pos4 pointer-none fa fa-compass"
-                        })
+                          function($event) {
+                            return _vm.loadCities()
+                          }
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { disabled: "", value: "" } }, [
+                        _vm._v("Select your state")
                       ]),
                       _vm._v(" "),
-                      _c("has-error", {
-                        attrs: { form: _vm.form, field: "city.state.id" }
+                      _vm._l(_vm.states, function(state) {
+                        return _c(
+                          "option",
+                          { key: state.id, domProps: { value: state.id } },
+                          [_vm._v(_vm._s(state.name))]
+                        )
                       })
                     ],
-                    1
+                    2
                   ),
                   _vm._v(" "),
+                  _c("i", {
+                    staticClass: "how-pos4 pointer-none fa fa-compass"
+                  })
+                ]),
+                _vm._v(" "),
+                _c("has-error", {
+                  attrs: { form: _vm.form, field: "city.state.id" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c("div", { staticClass: "bor8 how-pos4-parent" }, [
                   _c(
-                    "div",
-                    { staticClass: "col-md-6" },
-                    [
-                      _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.city.id,
-                                expression: "form.city.id"
-                              }
-                            ],
-                            staticClass:
-                              "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                            class: {
-                              "has-error": _vm.form.errors.has("city.id")
-                            },
-                            attrs: { name: "city", id: "city", required: "" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form.city,
-                                  "id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { disabled: "", value: "" } },
-                              [_vm._v("Select your city")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.cities, function(city) {
-                              return _c(
-                                "option",
-                                { key: city.id, domProps: { value: city.id } },
-                                [_vm._v(_vm._s(city.name))]
-                              )
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.city.id,
+                          expression: "form.city.id"
+                        }
+                      ],
+                      staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                      class: { "has-error": _vm.form.errors.has("city.id") },
+                      attrs: { name: "city", id: "city", required: "" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
                             })
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _c("i", {
-                          staticClass: "how-pos4 pointer-none fa fa-map-marker"
-                        })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form.city,
+                            "id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { disabled: "", value: "" } }, [
+                        _vm._v("Select your city")
                       ]),
                       _vm._v(" "),
-                      _c("has-error", {
-                        attrs: { form: _vm.form, field: "city.id" }
+                      _vm._l(_vm.cities, function(city) {
+                        return _c(
+                          "option",
+                          { key: city.id, domProps: { value: city.id } },
+                          [_vm._v(_vm._s(city.name))]
+                        )
                       })
                     ],
-                    1
-                  )
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "how-pos4 pointer-none fa fa-map-marker"
+                  })
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group m-b-20" },
-                  [
-                    _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.password,
-                            expression: "form.password"
-                          }
-                        ],
-                        staticClass:
-                          "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                        class: { "has-error": _vm.form.errors.has("password") },
-                        attrs: {
-                          type: "password",
-                          name: "password",
-                          placeholder: "Password",
-                          id: "password",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.password },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "password", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "how-pos4 pointer-none fa fa-key"
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("has-error", {
-                      attrs: { form: _vm.form, field: "password" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group m-b-20" },
-                  [
-                    _c("div", { staticClass: "bor8 how-pos4-parent" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.password_confirmation,
-                            expression: "form.password_confirmation"
-                          }
-                        ],
-                        staticClass:
-                          "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
-                        class: {
-                          "has-error": _vm.form.errors.has(
-                            "password_confirmation"
-                          )
-                        },
-                        attrs: {
-                          type: "password",
-                          name: "password_confirmation",
-                          placeholder: "Re-enter your password",
-                          id: "password_confirmation",
-                          required: ""
-                        },
-                        domProps: { value: _vm.form.password_confirmation },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.form,
-                              "password_confirmation",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "how-pos4 pointer-none fa fa-check"
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("has-error", {
-                      attrs: { form: _vm.form, field: "password_confirmation" }
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group m-b-20" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "flex-c-m stext-101 cl0 size-121 bg1 bor3 hov-btn1 p-lr-15 trans-04",
-                      attrs: { type: "submit", disabled: _vm.form.busy }
-                    },
-                    [_vm._v("Register")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-full" }, [
-                  _c("div", { staticClass: "flex-w w-full" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass:
-                          "flex-c-m stext-101 cl0 size-107 bg3 bor3 hov-btn2 p-lr-15 trans-04 m-r-20",
-                        attrs: { href: _vm.openLink("login") }
-                      },
-                      [_vm._v("Sign In")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass:
-                          "flex-c-m stext-101 cl2 size-107 bg2 bor3 hov-btn1 p-lr-15 trans-04 m-r-20",
-                        attrs: { href: _vm.openLink("password/reset") }
-                      },
-                      [_vm._v("Reset Password")]
-                    )
-                  ])
-                ])
-              ]
+                _c("has-error", { attrs: { form: _vm.form, field: "city.id" } })
+              ],
+              1
             )
-          ],
-          1
-        )
-      ])
-    ])
-  ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group m-b-20" },
+            [
+              _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.password,
+                      expression: "form.password"
+                    }
+                  ],
+                  staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                  class: { "has-error": _vm.form.errors.has("password") },
+                  attrs: {
+                    type: "password",
+                    name: "password",
+                    placeholder: "Password",
+                    id: "password",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "password", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("i", { staticClass: "how-pos4 pointer-none fa fa-key" })
+              ]),
+              _vm._v(" "),
+              _c("has-error", { attrs: { form: _vm.form, field: "password" } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group m-b-20" },
+            [
+              _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.password_confirmation,
+                      expression: "form.password_confirmation"
+                    }
+                  ],
+                  staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                  class: {
+                    "has-error": _vm.form.errors.has("password_confirmation")
+                  },
+                  attrs: {
+                    type: "password",
+                    name: "password_confirmation",
+                    placeholder: "Re-enter your password",
+                    id: "password_confirmation",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.password_confirmation },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form,
+                        "password_confirmation",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("i", { staticClass: "how-pos4 pointer-none fa fa-check" })
+              ]),
+              _vm._v(" "),
+              _c("has-error", {
+                attrs: { form: _vm.form, field: "password_confirmation" }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group m-b-20" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "flex-c-m stext-101 cl0 size-121 bg1 bor3 hov-btn1 p-lr-15 trans-04",
+                attrs: { type: "submit", disabled: _vm.form.busy }
+              },
+              [_vm._v("Register")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-full" }, [
+            _c("div", { staticClass: "flex-w w-full" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "flex-c-m stext-101 cl0 size-107 bg3 bor3 hov-btn2 p-lr-15 trans-04 m-r-20",
+                  attrs: { href: _vm.openLink("login") }
+                },
+                [_vm._v("Sign In")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "flex-c-m stext-101 cl2 size-107 bg2 bor3 hov-btn1 p-lr-15 trans-04 m-r-20",
+                  attrs: { href: _vm.openLink("password/reset") }
+                },
+                [_vm._v("Reset Password")]
+              )
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54984,126 +54930,138 @@ var render = function() {
             staticClass: "table-responsive table-full-width"
           },
           [
-            _c("table", { staticClass: "table table-hover" }, [
+            _c("table", { staticClass: "table" }, [
               _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
                 _vm._l(_vm.services, function(service) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(service.title))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(service.price))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(service.address))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(service.service.category.name) + " "),
-                      _c("br"),
-                      _vm._v(" > " + _vm._s(service.service.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(service.user.name))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-success btn-fill",
-                            attrs: {
-                              href: _vm.viewService(service.id),
-                              target: "__blank"
-                            }
-                          },
-                          [_vm._v("View")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-sm btn-info btn-fill",
-                            attrs: {
-                              to: {
-                                name: "AdminNewService",
-                                params: { id: service.id }
+                  return _c(
+                    "tr",
+                    {
+                      class: {
+                        "bg-info": service.featured == 1,
+                        "bg-danger": service.active == 0
+                      }
+                    },
+                    [
+                      _c("td", [_vm._v(_vm._s(service.title))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(service.price))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(service.address))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(service.service.category.name) + " "),
+                        _c("br"),
+                        _vm._v(" > " + _vm._s(service.service.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(service.user.name))]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-success btn-fill",
+                              attrs: {
+                                href: _vm.viewService(service.id),
+                                target: "__blank"
                               }
-                            }
-                          },
-                          [_vm._v("Edit")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-sm btn-danger btn-fill",
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteService(service.id)
+                            },
+                            [_vm._v("View")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-sm btn-info btn-fill",
+                              attrs: {
+                                to: {
+                                  name: "AdminNewService",
+                                  params: { id: service.id }
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Delete")]
-                        ),
-                        _vm._v(" "),
-                        _c("hr", { staticStyle: { margin: "5px" } }),
-                        _vm._v(" "),
-                        service.featured == 0
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-success btn-fill",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.featureService(service.id)
-                                  }
+                            },
+                            [_vm._v("Edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-danger btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteService(service.id)
                                 }
-                              },
-                              [_vm._v("Feature")]
-                            )
-                          : _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-warning btn-fill",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.featureService(service.id)
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          ),
+                          _vm._v(" "),
+                          _c("hr", { staticStyle: { margin: "5px" } }),
+                          _vm._v(" "),
+                          service.featured == 0
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-primary btn-fill",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.featureService(service.id)
+                                    }
                                   }
-                                }
-                              },
-                              [_vm._v("Unfeature")]
-                            ),
-                        _vm._v(" "),
-                        service.active == 1
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-danger btn-fill",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.banService(service.id)
+                                },
+                                [_vm._v("Feature")]
+                              )
+                            : _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-warning btn-fill",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.featureService(service.id)
+                                    }
                                   }
-                                }
-                              },
-                              [_vm._v("Ban")]
-                            )
-                          : _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-sm btn-primary btn-fill",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.banService(service.id)
+                                },
+                                [_vm._v("Unfeature")]
+                              ),
+                          _vm._v(" "),
+                          service.active == 1
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-danger btn-fill",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.banService(service.id)
+                                    }
                                   }
-                                }
-                              },
-                              [_vm._v("Unban")]
-                            )
-                      ],
-                      1
-                    )
-                  ])
+                                },
+                                [_vm._v("Ban")]
+                              )
+                            : _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-primary btn-fill",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.banService(service.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Unban")]
+                              )
+                        ],
+                        1
+                      )
+                    ]
+                  )
                 }),
                 0
               )

@@ -10,7 +10,7 @@
 					There are no services yet
 				</div>
 				<div class="table-responsive table-full-width" v-show="services.length > 0">
-					<table class="table table-hover">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>Title</th>
@@ -22,7 +22,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="service in services">
+							<tr v-for="service in services" :class="{ 'bg-info':service.featured == 1, 'bg-danger':service.active == 0 }">
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
 								<td>{{ service.address }}</td>
@@ -34,7 +34,7 @@
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteService(service.id)">Delete</button>
 									<hr style="margin: 5px;">
 
-									<button class="btn btn-sm btn-success btn-fill" @click="featureService(service.id)" v-if="service.featured == 0">Feature</button>
+									<button class="btn btn-sm btn-primary btn-fill" @click="featureService(service.id)" v-if="service.featured == 0">Feature</button>
 									<button class="btn btn-sm btn-warning btn-fill" @click="featureService(service.id)" v-else>Unfeature</button>
 
 									<button class="btn btn-sm btn-danger btn-fill" @click="banService(service.id)" v-if="service.active == 1">Ban</button>
