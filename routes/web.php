@@ -65,6 +65,10 @@ Auth::routes(['verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Socialite
+Route::get('/social/redirect/{provider}/{role}', 'Auth\SocialController@redirectToProvider')->where('provider', 'twitter|linkedin|google|facebook')->name('social.redirect');
+Route::get('/social/callback/{provider}/{role}', 'Auth\SocialController@handleProviderCallback')->where('provider', 'twitter|linkedin|google|facebook');
+
 Route::middleware(['role:admin'])->group(function () {
 	Route::prefix('admin')->group(function () {		
 		Route::get('/', 'AdminController@index')->name('admin');
