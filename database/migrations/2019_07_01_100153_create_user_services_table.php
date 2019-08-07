@@ -22,10 +22,10 @@ class CreateUserServicesTable extends Migration
 
             $table->string('title');
             $table->longText('description');
-            $table->float('price', 8, 2);
-            $table->string('image_1');
-            $table->string('image_2');
-            $table->string('image_3');
+            $table->float('price', 8, 2)->default(1000.00);
+            $table->string('image_1')->default('unavailable.jpg');
+            $table->string('image_2')->default('unavailable.jpg');
+            $table->string('image_3')->default('unavailable.jpg');
             $table->boolean('featured')->default(0);
             $table->boolean('active')->default(1);
             $table->string('address')->nullable();
