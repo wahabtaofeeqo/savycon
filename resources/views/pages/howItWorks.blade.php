@@ -16,6 +16,7 @@
 			You need to understand how & what each user can do
 		</span>
 	</div>
+
 	<section class="bg0 p-t-30 p-b-120">
 		<div class="container">
 			<div class="bor10 p-t-43 p-b-40">
@@ -152,7 +153,15 @@
 				</div>
 			</div>
 		</div>
-	</section>	
+	</section>
+
+	<div class="bg2 flex-c-m flex-w size-302 m-t-0 p-tb-15">
+		<span class="stext-107 cl6 p-lr-25"></span>
+	</div>
+
+	<div style="opacity: 0;">
+		<vue-goodshare-facebook has_icon></vue-goodshare-facebook>
+	</div>	
 
 	<!-- Services Overview -->
 	<services-overview></services-overview>
