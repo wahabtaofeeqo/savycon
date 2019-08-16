@@ -4,36 +4,18 @@
 			<div class="container">
 				<div class="p-b-10">
 					<h3 class="ltext-103 cl5">
-						Services Overview 
-						<small class="cl1" style="font-size: 35%;">
-							<span class="pull-right">Showing page {{ pagination.current_page }} of {{ pagination.last_page }}</span>
-						</small>
-						<div class="clearfix"></div>
-					</h3>
-				</div>
-
-				<!-- Categories -->
-				<div class="flex-w flex-sb-m p-b-52">
-					<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" @click="loadServices" data-filter="*">
-							All Categories
-						</button>
-
-						<span v-for="category in categories">
-							<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" @click="switchCategory(category.id)" :data-filter="categoryName(category.name)">
-								{{ category.name }}
-							</button>
-						</span>
-					</div>
-
-					<!-- Search -->
-					<div class="flex-w flex-c-m m-tb-10">
+						Services Overview
 						<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
 							<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
 							<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
 							Search
 						</div>
-					</div>
+					</h3>
+				</div>
+
+				<!-- Categories -->
+				<div class="flex-w flex-sb-m p-b-52">
+					<!-- Search -->
 					<div class="dis-none panel-search w-full p-t-10 p-b-15">
 						<div class="bor8 dis-flex p-l-15">
 							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" @click="searchServices">
@@ -44,6 +26,10 @@
 							<datalist id="available_services">
 								<option :value="service.title" v-for="service in allServices"></option>
 							</datalist>
+
+							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" @click="searchServices">
+								<i class="zmdi zmdi-map"></i>
+							</button>
 
 							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search_address" @keyup.enter="searchServices" name="" placeholder="Location" list="available_cities">
 							<datalist id="available_cities">
@@ -83,13 +69,9 @@
 				</div>
 
 				<!-- Pagination -->
-				<div class="flex-c-m flex-w w-full p-t-38" v-show="pagination.next_page_url">
-					<button class="flex-c-m how-pagination1 trans-04 m-all-7" @click="fetchPaginateServices(pagination.prev_page_url)" :disabled="!pagination.prev_page_url">
-						<i class="fa fa-arrow-left"></i>
-					</button>
-
-					<button class="flex-c-m how-pagination1 trans-04 m-all-7" @click="fetchPaginateServices(pagination.next_page_url)" :disabled="!pagination.next_page_url">
-						<i class="fa fa-arrow-right"></i>
+				<div class="flex-c-m flex-w w-full p-t-45" v-show="pagination.next_page_url">
+					<button class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" @click="fetchPaginateServices(pagination.next_page_url)">
+						Shuffle
 					</button>
 				</div>
 			</div>
@@ -183,6 +165,8 @@
 				.then((response) => {			
 					this.services = response.data.data
 
+					this.makePagination(response.data)
+
 					loader.hide()
 				})
 				.catch(() => {
@@ -238,3 +222,12 @@
 		}
 	}	
 </script>
+
+<style scoped>
+	.panel-search input {
+		padding-left: 15px;
+	}
+	.panel-search input::placeholder {
+		color: gray;
+	}
+</style>

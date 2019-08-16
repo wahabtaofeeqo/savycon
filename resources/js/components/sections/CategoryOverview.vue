@@ -18,7 +18,7 @@
 						    	</div>
 
 						    	<div class="row isotope-grid" v-show="services.length > 0">
-									<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
+									<div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item" v-for="service in services">
 										<div class="block2">
 											<div class="block2-pic hov-img0">
 												<img :src="getPhoto(service.image_1)" alt="IMG-SERVICE">

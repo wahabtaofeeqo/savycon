@@ -2,7 +2,9 @@
 	<div>
 		<div class="card">
 			<div class="header">
-				<h4 class="card-title">Services</h4>
+				<h4 class="card-title">
+					Services <span class="badge badge-primary">{{ pagination.total_items }}</span>
+				</h4>
 				<p class="category">All your services</p>
 			</div>
 			<div class="content">
@@ -13,16 +15,18 @@
 					<table class="table">
 						<thead>
 							<tr>
+								<th>S/N</th>
 								<th>Title</th>
 								<th>Price (₦)</th>
 								<th>Address</th>
-								<th>Location</th>
+								<th>Category > Sub</th>
 								<th>Owner</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="service in services" :class="{ 'bg-info':service.featured == 1, 'bg-danger':service.active == 0 }">
+							<tr v-for="(service, index) in services" :class="{ 'bg-info':service.featured == 1, 'bg-danger':service.active == 0 }">
+								<td>{{ index+1 }}</td>
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
 								<td>{{ service.address }}</td>

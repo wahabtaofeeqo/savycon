@@ -153,7 +153,15 @@
 				</div>
 			</div>
 		</div>
-	</section>	
+	</section>
+	
+	<div class="bg2 flex-c-m flex-w size-302 m-t-0 p-tb-15">
+		<span class="stext-107 cl6 p-lr-25"></span>
+	</div>
+
+	<div style="opacity: 0;">
+		<vue-goodshare-facebook has_icon></vue-goodshare-facebook>
+	</div>
 
 	<!-- Services Overview -->
 	<services-overview></services-overview>

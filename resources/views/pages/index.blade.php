@@ -135,7 +135,7 @@
 	<hr>
 	@endif
 
-	<!-- Featured Services -->
+	@if(count($featured_services) > 0)
 	<section class="sec-product bg0 p-t-100 p-b-50">
 		<div class="container">
 			<div class="p-b-32">
@@ -146,12 +146,7 @@
 
 			<div class="wrap-slick2">
 				<div class="slick2">
-					@if(count($featured_services) < 1)
-						<div class="alert alert-info">
-				        	There are no featured services at the moment
-				        </div>
-					@else
-						@foreach($featured_services as $service)
+					@foreach($featured_services as $service)
 						<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
@@ -175,8 +170,7 @@
 								</div>
 							</div>
 						</div>
-						@endforeach
-					@endif
+					@endforeach
 				</div>
 			</div>
 		</div>
@@ -184,6 +178,11 @@
 
 	<div class="bg2 flex-c-m flex-w size-302 m-t-0 p-tb-15">
 		<span class="stext-107 cl6 p-lr-25"></span>
+	</div>
+	@endif
+
+	<div style="opacity: 0;">
+		<vue-goodshare-facebook has_icon></vue-goodshare-facebook>
 	</div>
 
 	<!-- Services Overview -->

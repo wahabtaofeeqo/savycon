@@ -15,7 +15,7 @@ class ServiceController extends Controller
     		'user',
     		'service',
     		'service.category'
-    	])->where('active', 1)->latest()->paginate(20);
+    	])->where('active', 1)->paginate(20);
 
     	return response($services, 200);
     }
@@ -26,7 +26,7 @@ class ServiceController extends Controller
     		'user',
     		'service',
     		'service.category'
-    	])->where('active', 1)->latest()->paginate(20);
+    	])->where('active', 1)->paginate(20);
 
     	return response($services, 200);
     }
@@ -37,7 +37,7 @@ class ServiceController extends Controller
             'user',
             'service',
             'service.category'
-        ])->where('active', 1)->latest()->limit($count)->get();
+        ])->where('active', 1)->limit($count)->get();
 
         return response($services, 200);
     }

@@ -367,7 +367,7 @@
                         @yield('content')
 
                         <!-- Footer -->
-                        <footer class="bg3 p-t-75 p-b-32">
+                        <footer class="bg3 p-t-75 p-b-10">
                                 <div class="container">
                                         <div class="row">
                                                 <div class="col-sm-6 col-lg-3 p-b-50">
@@ -475,9 +475,8 @@
 
                                         <div class="p-t-40">
                                                 <p class="stext-107 cl6 txt-center">
-                                                        Copyright &copy; @php echo date("Y") @endphp
-                                                        All rights reserved | Powered by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
-                                                        <br><small>Template by <a href="https://colorlib.com" target="_blank">Colorlib</a></small>
+                                                        Copyright &copy; @php echo date("Y") @endphp All rights reserved
+                                                        <br>Powered by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
                                                 </p>
                                         </div>
                                 </div>
