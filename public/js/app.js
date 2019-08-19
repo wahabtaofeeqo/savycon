@@ -2825,7 +2825,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var loader = this.$loading.show();
-      this.form.post('/api/categories').then(function () {
+      this.form.post(this.categoryURL).then(function () {
         Swal.fire({
           type: 'success',
           title: 'Category was successfully created'
@@ -2909,7 +2909,7 @@ __webpack_require__.r(__webpack_exports__);
       var loader = this.$loading.show({
         container: this.$refs.serviceContainer
       });
-      this.serviceForm.post('/api/sub-categories').then(function () {
+      this.serviceForm.post('/api/sub-categories/').then(function () {
         Swal.fire({
           type: 'success',
           title: 'Sub-Category was successfully created'

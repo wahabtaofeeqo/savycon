@@ -270,7 +270,7 @@
 			createCategory() {
 				const loader = this.$loading.show()
 
-				this.form.post('/api/categories')
+				this.form.post(this.categoryURL)
 				.then(() => {
 					Swal.fire({
 						type: 'success',
@@ -368,7 +368,7 @@
 					container: this.$refs.serviceContainer
 				})
 
-				this.serviceForm.post('/api/sub-categories')
+				this.serviceForm.post('/api/sub-categories/')
 				.then(() => {
 					Swal.fire({
 						type: 'success',
