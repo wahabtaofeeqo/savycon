@@ -66,6 +66,14 @@ class ServiceController extends Controller
                 ['description', 'LIKE', '%'.$text.'%'],
                 ['active', '1'],
             ])
+            ->orWhere([
+                ['title', 'LIKE', '%'.$text.'%'],
+                ['active', '1'],
+            ])
+            ->orWhere([
+                ['description', 'LIKE', '%'.$text.'%'],
+                ['active', '1'],
+            ])
             ->paginate(20);
         } else {
             $services = UserService::where([

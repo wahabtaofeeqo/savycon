@@ -41,7 +41,7 @@ class ContactEnquiryController extends Controller
         $enquiry->message = $request->message;
         $enquiry->save();
 
-        return redirect()->route('contact')->with('status', 'Message was submitted successfully');
+        return redirect()->route('contact')->with('status-contact', 'Message was submitted successfully');
     }
 
     /**

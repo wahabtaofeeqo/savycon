@@ -15,9 +15,9 @@
 	<!-- Content page -->
 	<section class="bg0 p-t-104 p-b-116">
 		<div class="container">
-			@if (session('status'))
+			@if (session('status-contact'))
 				<div class="alert alert-success" role="alert">
-					{{ session('status') }}
+					{{ session('status-contact') }}
 				</div>
 			@endif
 
