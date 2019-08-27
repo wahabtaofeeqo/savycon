@@ -20,7 +20,7 @@ class CreateUserServicesTable extends Migration
             $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
 
-            $table->string('title');
+            $table->longText('title');
             $table->longText('description');
             $table->float('price', 8, 2)->default(1000.00);
             $table->string('image_1')->default('unavailable.png');
@@ -28,7 +28,7 @@ class CreateUserServicesTable extends Migration
             $table->string('image_3')->default('unavailable.png');
             $table->boolean('featured')->default(0);
             $table->boolean('active')->default(1);
-            $table->string('address')->nullable();
+            $table->longText('address')->nullable();
             $table->timestamps();
         });
     }
