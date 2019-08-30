@@ -84,7 +84,7 @@
                 </noscript>
                 <!-- End Google Tag Manager (noscript) -->
         </head>
-        <body class="animsitionn">
+        <body class="animsition">
                 <div id="app">
                         <!-- Header -->
                         <header class="header-v2">
