@@ -21,5 +21,14 @@ class UsersTableSeeder extends Seeder
         $admin->phone = '8135303377';
         $admin->role = 'admin';
         $admin->save();
+
+        $admin = new User();
+        $admin->name = 'SavyCon Admin';
+        $admin->email = 'admin@savycon.com';
+        $admin->password = bcrypt('savycon-admin');
+        $admin->email_verified_at = now();
+        $admin->phone = '8062081641';
+        $admin->role = 'admin';
+        $admin->save();
     }
 }
