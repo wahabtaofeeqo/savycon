@@ -17,7 +17,10 @@
 					<hr>
 					<div class="form-group">
 						<div class="input-group">
+							<div class="input-group-addon">Name</div>
 							<input type="text" name="name" v-model="form.name" class="form-control" :class="{ 'has-error':form.errors.has('name') }" placeholder="Name" autofocus="on" required>
+							<div class="input-group-addon">Image Tag</div>
+							<input type="file" name="image_tag" class="form-control" id="image_tag" accept="image/*" @change="updateImageTag" required>
 							<div class="input-group-btn">
 								<button type="submit" :disabled="form.busy" class="btn btn-primary btn-fill" v-show="!editmode">Create</button>
 								<button type="submit" :disabled="form.busy" class="btn btn-success btn-fill" v-show="editmode">Update</button>
@@ -58,12 +61,16 @@
 							<table class="table table-hover">
 								<thead>
 									<tr>
+										<th></th>
 										<th>Name</th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr v-for="category in categories">
+										<td>
+											<img :src="'/images/tags/'+category.image_tag" width="25" height="25" style="border-radius: 25%;">
+										</td>
 										<td>{{ category.name }}</td>
 										<td>
 											<button class="btn btn-sm btn-success btn-fill" @click="showServices(category)">Show Sub-categories</button>
@@ -151,6 +158,7 @@
 				form: new Form({
 					id: '',
 					name: '',
+					image_tag: ''
 				}),
 
 				serviceForm: new Form({
@@ -267,6 +275,24 @@
 				this.editmode = false
 				this.form.reset()
 			},
+			updateImageTag(e) {
+                let file = e.target.files[0];
+                var reader = new FileReader();
+
+                if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
+                    reader.onloadend = (file) => {
+                        this.form.image_tag = reader.result;
+                    }
+
+                    reader.readAsDataURL(file);
+                } else {
+                    Swal.fire(
+                        'Oops...',
+                        'Please check the format (JPEG, JPG, PNG) and size (< 2MB) of the image.',
+                        'error'
+                    )
+                }
+            },
 			createCategory() {
 				const loader = this.$loading.show()
 
