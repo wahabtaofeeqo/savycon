@@ -45,6 +45,25 @@
 	                            <has-error :form="form" field="description"></has-error>
 		                    </div>
 		                    <div class="form-group">
+		                    	<div class="row">
+			                        <div class="col-md-6">
+			                        	<label for="state">State</label>
+			                            <select class="form-control" id="state" @change="loadCities()" v-model="form.city.state.id" required>
+			                            	<option disabled value="">Choose a state</option>
+			                            	<option v-for="state in states" :key="state.id" v-bind:value="state.id">{{ state.name }}</option>
+			                        	</select>
+			                        </div>
+			                        <div class="col-md-6">
+			                        	<label for="category">City</label>
+			                            <select class="form-control" id="city" v-model="form.city.id" required>
+			                            	<option disabled value="">Choose a city</option>
+			                            	<option v-for="city in cities" :key="city.id" v-bind:value="city.id">{{ city.name }}</option>
+			                        	</select>
+			                        	<has-error :form="form" field="service.id"></has-error>
+			                        </div>
+			                    </div>
+		                    </div>
+		                    <div class="form-group">
 		                    	<label for="address">In which places do you offer this service?</label>
 	                            <input type="text" name="address" v-model="form.address" id="address" placeholder="Descriptive address where you intend to offer this service" class="form-control" :class="{ 'has-error':form.errors.has('address') }" required>
 	                            <small class="help-block text-primary">You can separate different locations with a comma for a better search pop-up</small>
@@ -142,17 +161,30 @@
 						category: {
 							id: '',
 						},
+					},
+					city: {
+						id: '',
+						state: {
+							id: ''
+						}
 					}
 				}),
 
 				categories: {},
 				categoryServices: {},
 
+				states: {},
+				cities: {},
+
 				serviceToLoad: '',
 
 				url: '/api/service',
+
 				categoryURL: '/api/category',
 				categoryServicesURL: '/api/category/services/',
+
+				statesURL: '/api/states',
+				stateCitiesURL: '/api/states/cities/',
 			}
 		},
 		methods: {
@@ -195,6 +227,29 @@
 						type: 'error',
 						title: 'Oops!',
 						text: 'We could not gather the sub-categories at the moment'
+					})
+					loader.hide()
+				})
+			},
+			loadStates() {
+				axios.get(this.statesURL)
+				.then(response => {
+					this.states = response.data
+				});
+			},
+			loadCities() {
+				const loader = this.$loading.show()
+
+				axios.get(this.stateCitiesURL+this.form.city.state.id)
+				.then((response) => {
+					this.cities = response.data
+					loader.hide()
+				})
+				.catch(() => {
+					Swal.fire({
+						type: 'error',
+						title: 'Oops!',
+						text: 'We could not gather the cities at the moment'
 					})
 					loader.hide()
 				})
@@ -310,6 +365,7 @@
 		},
 		created() {
 			this.loadCategories();
+			this.loadStates();
 
 			this.serviceToLoad = this.$route.params.id
 			if (this.serviceToLoad) {

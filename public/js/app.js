@@ -2708,6 +2708,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2722,7 +2729,8 @@ __webpack_require__.r(__webpack_exports__);
       services: [],
       form: new Form({
         id: '',
-        name: ''
+        name: '',
+        image_tag: ''
       }),
       serviceForm: new Form({
         id: '',
@@ -2821,8 +2829,24 @@ __webpack_require__.r(__webpack_exports__);
       this.editmode = false;
       this.form.reset();
     },
-    createCategory: function createCategory() {
+    updateImageTag: function updateImageTag(e) {
       var _this3 = this;
+
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
+        reader.onloadend = function (file) {
+          _this3.form.image_tag = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        Swal.fire('Oops...', 'Please check the format (JPEG, JPG, PNG) and size (< 2MB) of the image.', 'error');
+      }
+    },
+    createCategory: function createCategory() {
+      var _this4 = this;
 
       var loader = this.$loading.show();
       this.form.post(this.categoryURL).then(function () {
@@ -2830,10 +2854,10 @@ __webpack_require__.r(__webpack_exports__);
           type: 'success',
           title: 'Category was successfully created'
         });
-        _this3.createmode = false;
+        _this4.createmode = false;
         Fire.$emit('refreshCategories');
 
-        _this3.form.reset();
+        _this4.form.reset();
 
         loader.hide();
       })["catch"](function () {
@@ -2846,7 +2870,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateCategory: function updateCategory() {
-      var _this4 = this;
+      var _this5 = this;
 
       var loader = this.$loading.show();
       this.form.put('/api/categories/' + this.form.id).then(function () {
@@ -2854,9 +2878,9 @@ __webpack_require__.r(__webpack_exports__);
           type: 'success',
           title: 'Category was successfully updated'
         });
-        _this4.createmode = false;
+        _this5.createmode = false;
 
-        _this4.form.reset();
+        _this5.form.reset();
 
         Fire.$emit('refreshCategories');
         loader.hide();
@@ -2881,13 +2905,13 @@ __webpack_require__.r(__webpack_exports__);
       this.loadServices(category.id);
     },
     loadServices: function loadServices(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       var loader = this.$loading.show({
         container: this.$refs.serviceContainer
       });
       axios.get('/api/sub-categories/' + id).then(function (response) {
-        _this5.services = response.data;
+        _this6.services = response.data;
         loader.hide();
       })["catch"](function () {
         loader.hide();
@@ -2904,7 +2928,7 @@ __webpack_require__.r(__webpack_exports__);
       this.serviceForm.reset();
     },
     createService: function createService() {
-      var _this6 = this;
+      var _this7 = this;
 
       var loader = this.$loading.show({
         container: this.$refs.serviceContainer
@@ -2914,10 +2938,10 @@ __webpack_require__.r(__webpack_exports__);
           type: 'success',
           title: 'Sub-Category was successfully created'
         });
-        _this6.serviceCreateMode = false;
+        _this7.serviceCreateMode = false;
         Fire.$emit('refreshSubCategories');
 
-        _this6.serviceForm.reset();
+        _this7.serviceForm.reset();
 
         loader.hide();
       })["catch"](function () {
@@ -2935,7 +2959,7 @@ __webpack_require__.r(__webpack_exports__);
       this.serviceForm.fill(service);
     },
     updateService: function updateService() {
-      var _this7 = this;
+      var _this8 = this;
 
       var loader = this.$loading.show({
         container: this.$refs.serviceContainer
@@ -2945,10 +2969,10 @@ __webpack_require__.r(__webpack_exports__);
           type: 'success',
           title: 'Sub-Category was successfully updated'
         });
-        _this7.serviceCreateMode = false;
+        _this8.serviceCreateMode = false;
         Fire.$emit('refreshSubCategories');
 
-        _this7.serviceForm.reset();
+        _this8.serviceForm.reset();
 
         loader.hide();
       })["catch"](function () {
@@ -2961,7 +2985,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteService: function deleteService(id) {
-      var _this8 = this;
+      var _this9 = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -2971,8 +2995,8 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         if (result.value) {
-          var loader = _this8.$loading.show({
-            container: _this8.$refs.serviceContainer
+          var loader = _this9.$loading.show({
+            container: _this9.$refs.serviceContainer
           });
 
           axios["delete"]('/api/sub-categories/' + id).then(function () {
@@ -2995,14 +3019,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this9 = this;
+    var _this10 = this;
 
     this.loadCategories();
     Fire.$on('refreshCategories', function () {
-      _this9.loadCategories();
+      _this10.loadCategories();
     });
     Fire.$on('refreshSubCategories', function () {
-      _this9.loadServices(_this9.serviceForm.category.id);
+      _this10.loadServices(_this10.serviceForm.category.id);
     });
   },
   mounted: function mounted() {}
@@ -3019,6 +3043,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -4375,6 +4401,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4393,14 +4438,24 @@ __webpack_require__.r(__webpack_exports__);
           category: {
             id: ''
           }
+        },
+        city: {
+          id: '',
+          state: {
+            id: ''
+          }
         }
       }),
       categories: {},
       categoryServices: {},
+      states: {},
+      cities: {},
       serviceToLoad: '',
       url: '/api/service',
       categoryURL: '/api/category',
-      categoryServicesURL: '/api/category/services/'
+      categoryServicesURL: '/api/category/services/',
+      statesURL: '/api/states',
+      stateCitiesURL: '/api/states/cities/'
     };
   },
   methods: {
@@ -4446,15 +4501,38 @@ __webpack_require__.r(__webpack_exports__);
         loader.hide();
       });
     },
-    updateImage1: function updateImage1(e) {
+    loadStates: function loadStates() {
       var _this4 = this;
+
+      axios.get(this.statesURL).then(function (response) {
+        _this4.states = response.data;
+      });
+    },
+    loadCities: function loadCities() {
+      var _this5 = this;
+
+      var loader = this.$loading.show();
+      axios.get(this.stateCitiesURL + this.form.city.state.id).then(function (response) {
+        _this5.cities = response.data;
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops!',
+          text: 'We could not gather the cities at the moment'
+        });
+        loader.hide();
+      });
+    },
+    updateImage1: function updateImage1(e) {
+      var _this6 = this;
 
       var file = e.target.files[0];
       var reader = new FileReader();
 
       if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
         reader.onloadend = function (file) {
-          _this4.form.image_1 = reader.result;
+          _this6.form.image_1 = reader.result;
           $('#dropzone-image1').attr('src', reader.result);
         };
 
@@ -4464,14 +4542,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateImage2: function updateImage2(e) {
-      var _this5 = this;
+      var _this7 = this;
 
       var file = e.target.files[0];
       var reader = new FileReader();
 
       if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
         reader.onloadend = function (file) {
-          _this5.form.image_2 = reader.result;
+          _this7.form.image_2 = reader.result;
           $('#dropzone-image2').attr('src', reader.result);
         };
 
@@ -4481,14 +4559,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateImage3: function updateImage3(e) {
-      var _this6 = this;
+      var _this8 = this;
 
       var file = e.target.files[0];
       var reader = new FileReader();
 
       if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
         reader.onloadend = function (file) {
-          _this6.form.image_3 = reader.result;
+          _this8.form.image_3 = reader.result;
           $('#dropzone-image3').attr('src', reader.result);
         };
 
@@ -4498,7 +4576,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     createService: function createService() {
-      var _this7 = this;
+      var _this9 = this;
 
       var loader = this.$loading.show();
       this.form.post(this.url).then(function () {
@@ -4508,7 +4586,7 @@ __webpack_require__.r(__webpack_exports__);
           text: 'We will reload the page now...'
         });
 
-        _this7.form.reset();
+        _this9.form.reset();
 
         setTimeout(function () {
           window.location.reload();
@@ -4523,7 +4601,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateService: function updateService() {
-      var _this8 = this;
+      var _this10 = this;
 
       var loader = this.$loading.show();
       this.form.put(this.url + '/' + this.form.id).then(function () {
@@ -4532,7 +4610,7 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Service was updated successfully'
         });
 
-        _this8.form.reset();
+        _this10.form.reset();
 
         window.location.href = '/admin/services';
       })["catch"](function () {
@@ -4547,6 +4625,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.loadCategories();
+    this.loadStates();
     this.serviceToLoad = this.$route.params.id;
 
     if (this.serviceToLoad) {
@@ -5416,11 +5495,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      editmode: false,
+      generatedPassword: false,
       users: [],
       pagination: {},
+      form: new Form({
+        id: '',
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+        city: {
+          id: '',
+          state: {
+            id: ''
+          }
+        }
+      }),
       url: '/api/user/',
       loadURL: '/api/users/vendor/'
     };
@@ -5459,8 +5583,48 @@ __webpack_require__.r(__webpack_exports__);
       this.loadURL = url;
       this.loadUsers();
     },
-    deleteUser: function deleteUser(id) {
+    editUser: function editUser(user) {
+      this.editmode = true;
+      this.form.fill(user);
+    },
+    generatePassword: function generatePassword() {
+      this.form.password = Math.random().toString(36).slice(-8).toUpperCase();
+      this.generatedPassword = true;
+      $('#password').attr('type', 'text');
+      setTimeout(function () {
+        $('#password').select();
+        document.execCommand("copy");
+      }, 100);
+      Toast.fire({
+        type: 'success',
+        title: 'Password is now copied to clipboard'
+      });
+    },
+    updateUser: function updateUser() {
       var _this2 = this;
+
+      var loader = this.$loading.show();
+      this.form.put('/api/user/' + this.form.id).then(function () {
+        _this2.loadUsers();
+
+        _this2.editmode = false;
+        Swal.fire({
+          type: 'success',
+          title: 'Successful',
+          text: 'User was updated successfully'
+        });
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Something went wrong',
+          text: 'User could not be updated'
+        });
+        loader.hide();
+      });
+    },
+    deleteUser: function deleteUser(id) {
+      var _this3 = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -5470,9 +5634,9 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         if (result.value) {
-          var loader = _this2.$loading.show();
+          var loader = _this3.$loading.show();
 
-          axios["delete"](_this2.url + id).then(function () {
+          axios["delete"](_this3.url + id).then(function () {
             Swal.fire({
               type: 'success',
               title: 'Vendor was deleted successfully'
@@ -5513,11 +5677,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.loadUsers();
     Fire.$on('refreshUsers', function () {
-      _this3.loadUsers();
+      _this4.loadUsers();
     });
   },
   mounted: function mounted() {}
@@ -5773,8 +5937,15 @@ __webpack_require__.r(__webpack_exports__);
       this.url = url;
       this.loadServices();
     },
-    getPhoto: function getPhoto(name) {
-      return '/images/services/' + name;
+    getPhoto: function getPhoto(service) {
+      var path = '/images/services/';
+
+      if (service.image_1 === 'unavailable.png') {
+        path = '/images/tags/';
+        name = service.service.category.image_tag;
+      }
+
+      return path + name;
     },
     openService: function openService(id) {
       return '/service/' + id;
@@ -6234,8 +6405,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getPhoto: function getPhoto(name) {
-      return '/images/services/' + name;
+    getPhoto: function getPhoto(service) {
+      var path = '/images/services/';
+
+      if (service.image_1 === 'unavailable.png') {
+        path = '/images/tags/';
+        name = service.service.category.image_tag;
+      }
+
+      return path + name;
     },
     loadCategories: function loadCategories() {
       var _this = this;
@@ -6555,8 +6733,15 @@ __webpack_require__.r(__webpack_exports__);
       this.url = url;
       this.loadServices();
     },
-    getPhoto: function getPhoto(name) {
-      return '/images/services/' + name;
+    getPhoto: function getPhoto(service) {
+      var path = '/images/services/';
+
+      if (service.image_1 === 'unavailable.png') {
+        path = '/images/tags/';
+        name = service.service.category.image_tag;
+      }
+
+      return path + name;
     },
     openService: function openService(id) {
       return '/service/' + id;
@@ -7464,6 +7649,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7482,14 +7686,24 @@ __webpack_require__.r(__webpack_exports__);
           category: {
             id: ''
           }
+        },
+        city: {
+          id: '',
+          state: {
+            id: ''
+          }
         }
       }),
       categories: {},
       categoryServices: {},
+      states: {},
+      cities: {},
       serviceToLoad: '',
       url: '/api/service',
       categoryURL: '/api/category',
-      categoryServicesURL: '/api/category/services/'
+      categoryServicesURL: '/api/category/services/',
+      statesURL: '/api/states',
+      stateCitiesURL: '/api/states/cities/'
     };
   },
   methods: {
@@ -7535,15 +7749,38 @@ __webpack_require__.r(__webpack_exports__);
         loader.hide();
       });
     },
-    updateImage1: function updateImage1(e) {
+    loadStates: function loadStates() {
       var _this4 = this;
+
+      axios.get(this.statesURL).then(function (response) {
+        _this4.states = response.data;
+      });
+    },
+    loadCities: function loadCities() {
+      var _this5 = this;
+
+      var loader = this.$loading.show();
+      axios.get(this.stateCitiesURL + this.form.city.state.id).then(function (response) {
+        _this5.cities = response.data;
+        loader.hide();
+      })["catch"](function () {
+        Swal.fire({
+          type: 'error',
+          title: 'Oops!',
+          text: 'We could not gather the cities at the moment'
+        });
+        loader.hide();
+      });
+    },
+    updateImage1: function updateImage1(e) {
+      var _this6 = this;
 
       var file = e.target.files[0];
       var reader = new FileReader();
 
       if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
         reader.onloadend = function (file) {
-          _this4.form.image_1 = reader.result;
+          _this6.form.image_1 = reader.result;
           $('#dropzone-image1').attr('src', reader.result);
         };
 
@@ -7553,14 +7790,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateImage2: function updateImage2(e) {
-      var _this5 = this;
+      var _this7 = this;
 
       var file = e.target.files[0];
       var reader = new FileReader();
 
       if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
         reader.onloadend = function (file) {
-          _this5.form.image_2 = reader.result;
+          _this7.form.image_2 = reader.result;
           $('#dropzone-image2').attr('src', reader.result);
         };
 
@@ -7570,14 +7807,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateImage3: function updateImage3(e) {
-      var _this6 = this;
+      var _this8 = this;
 
       var file = e.target.files[0];
       var reader = new FileReader();
 
       if (file['size'] < 2097152 && (file['type'] == 'image/jpeg' || file['type'] == 'image/png' || file['type'] == 'image/jpg')) {
         reader.onloadend = function (file) {
-          _this6.form.image_3 = reader.result;
+          _this8.form.image_3 = reader.result;
           $('#dropzone-image3').attr('src', reader.result);
         };
 
@@ -7587,7 +7824,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     createService: function createService() {
-      var _this7 = this;
+      var _this9 = this;
 
       var loader = this.$loading.show();
       this.form.post(this.url).then(function () {
@@ -7597,7 +7834,7 @@ __webpack_require__.r(__webpack_exports__);
           text: 'We will reload the page now...'
         });
 
-        _this7.form.reset();
+        _this9.form.reset();
 
         setTimeout(function () {
           window.location.reload();
@@ -7612,7 +7849,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateService: function updateService() {
-      var _this8 = this;
+      var _this10 = this;
 
       var loader = this.$loading.show();
       this.form.put(this.url + '/' + this.form.id).then(function () {
@@ -7621,7 +7858,7 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Service was updated successfully'
         });
 
-        _this8.form.reset();
+        _this10.form.reset();
 
         window.location.href = '/vendor/services';
       })["catch"](function () {
@@ -7636,6 +7873,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.loadCategories();
+    this.loadStates();
     this.serviceToLoad = this.$route.params.id;
 
     if (this.serviceToLoad) {
@@ -51682,6 +51920,10 @@ var render = function() {
                 { staticClass: "form-group" },
                 [
                   _c("div", { staticClass: "input-group" }, [
+                    _c("div", { staticClass: "input-group-addon" }, [
+                      _vm._v("Name")
+                    ]),
+                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -51709,6 +51951,22 @@ var render = function() {
                           _vm.$set(_vm.form, "name", $event.target.value)
                         }
                       }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-addon" }, [
+                      _vm._v("Image Tag")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "file",
+                        name: "image_tag",
+                        id: "image_tag",
+                        accept: "image/*",
+                        required: ""
+                      },
+                      on: { change: _vm.updateImageTag }
                     }),
                     _vm._v(" "),
                     _c("div", { staticClass: "input-group-btn" }, [
@@ -51973,6 +52231,17 @@ var render = function() {
                     "tbody",
                     _vm._l(_vm.categories, function(category) {
                       return _c("tr", [
+                        _c("td", [
+                          _c("img", {
+                            staticStyle: { "border-radius": "25%" },
+                            attrs: {
+                              src: "/images/tags/" + category.image_tag,
+                              width: "25",
+                              height: "25"
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(category.name))]),
                         _vm._v(" "),
                         _c("td", [
@@ -52217,7 +52486,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [_c("th", [_vm._v("Name")]), _vm._v(" "), _c("th")])
+      _c("tr", [
+        _c("th"),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th")
+      ])
     ])
   },
   function() {
@@ -52516,6 +52791,8 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(city.state.name))]),
                     _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(city.user_services_count))]),
+                    _vm._v(" "),
                     _c("td", [
                       _c(
                         "button",
@@ -52618,6 +52895,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Number of Services")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -54016,7 +54295,7 @@ var render = function() {
                     _c("h4", { staticClass: "title" }, [
                       _vm._v(
                         "\n\t\t\t\t\t\t\t" +
-                          _vm._s(index + 1) +
+                          _vm._s(message.id) +
                           "\n\t\t\t\t\t\t\t"
                       ),
                       _c("span", { staticClass: "pull-right" }, [
@@ -54488,6 +54767,146 @@ var render = function() {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "state" } }, [
+                          _vm._v("State")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.city.state.id,
+                                expression: "form.city.state.id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { id: "state", required: "" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form.city.state,
+                                    "id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return _vm.loadCities()
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("Choose a state")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.states, function(state) {
+                              return _c(
+                                "option",
+                                {
+                                  key: state.id,
+                                  domProps: { value: state.id }
+                                },
+                                [_vm._v(_vm._s(state.name))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6" },
+                        [
+                          _c("label", { attrs: { for: "category" } }, [
+                            _vm._v("City")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.city.id,
+                                  expression: "form.city.id"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { id: "city", required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form.city,
+                                    "id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("Choose a city")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.cities, function(city) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: city.id,
+                                    domProps: { value: city.id }
+                                  },
+                                  [_vm._v(_vm._s(city.name))]
+                                )
+                              })
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "service.id" }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -56044,7 +56463,7 @@ var render = function() {
             ],
             staticClass: "alert alert-danger"
           },
-          [_vm._v("\n\t\t\t\tThere are no vendors yet\n\t\t\t")]
+          [_vm._v("\n\t\t\t\t\tThere are no vendors yet\n\t\t\t\t")]
         ),
         _vm._v(" "),
         _c(
@@ -56054,147 +56473,337 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.users.length > 0,
-                expression: "users.length > 0"
+                value: !_vm.editmode,
+                expression: "!editmode"
               }
-            ],
-            staticClass: "table-responsive table-full-width"
+            ]
           },
           [
-            _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(0),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.users.length > 0,
+                    expression: "users.length > 0"
+                  }
+                ],
+                staticClass: "table-responsive table-full-width"
+              },
+              [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.users, function(user) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(user.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.email))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("+234" + _vm._s(user.phone))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.city.state.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.city.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.user_services_count))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          user.user_services_count > 0
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-primary btn-fill",
+                                  attrs: {
+                                    href: _vm.showUserServices(user.id),
+                                    target: "__blank"
+                                  }
+                                },
+                                [_vm._v("View")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-info btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.editUser(user)
+                                }
+                              }
+                            },
+                            [_vm._v("Edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-danger btn-fill",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteUser(user.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          ),
+                          _vm._v(" "),
+                          user.active == 1
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-warning btn-fill",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.suspendUser(user.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Suspend")]
+                              )
+                            : _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-primary btn-fill",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.suspendUser(user.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Unsuspend")]
+                              )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "paginator" }, [
+              _c(
+                "button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.pagination.prev_page_url,
+                      expression: "pagination.prev_page_url"
+                    }
+                  ],
+                  staticClass: "btn btn-fill btn-primary",
+                  attrs: { disabled: !_vm.pagination.prev_page_url },
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchPaginateUsers(
+                        _vm.pagination.prev_page_url
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-arrow-left" }),
+                  _vm._v(" Prev\n\t\t\t\t\t\t")
+                ]
+              ),
               _vm._v(" "),
               _c(
-                "tbody",
-                _vm._l(_vm.users, function(user) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(user.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.email))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("+234" + _vm._s(user.phone))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.city.state.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.city.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.user_services_count))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      user.user_services_count > 0
-                        ? _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-sm btn-primary btn-fill",
-                              attrs: {
-                                href: _vm.showUserServices(user.id),
-                                target: "__blank"
-                              }
-                            },
-                            [_vm._v("View Services")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-danger btn-fill",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteUser(user.id)
-                            }
-                          }
-                        },
-                        [_vm._v("Delete")]
-                      ),
-                      _vm._v(" "),
-                      user.active == 1
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-warning btn-fill",
-                              on: {
-                                click: function($event) {
-                                  return _vm.suspendUser(user.id)
-                                }
-                              }
-                            },
-                            [_vm._v("Suspend")]
-                          )
-                        : _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-primary btn-fill",
-                              on: {
-                                click: function($event) {
-                                  return _vm.suspendUser(user.id)
-                                }
-                              }
-                            },
-                            [_vm._v("Unsuspend")]
-                          )
-                    ])
-                  ])
-                }),
-                0
-              )
+                "button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.pagination.next_page_url,
+                      expression: "pagination.next_page_url"
+                    }
+                  ],
+                  staticClass: "btn btn-fill btn-primary pull-right",
+                  attrs: { disabled: !_vm.pagination.next_page_url },
+                  on: {
+                    click: function($event) {
+                      return _vm.fetchPaginateUsers(
+                        _vm.pagination.next_page_url
+                      )
+                    }
+                  }
+                },
+                [
+                  _vm._v("\n\t\t\t\t\t\t\tNext "),
+                  _c("i", { staticClass: "fa fa-arrow-right" })
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" })
             ])
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "paginator" }, [
-          _c(
-            "button",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.pagination.prev_page_url,
-                  expression: "pagination.prev_page_url"
-                }
-              ],
-              staticClass: "btn btn-fill btn-primary",
-              attrs: { disabled: !_vm.pagination.prev_page_url },
-              on: {
-                click: function($event) {
-                  return _vm.fetchPaginateUsers(_vm.pagination.prev_page_url)
-                }
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.editmode,
+                expression: "editmode"
               }
-            },
-            [
-              _c("i", { staticClass: "fa fa-arrow-left" }),
-              _vm._v(" Prev\n\t\t\t\t")
             ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.pagination.next_page_url,
-                  expression: "pagination.next_page_url"
+          },
+          [
+            _c("alert-error", { attrs: { form: _vm.form } }),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                attrs: { method: "POST" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.updateUser()
+                  },
+                  keydown: function($event) {
+                    return _vm.form.onKeydown($event)
+                  }
                 }
-              ],
-              staticClass: "btn btn-fill btn-primary pull-right",
-              attrs: { disabled: !_vm.pagination.next_page_url },
-              on: {
-                click: function($event) {
-                  return _vm.fetchPaginateUsers(_vm.pagination.next_page_url)
-                }
-              }
-            },
-            [
-              _vm._v("\n\t\t\t\t\tNext "),
-              _c("i", { staticClass: "fa fa-arrow-right" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ])
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "email" } }, [
+                      _vm._v("Email address")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.email,
+                          expression: "form.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "has-error": _vm.form.errors.has("email") },
+                      attrs: {
+                        type: "email",
+                        name: "email",
+                        placeholder: "Email address",
+                        id: "email",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "email", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.form, field: "email" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "password" } }, [
+                      _vm._v("Password")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.password,
+                            expression: "form.password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "has-error": _vm.form.errors.has("password") },
+                        attrs: {
+                          type: "password",
+                          name: "password",
+                          placeholder: "Enter a password",
+                          id: "password"
+                        },
+                        domProps: { value: _vm.form.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "password", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group-btn" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { type: "button" },
+                            on: { click: _vm.generatePassword }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.generatedPassword
+                                  ? "Copied to Clipboard"
+                                  : "Auto-Generate Password"
+                              )
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("has-error", {
+                      attrs: { form: _vm.form, field: "password" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-fill btn-primary",
+                    attrs: { type: "submit", disabled: _vm.form.busy }
+                  },
+                  [_vm._v("Update User")]
+                )
+              ]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])
@@ -56220,6 +56829,15 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticClass: "help-block text-primary" }, [
+      _c("i", { staticClass: "fa fa-info-circle" }),
+      _vm._v(" Ignore if you do not want to change the password")
     ])
   }
 ]
@@ -56312,7 +56930,7 @@ var render = function() {
                           _c("div", { staticClass: "block2-pic hov-img0" }, [
                             _c("img", {
                               attrs: {
-                                src: _vm.getPhoto(service.image_1),
+                                src: _vm.getPhoto(service),
                                 alt: "IMG-SERVICE"
                               }
                             }),
@@ -56673,7 +57291,7 @@ var render = function() {
                                 [
                                   _c("img", {
                                     attrs: {
-                                      src: _vm.getPhoto(service.image_1),
+                                      src: _vm.getPhoto(service),
                                       alt: "SERVICE"
                                     }
                                   })
@@ -57433,16 +58051,7 @@ var render = function() {
                         _vm.search_address = $event.target.value
                       }
                     }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "datalist",
-                    { attrs: { id: "available_cities" } },
-                    _vm._l(_vm.allServices, function(city) {
-                      return _c("option", { domProps: { value: city.address } })
-                    }),
-                    0
-                  )
+                  })
                 ])
               ]
             )
@@ -57496,7 +58105,7 @@ var render = function() {
                     _c("div", { staticClass: "block2-pic hov-img0" }, [
                       _c("img", {
                         attrs: {
-                          src: _vm.getPhoto(service.image_1),
+                          src: _vm.getPhoto(service),
                           alt: "IMG-SERVICE"
                         }
                       }),
@@ -57711,7 +58320,7 @@ var render = function() {
                           _c("div", { staticClass: "block2-pic hov-img0" }, [
                             _c("img", {
                               attrs: {
-                                src: _vm.getPhoto(service.image_1),
+                                src: _vm.getPhoto(service),
                                 alt: "IMG-SERVICE"
                               }
                             }),
@@ -57972,7 +58581,7 @@ var render = function() {
                                 [
                                   _c("img", {
                                     attrs: {
-                                      src: _vm.getPhoto(service.image_1),
+                                      src: _vm.getPhoto(service),
                                       alt: "SERVICE"
                                     }
                                   })
@@ -59533,6 +60142,146 @@ var render = function() {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "state" } }, [
+                          _vm._v("State")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.city.state.id,
+                                expression: "form.city.state.id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { id: "state", required: "" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form.city.state,
+                                    "id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return _vm.loadCities()
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("Choose a state")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.states, function(state) {
+                              return _c(
+                                "option",
+                                {
+                                  key: state.id,
+                                  domProps: { value: state.id }
+                                },
+                                [_vm._v(_vm._s(state.name))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6" },
+                        [
+                          _c("label", { attrs: { for: "category" } }, [
+                            _vm._v("City")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.city.id,
+                                  expression: "form.city.id"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { id: "city", required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form.city,
+                                    "id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("Choose a city")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.cities, function(city) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: city.id,
+                                    domProps: { value: city.id }
+                                  },
+                                  [_vm._v(_vm._s(city.name))]
+                                )
+                              })
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "service.id" }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
