@@ -36,6 +36,14 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->name;
+        if (!empty($request->image_tag)) {
+            $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_tag, 0, strpos($request->image_tag, ';')))[1])[1];
+
+            \Image::make($request->image_tag)->save('images/tags/'.$name);
+
+            $category->image_tag = $name;
+        }
+
         $category->save();
 
         return response($category, 200);
@@ -63,6 +71,13 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->name = $request->name;
+        if (!empty($request->image_tag)) {
+            $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_tag, 0, strpos($request->image_tag, ';')))[1])[1];
+
+            \Image::make($request->image_tag)->save('images/tags/'.$name);
+
+            $category->image_tag = $name;
+        }
         $category->save();
 
         return response($category, 200);
