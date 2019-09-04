@@ -9,50 +9,80 @@
 				<div class="alert alert-danger" v-show="users.length < 1">
 					There are no vendors yet
 				</div>
-				<div class="table-responsive table-full-width" v-show="users.length > 0">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Email</th>
-								<th>Phone number</th>
-								<th>State</th>
-								<th>City</th>
-								<th>Services count</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="user in users">
-								<td>{{ user.name }}</td>
-								<td>{{ user.email }}</td>
-								<td>+234{{ user.phone }}</td>
-								<td>{{ user.city.state.name }}</td>
-								<td>{{ user.city.name }}</td>
-								<td>{{ user.user_services_count }}</td>
-								<td>
-									<a :href="showUserServices(user.id)" target="__blank" class="btn btn-sm btn-primary btn-fill" v-if="user.user_services_count > 0">View Services</a>
-									<button class="btn btn-sm btn-danger btn-fill" @click="deleteUser(user.id)">Delete</button>
+				<!-- List -->
+				<div v-show="!editmode">
+					<div class="table-responsive table-full-width" v-show="users.length > 0">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Email</th>
+									<th>Phone number</th>
+									<th>State</th>
+									<th>City</th>
+									<th>Services count</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="user in users">
+									<td>{{ user.name }}</td>
+									<td>{{ user.email }}</td>
+									<td>+234{{ user.phone }}</td>
+									<td>{{ user.city.state.name }}</td>
+									<td>{{ user.city.name }}</td>
+									<td>{{ user.user_services_count }}</td>
+									<td>
+										<a :href="showUserServices(user.id)" target="__blank" class="btn btn-sm btn-primary btn-fill" v-if="user.user_services_count > 0">View</a>
+										<button class="btn btn-sm btn-info btn-fill" @click="editUser(user)">Edit</button>
+										<button class="btn btn-sm btn-danger btn-fill" @click="deleteUser(user.id)">Delete</button>
 
-									<button class="btn btn-sm btn-warning btn-fill" @click="suspendUser(user.id)" v-if="user.active == 1">Suspend</button>
-									<button class="btn btn-sm btn-primary btn-fill" @click="suspendUser(user.id)" v-else>Unsuspend</button>	
-								</td>
-							</tr>
-						</tbody>
-					</table>
+										<button class="btn btn-sm btn-warning btn-fill" @click="suspendUser(user.id)" v-if="user.active == 1">Suspend</button>
+										<button class="btn btn-sm btn-primary btn-fill" @click="suspendUser(user.id)" v-else>Unsuspend</button>	
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Pagination -->
+					<div class="paginator">
+						<button class="btn btn-fill btn-primary" @click="fetchPaginateUsers(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
+							<i class="fa fa-arrow-left"></i> Prev
+						</button>
+
+						<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateUsers(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+							Next <i class="fa fa-arrow-right"></i>
+						</button>
+
+						<div class="clearfix"></div>
+					</div>
 				</div>
 
-				<!-- Pagination -->
-				<div class="paginator">
-					<button class="btn btn-fill btn-primary" @click="fetchPaginateUsers(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
-						<i class="fa fa-arrow-left"></i> Prev
-					</button>
+				<!-- Edit -->
+				<div v-show="editmode">
+					<alert-error :form="form"></alert-error>
 
-					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateUsers(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
-						Next <i class="fa fa-arrow-right"></i>
-					</button>
+					<form method="POST" @submit.prevent="updateUser()" @keydown="form.onKeydown($event)">
+						<div class="form-group">
+                        	<label for="email">Email address</label>
+                            <input v-model="form.email" type="email" name="email" placeholder="Email address" class="form-control" :class="{ 'has-error':form.errors.has('email') }" id="email" required>
+                            <has-error :form="form" field="email"></has-error>
+                        </div>
+                        <div class="form-group">
+                        	<label for="password">Password</label>
+                        	<div class="input-group">
+                            	<input v-model="form.password" type="password" name="password" placeholder="Enter a password" class="form-control" :class="{ 'has-error':form.errors.has('password') }" id="password">
+                            	<div class="input-group-btn">
+                            		<button class="btn btn-default" type="button" @click="generatePassword">{{ generatedPassword ? 'Copied to Clipboard' : 'Auto-Generate Password' }}</button>
+                            	</div>
+                            </div>
+                            <small class="help-block text-primary"><i class="fa fa-info-circle"></i> Ignore if you do not want to change the password</small>
+                            <has-error :form="form" field="password"></has-error>
+                        </div>
 
-					<div class="clearfix"></div>
+						<button type="submit" :disabled="form.busy" class="btn btn-fill btn-primary">Update User</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -63,8 +93,25 @@
 	export default {
 		data() {
 			return {
+				editmode: false,
+				generatedPassword: false,
+
 				users: [],
 				pagination: {},
+
+				form: new Form({
+					id: '',
+					name: '',
+					email: '',
+					phone: '',
+					password: '',
+					city: {
+						id: '',
+						state: {
+							id: ''
+						}
+					}
+				}),
 
 				url: '/api/user/',
 				loadURL: '/api/users/vendor/',
@@ -106,6 +153,54 @@
             fetchPaginateUsers(url) {
                 this.loadURL = url;
                 this.loadUsers();
+            },
+            editUser(user) {
+            	this.editmode = true
+
+            	this.form.fill(user)
+            },
+            generatePassword() {
+            	this.form.password = Math.random().toString(36).slice(-8).toUpperCase()
+
+            	this.generatedPassword = true
+
+            	$('#password').attr('type', 'text')
+            	
+            	setTimeout(() => {
+            		$('#password').select()
+
+            		document.execCommand("copy");
+            	}, 100)
+
+            	Toast.fire({
+            		type: 'success',
+            		title: 'Password is now copied to clipboard'
+            	})
+            },
+            updateUser() {
+            	const loader = this.$loading.show()
+
+            	this.form.put('/api/user/'+this.form.id)
+            	.then(() => {
+            		this.loadUsers()
+            		this.editmode = false
+            		Swal.fire({
+            			type: 'success',
+            			title: 'Successful',
+            			text: 'User was updated successfully'
+            		})
+
+            		loader.hide()
+            	})
+            	.catch(() => {
+            		Swal.fire({
+            			type: 'error',
+            			title: 'Something went wrong',
+            			text: 'User could not be updated'
+            		})
+
+            		loader.hide()
+            	})
             },
 			deleteUser(id) {
 				Swal.fire({
