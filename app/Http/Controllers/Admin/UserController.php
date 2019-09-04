@@ -5,6 +5,7 @@ namespace SavyCon\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
+use SavyCon\Http\Requests\UpdateUserData;
 use SavyCon\Models\User;
 
 class UserController extends Controller
@@ -53,9 +54,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserData $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email,'.$user->id,
+        ]);
+
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = \Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response($user, 200);
     }
 
     /**
