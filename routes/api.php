@@ -68,6 +68,7 @@ Route::get('/services/featured', 'ServiceController@featured');
 Route::get('/services/featured/{count}', 'ServiceController@limitedFeatured')->where('count', '([0-9]+)');
 Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');
 
+// States and Cities
 Route::get('/states', 'LocationController@states')->name('state.all');
 Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)');
 
