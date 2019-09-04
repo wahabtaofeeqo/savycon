@@ -5,16 +5,15 @@ namespace SavyCon\Http\Controllers\General;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
+use SavyCon\Models\User;
 use SavyCon\Models\UserServiceMessage;
 use SavyCon\Http\Requests\StoreMessage;
 
+use SavyCon\Jobs\Mails\Admin\InformAdminOnNewUserServiceMessage;
+use SavyCon\Jobs\Mails\User\NotifyUserOnNewServiceMessage;
+
 class MessageController extends Controller
 {
-    public function __construct() 
-    {
-        $this->middleware('auth:api');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +21,8 @@ class MessageController extends Controller
      */
     public function index()
     {
+        $this->middleware('auth:api');
+
         $messages = UserServiceMessage::with([
             'userService',
             'userService.service',
@@ -49,6 +50,11 @@ class MessageController extends Controller
         $message->message = $request->message;
         $message->user_service_id = $request->service_id;
         $message->save();
+
+        NotifyUserOnNewServiceMessage::dispatch($message)->delay(now()->addSeconds(5));
+
+        $admin = User::findOrFail(2);
+        InformAdminOnNewUserServiceMessage::dispatch($admin, $message)->delay(now()->addSeconds(1));
 
         return response($message, 200);
     }

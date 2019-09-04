@@ -8,6 +8,8 @@ use SavyCon\Http\Controllers\Controller;
 use SavyCon\Models\UserService;
 use SavyCon\Models\UserServiceRating;
 
+use SavyCon\Jobs\Mails\User\NotifyUserOnNewServiceReview;
+
 class RatingController extends Controller
 {
     /**
@@ -39,6 +41,8 @@ class RatingController extends Controller
         $rating->stars = $request->stars;
         $rating->comment = $request->comment;
         $rating->save();
+
+        NotifyUserOnNewServiceReview::dispatch($rating)->delay(now()->addSeconds(15));
 
         return response($rating, 200);
     }

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use SavyCon\Jobs\Mails\User\WelcomeUserToSavycon;
+use SavyCon\Jobs\Mails\Admin\InformAdminOfNewUser;
+
 class RegisterController extends Controller
 {
     /*
@@ -66,7 +69,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -74,5 +77,12 @@ class RegisterController extends Controller
             'role' => $data['role'],
             'city_id' => $data['city_id']
         ]);
+
+        WelcomeUserToSavycon::dispatch($user)->delay(now()->addSeconds(15));
+
+        $admin = User::findOrFail(2);
+        InformAdminOfNewUser::dispatch($user, $admin)->delay(now()->addSeconds(30));
+
+        return $user;
     }
 }

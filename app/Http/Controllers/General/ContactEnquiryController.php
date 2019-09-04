@@ -5,8 +5,12 @@ namespace SavyCon\Http\Controllers\General;
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
+use SavyCon\Models\User;
+
 use SavyCon\Models\ContactEnquiry;
 use SavyCon\Http\Requests\StoreNewContactEnquiry;
+
+use SavyCon\Jobs\Mails\Admin\InformOfSupportTicket;
 
 class ContactEnquiryController extends Controller
 {
@@ -40,6 +44,9 @@ class ContactEnquiryController extends Controller
         $enquiry->phone = $request->phone;
         $enquiry->message = $request->message;
         $enquiry->save();
+
+        $admin = User::findOrFail(2);
+        InformOfSupportTicket::dispatch($admin)->delay(now()->addSeconds(10));
 
         return redirect()->route('contact')->with('status-contact', 'Message was submitted successfully');
     }
