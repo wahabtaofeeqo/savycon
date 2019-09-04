@@ -67,7 +67,7 @@ class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, Wi
                                     'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com'
                             ,
                             'password' => Hash::make($row['contactperson']),
-                            'phone' => ($row['phone'] === 'nan') ? '8001002000' : $row['phone'],
+                            'phone' => ($row['phone'] === 'nan') ? '8001002000' : substr($row['phone'], 1),
                             'role' => 'vendor',
                             'city_id' => 
                                 empty(City::where('name', $row['city'])->first())
@@ -90,6 +90,13 @@ class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, Wi
                         User::where('name', $row['contactperson'])->where('phone', $row['phone'])->first()->id
                 : 
                     User::where('name', $row['contactperson'])->where('email', $row['email'])->first()->id
+            ,
+            'city_id' => empty(City::where('name', $row['city'])->first())
+                ?   City::create([
+                        'name' => $row['city'],
+                        'state_id' => $this->state_id
+                    ])->id
+                :   City::where('name', $row['city'])->first()->id
             ,
             'service_id' => 
                 empty(Service::where('name', $row['category'])->first())

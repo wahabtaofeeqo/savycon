@@ -15,7 +15,7 @@
 					<div class="card">
 						<div class="header">
 							<h4 class="title">
-								{{ index+1 }}
+								{{ message.id }}
 								<span class="pull-right">
 									<a :href="viewService(message.user_service.id)" target="__blank" class="btn btn-danger btn-sm btn-fill" title="View Service">View Service</a>
 									<button class="btn btn-sm btn-success btn-fill" @click="resolveMessage(message.id)">Resolve</button>

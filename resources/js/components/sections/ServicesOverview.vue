@@ -32,9 +32,9 @@
 							</button>
 
 							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search_address" @keyup.enter="searchServices" name="" placeholder="Location" list="available_cities">
-							<datalist id="available_cities">
+							<!-- <datalist id="available_cities">
 								<option :value="city.address" v-for="city in allServices"></option>
-							</datalist>
+							</datalist> -->
 						</div>	
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 						<div class="block2">
 							<div class="block2-pic hov-img0">
-								<img :src="getPhoto(service.image_1)" alt="IMG-SERVICE">
+								<img :src="getPhoto(service)" alt="IMG-SERVICE">
 
 								<a :href="openService(service.id)" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
 									View
@@ -99,8 +99,16 @@
 			}
 		},
 		methods: {
-			getPhoto(name) {
-				return '/images/services/'+name
+			getPhoto(service) {
+				var path = '/images/services/'
+				
+				if (service.image_1 === 'unavailable.png') {
+					path = '/images/tags/'
+
+					name = service.service.category.image_tag
+				}
+
+				return path+name
 			},
 			loadCategories() {
 				axios.get(this.categoriesURL)

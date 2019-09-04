@@ -26,85 +26,85 @@ class CounterController extends Controller
 
     public function totalStates()
     {
-    	return State::count();
+    	return number_format(State::count());
     }
 
     public function totalCities()
     {
-    	return City::count();
+    	return number_format(City::count());
     }
 
     public function totalCategories()
     {
-    	return Category::count();
+    	return number_format(Category::count());
     }
 
     public function totalSubCategories()
     {
-    	return Service::count();
+    	return number_format(Service::count());
     }
 
     public function totalServices()
     {
-    	return UserService::count();
+    	return number_format(UserService::count());
     }
 
     public function featuredServices()
     {
-    	return UserService::where('featured', 1)->count();
+    	return number_format(UserService::where('featured', 1)->count());
     }
 
     public function bannedServices()
     {
-    	return UserService::where('active', 0)->count();
+    	return number_format(UserService::where('active', 0)->count());
     }
 
     public function totalVendors()
     {
-    	return User::where('role', 'vendor')->count();
+    	return number_format(User::where('role', 'vendor')->count());
     }
 
     public function suspendedVendors()
     {
-    	return User::where([
+    	return number_format(User::where([
     		['role', 'vendor'],
     		['active', 0]
-    	])->count();
+    	])->count());
     }
 
     public function totalBuyers()
     {
-    	return User::where('role', 'user')->count();
+    	return number_format(User::where('role', 'user')->count());
     }
 
     public function totalSubscribers()
     {
-    	return Subscription::count();
+    	return number_format(Subscription::count());
     }
 
     public function totalContactMessages()
     {
-    	return ContactEnquiry::count();
+    	return number_format(ContactEnquiry::count());
     }
 
     public function totalVendorMessages()
     {
-    	return UserServiceMessage::count();
+    	return number_format(UserServiceMessage::count());
     }
 
     public function totalUnfoundSearches()
     {
-    	return Search::count();
+    	return number_format(Search::count());
     }
 
     public function totalBuyerRequests()
     {
-    	return UserRequest::count();
+    	return number_format(UserRequest::count());
     }
 
     public function totalVendorServices()
     {
-        return auth()->user()->userServices()->count();
+        return number_format(auth()->user()->userServices()->count());
     }
 
     public function averageUserRating()

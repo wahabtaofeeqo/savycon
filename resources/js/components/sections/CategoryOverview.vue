@@ -21,7 +21,7 @@
 									<div class="col-sm-6 col-md-4 col-lg-4 p-b-35 isotope-item" v-for="service in services">
 										<div class="block2">
 											<div class="block2-pic hov-img0">
-												<img :src="getPhoto(service.image_1)" alt="IMG-SERVICE">
+												<img :src="getPhoto(service)" alt="IMG-SERVICE">
 
 												<a :href="openService(service.id)" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
 													View
@@ -111,7 +111,7 @@
 										<ul v-show="featuredServices.length > 0">
 											<li class="flex-w flex-t p-b-30" v-for="service in featuredServices">
 												<a :href="openService(service.id)" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-													<img :src="getPhoto(service.image_1)" alt="SERVICE">
+													<img :src="getPhoto(service)" alt="SERVICE">
 												</a>
 
 												<div class="size-215 flex-col-t p-t-8">
@@ -254,8 +254,16 @@
 				this.url = url;
                 this.loadServices();
 			},
-			getPhoto(name) {
-				return '/images/services/'+name
+			getPhoto(service) {
+				var path = '/images/services/'
+				
+				if (service.image_1 === 'unavailable.png') {
+					path = '/images/tags/'
+
+					name = service.service.category.image_tag
+				}
+
+				return path+name
 			},
 			openService(id) {
 				return '/service/'+id
