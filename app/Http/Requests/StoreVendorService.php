@@ -28,6 +28,7 @@ class StoreVendorService extends FormRequest
             'description' => 'required',
             'price' => 'required|numeric|between:500.00,10000000.00',
             'service.id' => 'required|numeric',
+            'city.id' => 'required|numeric',
             'image_1' => 'required',
             'image_2' => 'required',
             'image_3' => 'required',

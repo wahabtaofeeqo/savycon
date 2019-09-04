@@ -43,6 +43,7 @@
 							<tr>
 								<th>Name</th>
 								<th>State</th>
+								<th>Number of Services</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -50,6 +51,7 @@
 							<tr v-for="city in cities">
 								<td>{{ city.name }}</td>
 								<td>{{ city.state.name }}</td>
+								<td>{{ city.user_services_count }}</td>
 								<td>
 									<button class="btn btn-sm btn-primary btn-fill" @click="editCity(city)">Edit</button>
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteCity(city.id)">Delete</button>

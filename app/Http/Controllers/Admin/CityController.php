@@ -26,6 +26,7 @@ class CityController extends Controller
         $cities = City::with([
             'state'
         ])
+        ->withCount('userServices')
         ->orderBy('name', 'ASC')
         ->paginate(20);
 

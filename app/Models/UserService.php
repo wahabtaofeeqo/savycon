@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserService extends Model
 {
     protected $fillable = [
-        'title', 'description', 'price', 'image_1', 'image_2', 'image_3', 'featured', 'active', 'address', 'user_id', 'service_id'
+        'title', 'description', 'price', 'image_1', 'image_2', 'image_3', 'featured', 'active', 'address', 'user_id', 'city_id', 'service_id'
     ];
 
     public function user()
@@ -18,6 +18,11 @@ class UserService extends Model
     public function service()
     {
     	return $this->belongsTo('SavyCon\Models\Service');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('SavyCon\Models\City');
     }
 
     public function ratings()

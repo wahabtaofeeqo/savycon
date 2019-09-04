@@ -67,6 +67,7 @@ class ServiceController extends Controller
         $service->image_3 = $request->image_3;
         $service->address = $request->address;
         $service->user_id = auth('api')->user()->id;
+        $service->city_id = $request->input('city.id');
         $service->service_id = $request->input('service.id');
         $service->save();
 

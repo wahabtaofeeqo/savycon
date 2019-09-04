@@ -19,4 +19,9 @@ class State extends Model
     {
     	return $this->hasManyThrough('SavyCon\Models\User', 'SavyCon\Models\City');
     }
+
+    public function userServices()
+    {
+        return $this->hasManyThrough('SavyCon\Models\UserService', 'SavyCon\Models\City');
+    }
 }
