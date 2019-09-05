@@ -43,7 +43,7 @@
 					No service was found <mark>{{ search ? 'for your search' : 'in this category'}}</mark>
 				</div>
 
-				<div class="row" ref="serviceContainer" v-show="services.length > 0">
+				<div class="row" v-show="services.length > 0">
 					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 						<div class="block2">
 							<div class="block2-pic hov-img0">
@@ -164,23 +164,6 @@
                 this.url = url;
                 this.loadServices();
             },
-			switchCategory(id) {
-				const loader = this.$loading.show({
-					container: this.$refs.serviceContainer
-				})
-
-				axios.get(this.categoriesURL+'/'+id)
-				.then((response) => {			
-					this.services = response.data.data
-
-					this.makePagination(response.data)
-
-					loader.hide()
-				})
-				.catch(() => {
-					loader.hide()
-				})
-			},
 			categoriesLink() {
 				return '/category'
 			},

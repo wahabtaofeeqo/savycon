@@ -56,7 +56,11 @@ class ServiceController extends Controller
     public function search($text = null, $address = null)
     {
         if ($address) {
-            $services = UserService::where([
+            $services = UserService::with([
+                'user',
+                'service',
+                'service.category'
+            ])->where([
                 ['address', 'LIKE', '%'.$address.'%'],
                 ['title', 'LIKE', '%'.$text.'%'],
                 ['active', '1'],
@@ -76,7 +80,11 @@ class ServiceController extends Controller
             ])
             ->paginate(20);
         } else {
-            $services = UserService::where([
+            $services = UserService::with([
+                'user',
+                'service',
+                'service.category'
+            ])->where([
                 ['title', 'LIKE', '%'.$text.'%'],
                 ['active', '1'],
             ])
