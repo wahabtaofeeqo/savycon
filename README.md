@@ -64,9 +64,7 @@ A platform where people find and post services for direct contact.
 - [x] Dashboard Content
 
 ### Things to Collect
-- Database Access
-	Study and create seeds for;
-		- [ ] Import Excel
+- [x] Database
 - [x] Google Tag Manager (SEO)
 - [ ] Socialite (CLIENT_ID, CLIENT_SECRET)
 	- [ ] Facebook
@@ -74,7 +72,6 @@ A platform where people find and post services for direct contact.
 	- [ ] Google
 	- [ ] LinkedIn
 - [x] Featured Adverts
-	- Map with user's location for states
 
 
 
