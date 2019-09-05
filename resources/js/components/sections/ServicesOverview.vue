@@ -1,6 +1,6 @@
 <template>
 	<div>
-    	<section class="bg0 p-t-23 p-b-140" id="search">
+    	<section class="bg0 p-t-50 p-b-140" id="search">
 			<div class="container">
 				<div class="p-b-10">
 					<h3 class="ltext-103 cl5">
@@ -43,7 +43,7 @@
 					No service was found <mark>{{ search ? 'for your search' : 'in this category'}}</mark>
 				</div>
 
-				<div class="row isotope-grid" ref="serviceContainer" v-show="services.length > 0">
+				<div class="row" ref="serviceContainer" v-show="services.length > 0">
 					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 						<div class="block2">
 							<div class="block2-pic hov-img0">

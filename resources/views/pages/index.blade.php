@@ -101,7 +101,7 @@
 	</section>
 
 	@if($adverts->count() > 0)
-	<div class="sec-banner bg0 p-t-95 p-b-55">
+	<section class="sec-banner bg0 p-t-95 p-b-55">
 		<div class="container">
 			<div class="row">
 				@foreach($adverts as $advert)
@@ -131,7 +131,7 @@
 				@endforeach
 			</div>
 		</div>
-	</div>
+	</section>
 	<hr>
 	@endif
 
@@ -176,14 +176,10 @@
 		</div>
 	</section>
 
-	<div class="bg2 flex-c-m flex-w size-302 m-t-0 p-tb-15">
+	<section class="bg2 flex-c-m flex-w size-302 m-t-0 p-tb-15">
 		<span class="stext-107 cl6 p-lr-25"></span>
-	</div>
+	</section>
 	@endif
-
-	<div style="opacity: 0;">
-		<vue-goodshare-facebook has_icon></vue-goodshare-facebook>
-	</div>
 
 	<!-- Services Overview -->
 	<services-overview></services-overview>
