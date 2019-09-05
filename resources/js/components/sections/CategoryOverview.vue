@@ -30,11 +30,16 @@
 
 											<div class="block2-txt flex-w flex-t p-t-14">
 												<div class="block2-txt-child1 flex-col-l ">
-													<a :href="openService(service.id)" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-														{{ service.title }}
-													</a>
+													<small class="cl3 p-b-6">
+														<i class="fa fa-map-marker"></i> {{ service.city.name }}, {{ service.city.state.name }}
+													</small>
 													<span class="stext-105 cl3">
-														₦{{ service.price }}
+														<a :href="openService(service.id)" class="stext-104 cl2 hov-cl1 trans-04 js-name-b2 p-b-6">{{ service.title }}</a> <br>
+														<small>
+															<a :href="'/category/'+service.service.category.id" class="cl4">
+																<img :src="'/images/tags/'+service.service.category.image_tag" width="10" height="10" style="border-radius: 25%;"> {{ service.service.category.name }}
+															</a>
+														</small>
 													</span>
 												</div>
 											</div>
@@ -81,6 +86,34 @@
 										</div>
 									</div>
 
+									<!-- Featured Services -->
+									<div class="p-t-65" ref="featuredContainer">
+										<h4 class="mtext-112 cl2 p-b-33">
+											Featured Services
+										</h4>
+										<div class="alert alert-info" v-show="featuredServices.length < 1">
+											NONE AT THE MOMENT
+										</div>
+
+										<ul v-show="featuredServices.length > 0">
+											<li class="flex-w flex-t p-b-30" v-for="service in featuredServices">
+												<a :href="openService(service.id)" class="wrap-pic-w size-214 hov-ovelay1 m-r-20">
+													<img :src="getPhoto(service)" alt="SERVICE">
+												</a>
+
+												<div class="size-215 flex-col-t p-t-8">
+													<a :href="openService(service.id)" class="stext-116 cl8 hov-cl1 trans-04">
+														{{ service.title }}
+													</a>
+
+													<span class="stext-116 cl6 p-t-20">
+														<i class="fa fa-map-marker"></i> {{ service.city.name }}, {{ service.city.state.name }}
+													</span>
+												</div>
+											</li>
+										</ul>
+									</div>
+
 									<!-- Other Categories -->
 									<div class="p-t-55" ref="categoriesContainer">
 										<h4 class="mtext-112 cl2 p-b-33">
@@ -95,34 +128,6 @@
 												<a :href="openCategory(category.id)" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
 													{{ category.name }}
 												</a>
-											</li>
-										</ul>
-									</div>
-
-									<!-- Featured Services -->
-									<div class="p-t-65" ref="featuredContainer">
-										<h4 class="mtext-112 cl2 p-b-33">
-											Featured Services
-										</h4>
-										<div class="alert alert-info" v-show="featuredServices.length < 1">
-											NONE AT THE MOMENT
-										</div>
-
-										<ul v-show="featuredServices.length > 0">
-											<li class="flex-w flex-t p-b-30" v-for="service in featuredServices">
-												<a :href="openService(service.id)" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
-													<img :src="getPhoto(service)" alt="SERVICE">
-												</a>
-
-												<div class="size-215 flex-col-t p-t-8">
-													<a :href="openService(service.id)" class="stext-116 cl8 hov-cl1 trans-04">
-														{{ service.title }}
-													</a>
-
-													<span class="stext-116 cl6 p-t-20">
-														₦{{ service.price }}
-													</span>
-												</div>
 											</li>
 										</ul>
 									</div>

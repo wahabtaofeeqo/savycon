@@ -1,5 +1,9 @@
 <template>
 	<div>
+		<div class="alert alert-info" v-show="services.length > 1">
+			<b>Services will display as "Contact for price" if less than ₦5000</b>
+		</div>
+
 		<div class="card">
 			<div class="header">
 				<h4 class="card-title">

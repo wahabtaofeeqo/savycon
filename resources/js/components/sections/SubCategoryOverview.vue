@@ -30,11 +30,16 @@
 
 											<div class="block2-txt flex-w flex-t p-t-14">
 												<div class="block2-txt-child1 flex-col-l ">
-													<a :href="openService(service.id)" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-														{{ service.title }}
-													</a>
+													<small class="cl3 p-b-6">
+														<i class="fa fa-map-marker"></i> {{ service.city.name }}, {{ service.city.state.name }}
+													</small>
 													<span class="stext-105 cl3">
-														₦{{ service.price }}
+														<a :href="openService(service.id)" class="stext-104 cl2 hov-cl1 trans-04 js-name-b2 p-b-6">{{ service.title }}</a> <br>
+														<small>
+															<a :href="'/category/'+service.service.category.id" class="cl4">
+																<img :src="'/images/tags/'+service.service.category.image_tag" width="10" height="10" style="border-radius: 25%;"> {{ service.service.category.name }}
+															</a>
+														</small>
 													</span>
 												</div>
 											</div>
@@ -90,7 +95,7 @@
 
 										<ul v-show="featuredServices.length > 0">
 											<li class="flex-w flex-t p-b-30" v-for="service in featuredServices">
-												<a :href="openService(service.id)" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+												<a :href="openService(service.id)" class="wra-pic-w size-214 hov-ovelay1 m-r-20">
 													<img :src="getPhoto(service)" alt="SERVICE">
 												</a>
 
@@ -100,7 +105,7 @@
 													</a>
 
 													<span class="stext-116 cl6 p-t-20">
-														₦{{ service.price }}
+														<i class="fa fa-map-marker"></i> {{ service.city.name }}, {{ service.city.state.name }}
 													</span>
 												</div>
 											</li>

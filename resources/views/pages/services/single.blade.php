@@ -91,8 +91,9 @@
 						</h4>
 
 						<span class="mtext-106 cl2">
-							<b>₦</b> {{ $service->price }} <br>
-							<span style="font-size: 13px;"><i class="fa fa-map-marker"></i> {{ $service->address }}</span>
+							<b>₦</b> {{ $service->price < 5000 ? 'Contact for Price' : $service->price }} 
+							<br>
+							<span style="font-size: 15px;"><i class="fa fa-map-marker"></i> {{ $service->city->name }}, {{ $service->city->state->name }}</span>
 						</span>
 
 						<p class="stext-102 cl3 p-t-23 p-b-50" style="white-space: pre-line;">
