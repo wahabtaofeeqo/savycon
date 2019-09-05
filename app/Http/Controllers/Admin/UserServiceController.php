@@ -25,7 +25,7 @@ class UserServiceController extends Controller
             'user',
             'service',
             'service.category'
-        ])->orderBy('id', 'ASC')->paginate(15);
+        ])->latest()->paginate(15);
 
         return response($services, 200);
     }

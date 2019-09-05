@@ -40,7 +40,9 @@ class CategoryController extends Controller
         $services = Category::findOrFail($id)->userServices()->with([
             'user',
             'service',
-            'service.category'
+            'service.category',
+            'city',
+            'city.state'
         ])->latest()->paginate(20);
 
         return response($services, 200);
@@ -59,7 +61,9 @@ class CategoryController extends Controller
         $services = Service::findOrFail($id)->userServices()->with([
             'user',
             'service',
-            'service.category'
+            'service.category',
+            'city',
+            'city.state'
         ])->latest()->paginate(20);
 
         return response($services, 200);

@@ -14,7 +14,9 @@ class ServiceController extends Controller
     	$services = UserService::inRandomOrder()->with([
     		'user',
     		'service',
-    		'service.category'
+    		'service.category',
+            'city',
+            'city.state'
     	])->where('active', 1)->paginate(20);
 
     	return response($services, 200);
@@ -25,7 +27,9 @@ class ServiceController extends Controller
     	$services = UserService::inRandomOrder()->where('featured', '1')->with([
     		'user',
     		'service',
-    		'service.category'
+    		'service.category',
+            'city',
+            'city.state'
     	])->where('active', 1)->paginate(20);
 
     	return response($services, 200);
@@ -36,7 +40,9 @@ class ServiceController extends Controller
         $services = UserService::inRandomOrder()->where('featured', '1')->with([
             'user',
             'service',
-            'service.category'
+            'service.category',
+            'city',
+            'city.state'
         ])->where('active', 1)->limit($count)->get();
 
         return response($services, 200);
@@ -47,7 +53,9 @@ class ServiceController extends Controller
     	$service = UserService::with([
     		'user',
     		'service',
-    		'service.category'
+    		'service.category',
+            'city',
+            'city.state'
     	])->findOrFail($id);
 
     	return response($service, 200);
@@ -59,7 +67,9 @@ class ServiceController extends Controller
             $services = UserService::with([
                 'user',
                 'service',
-                'service.category'
+                'service.category',
+                'city',
+                'city.state'
             ])->where([
                 ['address', 'LIKE', '%'.$address.'%'],
                 ['title', 'LIKE', '%'.$text.'%'],
@@ -83,7 +93,9 @@ class ServiceController extends Controller
             $services = UserService::with([
                 'user',
                 'service',
-                'service.category'
+                'service.category',
+                'city',
+                'city.state'
             ])->where([
                 ['title', 'LIKE', '%'.$text.'%'],
                 ['active', '1'],
