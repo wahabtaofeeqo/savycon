@@ -25,7 +25,7 @@
 			                        	</select>
 			                        </div>
 			                        <div class="col-md-6">
-			                        	<label for="category">Sub-Category</label>
+			                        	<label for="service">Sub-Category</label>
 			                            <select class="form-control" id="service" v-model="form.service.id" required>
 			                            	<option disabled value="">Choose a sub-category</option>
 			                            	<option v-for="service in categoryServices" :key="service.id" v-bind:value="service.id">{{ service.name }}</option>
@@ -48,18 +48,18 @@
 		                    	<div class="row">
 			                        <div class="col-md-6">
 			                        	<label for="state">State</label>
-			                            <select class="form-control" id="state" @change="loadCities()" v-model="form.city.state.id" required>
+			                            <select class="form-control" id="state" @change="loadStateCities()" v-model="form.city.state.id" required>
 			                            	<option disabled value="">Choose a state</option>
 			                            	<option v-for="state in states" :key="state.id" v-bind:value="state.id">{{ state.name }}</option>
 			                        	</select>
 			                        </div>
 			                        <div class="col-md-6">
-			                        	<label for="category">City</label>
+			                        	<label for="city">City</label>
 			                            <select class="form-control" id="city" v-model="form.city.id" required>
 			                            	<option disabled value="">Choose a city</option>
 			                            	<option v-for="city in cities" :key="city.id" v-bind:value="city.id">{{ city.name }}</option>
 			                        	</select>
-			                        	<has-error :form="form" field="service.id"></has-error>
+			                        	<has-error :form="form" field="city.id"></has-error>
 			                        </div>
 			                    </div>
 		                    </div>
@@ -195,6 +195,7 @@
 				.then((response) => {
 					this.form.fill(response.data)
 					this.loadCategoryServices()
+					this.loadStateCities()
 
 					loader.hide()
 				})
@@ -237,7 +238,8 @@
 					this.states = response.data
 				});
 			},
-			loadCities() {
+			loadStateCities() {
+				console.log('changed')
 				const loader = this.$loading.show()
 
 				axios.get(this.stateCitiesURL+this.form.city.state.id)

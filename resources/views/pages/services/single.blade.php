@@ -52,36 +52,29 @@
 							<div class="wrap-slick3-dots"></div>
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
+							@php
+								$path = ['images/services/'.$service->image_1, 'images/services/'.$service->image_2, 'images/services/'.$service->image_3];
+
+								if ($service->image_1 === 'unavailable.png')
+									$path[0] = 'images/tags/'.$service->service->category->image_tag;
+								if ($service->image_2 === 'unavailable.png')
+									$path[1] = 'images/tags/'.$service->service->category->image_tag;
+								if ($service->image_3 === 'unavailable.png')
+									$path[2] = 'images/tags/'.$service->service->category->image_tag;
+							@endphp
+
 							<div class="slick3 gallery-lb">
-								<div class="item-slick3" data-thumb="{{ asset('images/services/'.$service->image_1) }}">
+								@for($i = 0; $i < 3; $i++)
+								<div class="item-slick3" data-thumb="{{ asset($path[$i]) }}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="{{ asset('images/services/'.$service->image_1) }}" alt="IMG-PRODUCT">
+										<img src="{{ asset($path[$i]) }}" alt="IMG-PRODUCT">
 
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('images/services/'.$service->image_1) }}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset($path[$i]) }}">
 											<i class="fa fa-expand"></i>
 										</a>
 									</div>
 								</div>
-
-								<div class="item-slick3" data-thumb="{{ asset('images/services/'.$service->image_2) }}">
-									<div class="wrap-pic-w pos-relative">
-										<img src="{{ asset('images/services/'.$service->image_2) }}" alt="IMG-PRODUCT">
-
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('images/services/'.$service->image_2) }}">
-											<i class="fa fa-expand"></i>
-										</a>
-									</div>
-								</div>
-
-								<div class="item-slick3" data-thumb="{{ asset('images/services/'.$service->image_3) }}">
-									<div class="wrap-pic-w pos-relative">
-										<img src="{{ asset('images/services/'.$service->image_3) }}" alt="IMG-PRODUCT">
-
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('images/services/'.$service->image_3) }}">
-											<i class="fa fa-expand"></i>
-										</a>
-									</div>
-								</div>
+								@endfor
 							</div>
 						</div>
 					</div>
@@ -94,7 +87,7 @@
 						@endcan
 
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							{{ $service->title }} 
+							{{ $service->title }}
 						</h4>
 
 						<span class="mtext-106 cl2">

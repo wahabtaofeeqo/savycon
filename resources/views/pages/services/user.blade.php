@@ -14,7 +14,7 @@
 	<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('{{ asset('main/images/bg-01.jpg') }}');">
 		<h2 class="ltext-105 cl0 txt-center">
-			{{ ucwords($user->name) }} Services
+			{{ ucwords($user->name) }}'s<br>Services
 		</h2>
 	</section>
 
@@ -73,7 +73,11 @@
 						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
+									@if($service->image_1 === 'unavailable.png')
+									<img src="{{ asset('images/tags/'.$service->service->category->image_tag) }}" alt="IMG-SERVICE">
+									@else
 									<img src="{{ asset('images/services/'.$service->image_1) }}" alt="IMG-SERVICE">
+									@endif
 
 									<a href="{{ route('service.single', ['id' => $service->id]) }}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
 										View
