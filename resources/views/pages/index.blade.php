@@ -181,6 +181,10 @@
 	</div>
 	@endif
 
+	<div style="opacity: 0;">
+		<vue-goodshare-facebook has_icon></vue-goodshare-facebook>
+	</div>
+
 	<!-- Services Overview -->
 	<services-overview></services-overview>
 @endsection
