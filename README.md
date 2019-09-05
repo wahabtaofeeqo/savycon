@@ -75,3 +75,22 @@ A platform where people find and post services for direct contact.
 	- [ ] LinkedIn
 - [x] Featured Adverts
 	- Map with user's location for states
+
+
+
+# Updates
+- [x] Search Suggestions
+- [x] Admin can edit Vendor details
+- [x] Email notification
+	- [x] User registers
+		- Admin
+		- User
+	- [x] User service message
+		- User
+		- Admin
+	- [x] User service rating
+		- User
+	- [x] Contact Us message
+		- Admin
+- [x] Domain Routing
+- [x] Image tag
