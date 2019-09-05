@@ -539,7 +539,5 @@
                 </script>
 
                 <script src="{{ asset('main/js/main.js') }}"></script>
-
-                <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js" data-cf-settings="9951c263b0b744c855c840b6-|49" defer=""></script>
         </body>
 </html>
