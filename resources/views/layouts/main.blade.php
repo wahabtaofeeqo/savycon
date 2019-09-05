@@ -84,7 +84,7 @@
                 </noscript>
                 <!-- End Google Tag Manager (noscript) -->
         </head>
-        <body class="animsition">
+        <body class="animsitionn">
                 <div id="app">
                         <!-- Header -->
                         <header class="header-v2">
@@ -493,6 +493,7 @@
                 <script src="{{ asset('js/app.js') }}"></script>
 
                 <!-- Core -->
+                <script src="{{ asset('main/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
                 <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}"></script>
 
                 <!-- For slider -->
@@ -538,5 +539,7 @@
                 </script>
 
                 <script src="{{ asset('main/js/main.js') }}"></script>
+
+                <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/95c75768/cloudflare-static/rocket-loader.min.js" data-cf-settings="9951c263b0b744c855c840b6-|49" defer=""></script>
         </body>
 </html>
