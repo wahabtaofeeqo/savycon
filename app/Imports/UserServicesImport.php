@@ -47,7 +47,7 @@ class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, Wi
         return new UserService([
             'title' => $row['businessname'],
             'description' => $row['shortdesc'],
-            'address' => $row['address1'],
+            'address' => $row['houseno'].', '.$row['address1'].', '.$row['area'].', '.$row['landmark'],
             'user_id' =>
                 empty(User::where('name', $row['contactperson'])->where('email', $row['email'])->first())
                 ?
