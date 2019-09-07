@@ -10,21 +10,21 @@
 				
 				<form method="POST" @submit.prevent="updateProfile()" @keydown="form.onKeydown($event)">
 					<div class="row">
-                        <div class="col-12">
+                        <div class="col-md-12">
                         	<label for="name">Name</label>
                             <input v-model="form.name" type="text" name="name" placeholder="Name" class="form-control" :class="{ 'has-error':form.errors.has('name') }" id="name" required>
                             <has-error :form="form" field="name"></has-error>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-12">
                         	<label for="email">Email address</label>
                             <input v-model="form.email" type="email" name="email" placeholder="Email address" class="form-control" :class="{ 'has-error':form.errors.has('email') }" id="email" required>
                             <has-error :form="form" field="email"></has-error>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-12">
                         	<label for="phone">Phone number</label>
                             <div class="input-group">
                             	<div class="input-group-addon" id="addon-phone">+234</div>
@@ -53,7 +53,7 @@
                             <has-error :form="form" field="city.id"></has-error>
                         </div>
                     </div>
-
+                    
                     <button class="btn btn-primary btn-fill" :disabled="form.busy" type="submit">Update Profile</button>
                     <div class="clearfix"></div>
 		        </form>

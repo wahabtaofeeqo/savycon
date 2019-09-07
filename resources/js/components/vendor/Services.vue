@@ -23,7 +23,8 @@
 								<th>S/N</th>
 								<th>Title</th>
 								<th>Price (₦)</th>
-								<th>Category</th>
+								<th>Location</th>
+								<th>Category > Sub</th>
 								<th>No of Reviews</th>
 								<th></th>
 							</tr>
@@ -33,6 +34,7 @@
 								<td>{{ index+1 }}</td>
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
+								<td>{{ service.city.name }}, {{ service.city.state.name }}</td>
 								<td>{{ service.service.category.name }} <br> > {{ service.service.name }}</td>
 								<td>{{ service.ratings.length }}</td>
 								<td>

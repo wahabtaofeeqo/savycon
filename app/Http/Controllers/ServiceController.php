@@ -5,7 +5,6 @@ namespace SavyCon\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SavyCon\Models\UserService;
-use SavyCon\Models\Search;
 
 class ServiceController extends Controller
 {
@@ -61,69 +60,13 @@ class ServiceController extends Controller
     	return response($service, 200);
     }
 
-    public function search($text = null, $address = null)
-    {
-        if ($address) {
-            $services = UserService::with([
-                'user',
-                'service',
-                'service.category',
-                'city',
-                'city.state'
-            ])->where([
-                ['address', 'LIKE', '%'.$address.'%'],
-                ['title', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->orWhere([
-                ['address', 'LIKE', '%'.$address.'%'],
-                ['description', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->orWhere([
-                ['title', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->orWhere([
-                ['description', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->paginate(20);
-        } else {
-            $services = UserService::with([
-                'user',
-                'service',
-                'service.category',
-                'city',
-                'city.state'
-            ])->where([
-                ['title', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->orWhere([
-                ['description', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->paginate(20);
-        }
-
-        if (empty($service->data)) {
-            $unfound = new Search();
-            $unfound->text = $text;
-
-            if ($address) {
-                $unfound->address = $address;
-            }
-
-            $unfound->save();
-        }
-
-        return response($services, 200);
-    }
-
     public function allServices()
     {
-        $services = UserService::orderBy('title', 'ASC')->where('active', 1)->get();
+        $services = UserService::with([
+            'city',
+            'city.state'
+        ])
+        ->orderBy('title', 'ASC')->where('active', 1)->get();
 
         return response($services, 200);
     }

@@ -24,7 +24,9 @@ class UserServiceController extends Controller
         $services = UserService::with([
             'user',
             'service',
-            'service.category'
+            'service.category',
+            'city',
+            'city.state'
         ])->latest()->paginate(15);
 
         return response($services, 200);
