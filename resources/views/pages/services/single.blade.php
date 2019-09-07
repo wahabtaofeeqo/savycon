@@ -77,6 +77,13 @@
 								@endfor
 							</div>
 						</div>
+
+						<div class="m-t-20">
+							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+								Map
+							</h4>
+							<iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q={{ $service->address }}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"></iframe>
+						</div>
 					</div>
 				</div>
 					
@@ -92,8 +99,10 @@
 
 						<span class="mtext-106 cl2">
 							<b>₦</b> {{ $service->price < 5000 ? 'Contact for Price' : $service->price }} 
-							<br>
-							<span style="font-size: 15px;"><i class="fa fa-map-marker"></i> {{ $service->city->name }}, {{ $service->city->state->name }}</span>
+							<br><br>
+							<span style="font-size: 13px;">
+								<i class="fa fa-map-marker"></i> {{ $service->address }}, {{ $service->city->name }}, {{ $service->city->state->name }}
+							</span>
 						</span>
 
 						<p class="stext-102 cl3 p-t-23 p-b-50" style="white-space: pre-line;">
