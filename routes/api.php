@@ -47,10 +47,13 @@ Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('
 Route::get('/feature/service/{id}', 'Admin\UserServiceController@alterFeature')->where('id', '([0-9]+)');
 
 // Search
-Route::get('/findService/{text?}/{location?}', 'ServiceController@search')->where([
+Route::get('/findService/{text?}/{location?}', 'SearchController@search')->where([
 	'/text', '.*',
 	'/location', '.*',
 ])->name('search');
+Route::get('/suggestService/{text?}', 'SearchController@suggestSearch')->where([
+	'/text', '.*',
+])->name('suggest.search');
 
 Route::get('/category', 'CategoryController@index');
 Route::get('/category/limited', 'CategoryController@limitedIndex');

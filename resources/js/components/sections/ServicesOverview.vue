@@ -22,7 +22,7 @@
 								<i class="zmdi zmdi-search"></i>
 							</button>
 
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search" @keyup.enter="searchServices" name="search-service" placeholder="Search" list="available_services">
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search" @keyup="loadAllServices" @keyup.enter="searchServices" name="search-service" placeholder="Search" list="available_services">
 							<datalist id="available_services">
 								<option :value="service.title" v-for="service in allServices"></option>
 							</datalist>
@@ -32,15 +32,19 @@
 							</button>
 
 							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" v-model="search_address" @keyup.enter="searchServices" name="" placeholder="Location" list="available_cities">
-							<!-- <datalist id="available_cities">
-								<option :value="city.address" v-for="city in allServices"></option>
-							</datalist> -->
+							<datalist id="available_cities">
+								<option :value="service.city.name+', '+service.city.state.name" v-for="service in allServices"></option>
+							</datalist>
 						</div>	
 					</div>
 				</div>
 
 				<div class="alert alert-info" v-show="services.length < 1">
 					No service was found <mark>{{ search ? 'for your search' : 'in this category'}}</mark>
+				</div>
+
+				<div class="alert alert-warning" v-show="notfound == 1">
+					No service was found in the desired location, but you can check related services in other locations.
 				</div>
 
 				<div class="row" v-show="services.length > 0">
@@ -98,6 +102,7 @@
 
 				search: '',
 				search_address: '',
+				notfound: '',
 
 				allServices: [],
 				allCities: [],
@@ -182,9 +187,11 @@
 
 				axios.get('/api/findService/'+this.search+'/'+this.search_address)
 				.then((response) => {
-					this.services = response.data.data
+					this.services = response.data.services.data
 
-					this.makePagination(response.data)
+					this.notfound = response.data.notfound
+
+					this.makePagination(response.data.services)
 
 					loader.hide()
 				})
@@ -193,10 +200,13 @@
 				})
 			},
 			loadAllServices() {
-				axios.get('/api/services/all/')
-				.then((response) => {
-					this.allServices = response.data
-				})
+				setTimeout(() => {
+					axios.get('/api/suggestService/'+this.search)
+					.then((response) => {
+						this.allServices = response.data
+					})
+				}, 500)
+				
 			}
 		},
 		created() {
@@ -214,7 +224,6 @@
 		mounted() {
 			this.loadCategories()
 			this.loadServices()
-			this.loadAllServices()
 		}
 	}	
 </script>
