@@ -32,6 +32,7 @@ class CreateUserServicesTable extends Migration
             $table->boolean('featured')->default(0);
             $table->boolean('active')->default(1);
             $table->longText('address')->nullable();
+            $table->longText('landmark')->nullable();
             $table->timestamps();
         });
     }

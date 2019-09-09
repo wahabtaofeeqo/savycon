@@ -94,14 +94,15 @@
 						@endcan
 
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							{{ $service->title }}
+							{{ $service->title }} @if($service->featured == 1)<sup><span class="badge badge-primary">Featured</span></sup>@endif
 						</h4>
 
 						<span class="mtext-106 cl2">
 							<b>₦</b> {{ $service->price < 5000 ? 'Contact for Price' : $service->price }} 
 							<br><br>
-							<span style="font-size: 13px;">
-								<i class="fa fa-map-marker"></i> {{ $service->address }}, {{ $service->city->name }}, {{ $service->city->state->name }}
+							<span style="font-size: 13px;" title="Address and Landmark">
+								<i class="fa fa-map"></i>&nbsp;&nbsp;&nbsp; {{ $service->address }}<br>
+								{{ $service->landmark }}
 							</span>
 						</span>
 

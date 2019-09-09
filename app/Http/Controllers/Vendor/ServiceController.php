@@ -68,6 +68,7 @@ class ServiceController extends Controller
         $service->image_2 = $request->image_2;
         $service->image_3 = $request->image_3;
         $service->address = $request->address;
+        $service->landmark = $request->landmark;
         $service->user_id = auth('api')->user()->id;
         $service->city_id = $request->input('city.id');
         $service->service_id = $request->input('service.id');
@@ -142,6 +143,7 @@ class ServiceController extends Controller
         $service->description = $request->description;
         $service->price = $request->price;
         $service->address = $request->address;
+        $service->landmark = $request->landmark;
         $service->city_id = $request->input('city.id');
         $service->service_id = $request->input('service.id');
         $service->save();

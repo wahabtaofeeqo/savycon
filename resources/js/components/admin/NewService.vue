@@ -69,6 +69,11 @@
 	                            <has-error :form="form" field="address"></has-error>
 		                    </div>
 		                    <div class="form-group">
+		                    	<label for="landmark">Landmark of the address</label>
+	                            <input type="text" name="landmark" v-model="form.landmark" id="landmark" placeholder="Popular place for better description" class="form-control" :class="{ 'has-error':form.errors.has('landmark') }" required>
+	                            <has-error :form="form" field="landmark"></has-error>
+		                    </div>
+		                    <div class="form-group">
 		                    	<label for="price">Starting Price</label>
 	                        	<div class="input-group">
 	                            	<div class="input-group-addon">₦</div>
@@ -155,6 +160,7 @@
 					image_2: '',
 					image_3: '',
 					address: '',
+					landmark: '',
 					service: {
 						id: '',
 						category: {
