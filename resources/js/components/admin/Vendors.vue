@@ -2,7 +2,13 @@
 	<div>
 		<div class="card">
 			<div class="header">
-				<h4 class="card-title">Vendors <span class="badge badge-primary">{{ pagination.total_items }}</span></h4>
+				<h4 class="card-title">
+					Vendors <span class="badge badge-primary">{{ pagination.total_items }}</span>
+
+					<div class="pull-right">
+						<input type="text" name="search" class="form-control" v-model="search" placeholder="Search by name or email..." @input="searchVendor" @keyup.enter="searchVendor">
+					</div>
+				</h4>
 				<p class="category">All your vendors</p>
 			</div>
 			<div class="content">
@@ -113,6 +119,8 @@
 					}
 				}),
 
+				search: '',
+
 				url: '/api/user/',
 				loadURL: '/api/users/vendor/',
 			}
@@ -153,6 +161,22 @@
             fetchPaginateUsers(url) {
                 this.loadURL = url;
                 this.loadUsers();
+            },
+            searchVendor() {
+            	setTimeout(() => {
+            		axios.get('/api/findAdminVendor/'+this.search)
+	            	.then((response) => {
+	            		this.users = response.data.data
+
+	            		this.makePagination(response.data)
+	            	})
+	            	.catch(() => {
+	            		Toast.fire({
+	            			type: 'error',
+	            			title: 'Search does not exist',
+	            		})
+	            	})
+            	}, 500)
             },
             editUser(user) {
             	this.editmode = true

@@ -4,6 +4,7 @@ namespace SavyCon\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use SavyCon\Models\User;
 use SavyCon\Models\UserService;
 use SavyCon\Models\City;
 use SavyCon\Models\State;
@@ -67,6 +68,47 @@ class SearchController extends Controller
             'services' => $services,
             'notfound' => $notfound
         ], 200);
+    }
+
+    public function adminSearch($text = null)
+    {
+        $services = UserService::with([
+            'user',
+            'service',
+            'service.category',
+            'city',
+            'city.state'
+        ])
+        ->where([
+            ['title', 'LIKE', '%'.$text.'%'],
+        ])
+        ->latest()
+        ->paginate(20);
+
+        return response($services, 200);
+    }
+
+    public function adminSearchVendor($text = null)
+    {
+        $vendors = User::withCount([
+            'userServices'
+        ])
+        ->with([
+            'city',
+            'city.state'
+        ])
+        ->where([
+            ['role', 'vendor'],
+            ['name', 'LIKE', '%'.$text.'%'],
+        ])
+        ->orWhere([
+            ['role', 'vendor'],
+            ['email', 'LIKE', '%'.$text.'%'],
+        ])
+        ->latest()
+        ->paginate(10);
+
+        return response($vendors, 200);
     }
 
     public function suggestSearch($text = null)

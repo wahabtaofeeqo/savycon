@@ -4,6 +4,10 @@
 			<div class="header">
 				<h4 class="card-title">
 					Services <span class="badge badge-primary">{{ pagination.total_items }}</span>
+
+					<div class="pull-right">
+						<input type="text" name="search" class="form-control" v-model="search" placeholder="Search by title..." @input="searchService" @keyup.enter="searchService">
+					</div>
 				</h4>
 				<p class="category">All your services</p>
 			</div>
@@ -19,7 +23,7 @@
 								<th>Title</th>
 								<th>Price (₦)</th>
 								<th>Location</th>
-								<th>Category > Sub</th>
+								<th>Category</th>
 								<th>Owner</th>
 								<th></th>
 							</tr>
@@ -30,7 +34,7 @@
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
 								<td>{{ service.city.name }}, {{ service.city.state.name }}</td>
-								<td>{{ service.service.category.name }} <br> > {{ service.service.name }}</td>
+								<td>{{ service.service.category.name }}</td>
 								<td>{{ service.user.name }}</td>
 								<td>
 									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
@@ -72,6 +76,7 @@
 			return {
 				services: [],
 				pagination: {},
+				search: '',
 
 				url: '/api/userService/',
 			}
@@ -112,6 +117,22 @@
             fetchPaginateServices(url) {
                 this.url = url;
                 this.loadServices();
+            },
+            searchService() {
+            	setTimeout(() => {
+            		axios.get('/api/findAdminService/'+this.search)
+	            	.then((response) => {
+	            		this.services = response.data.data
+
+	            		this.makePagination(response.data)
+	            	})
+	            	.catch(() => {
+	            		Toast.fire({
+	            			type: 'error',
+	            			title: 'Search does not exist',
+	            		})
+	            	})
+            	}, 500)
             },
 			deleteService(id) {
 				Swal.fire({

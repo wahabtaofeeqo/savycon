@@ -24,7 +24,7 @@
 								<th>Title</th>
 								<th>Price (₦)</th>
 								<th>Location</th>
-								<th>Category > Sub</th>
+								<th>Category</th>
 								<th>No of Reviews</th>
 								<th></th>
 							</tr>
@@ -35,7 +35,7 @@
 								<td>{{ service.title }}</td>
 								<td>{{ service.price }}</td>
 								<td>{{ service.city.name }}, {{ service.city.state.name }}</td>
-								<td>{{ service.service.category.name }} <br> > {{ service.service.name }}</td>
+								<td>{{ service.service.category.name }}</td>
 								<td>{{ service.ratings.length }}</td>
 								<td>
 									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>

@@ -47,7 +47,11 @@
 					No service was found in the desired location, but you can check related services in other locations.
 				</div>
 
-				<div class="row" v-show="services.length > 0">
+				<div v-show="loader">
+					loading...
+				</div>
+
+				<div class="row" v-show="services.length > 0 && !loader">
 					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item" v-for="service in services">
 						<div class="block2">
 							<div class="block2-pic hov-img0">
@@ -92,6 +96,8 @@
 	export default {
 		data() {
 			return {
+				loader: false,
+
 				categories: [],
 
 				services: [],
@@ -137,9 +143,7 @@
 				return '.'+name.toLowerCase().trim()
 			},
 			loadServices() {
-				const loader = this.$loading.show({
-					container: this.$refs.serviceContainer
-				})
+				this.loader = true
 
 				axios.get(this.servicesURL)
 				.then((response) => {
@@ -147,7 +151,7 @@
 
 					this.makePagination(response.data)
 
-					loader.hide()
+					this.loader = false
 				})
 				.catch(() => {
 					Swal.fire({
@@ -156,7 +160,7 @@
 						text: 'Service data cannot be collected at the moment'
 					})
 
-					loader.hide()
+					this.loader = false
 				})
 			},
 			makePagination(data) {

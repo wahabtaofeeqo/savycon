@@ -55,6 +55,14 @@ Route::get('/suggestService/{text?}', 'SearchController@suggestSearch')->where([
 	'/text', '.*',
 ])->name('suggest.search');
 
+// Admin Search
+Route::get('/findAdminService/{text?}', 'SearchController@adminSearch')->where([
+	'/text', '.*',
+])->name('admin.search');
+Route::get('/findAdminVendor/{text?}', 'SearchController@adminSearchVendor')->where([
+	'/text', '.*',
+])->name('admin.search.vendor');
+
 Route::get('/category', 'CategoryController@index');
 Route::get('/category/limited', 'CategoryController@limitedIndex');
 Route::get('/category/show/{id}', 'CategoryController@show')->where('id', '([0-9]+)');
