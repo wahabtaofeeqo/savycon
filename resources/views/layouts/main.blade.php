@@ -476,7 +476,7 @@
                                         <div class="p-t-40">
                                                 <p class="stext-107 cl6 txt-center">
                                                         Copyright &copy; @php echo date("Y") @endphp All rights reserved
-                                                        <br>Powered by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
+                                                        <br>Developed by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
                                                 </p>
                                         </div>
                                 </div>
