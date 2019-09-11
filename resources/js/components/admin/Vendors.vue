@@ -71,9 +71,22 @@
 
 					<form method="POST" @submit.prevent="updateUser()" @keydown="form.onKeydown($event)">
 						<div class="form-group">
+                        	<label for="name">Full name</label>
+                            <input v-model="form.name" type="text" name="name" placeholder="Full name" class="form-control" :class="{ 'has-error':form.errors.has('name') }" id="name" required>
+                            <has-error :form="form" field="name"></has-error>
+                        </div>
+                        <div class="form-group">
                         	<label for="email">Email address</label>
                             <input v-model="form.email" type="email" name="email" placeholder="Email address" class="form-control" :class="{ 'has-error':form.errors.has('email') }" id="email" required>
                             <has-error :form="form" field="email"></has-error>
+                        </div>
+                        <div class="form-group">
+                        	<label for="phone">Phone number</label>
+                            <div class="input-group">
+                            	<div class="input-group-addon" id="addon-phone">+234</div>
+                            	<input v-model="form.phone" type="tel" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
+                            </div>
+                            <has-error :form="form" field="phone"></has-error>
                         </div>
                         <div class="form-group">
                         	<label for="password">Password</label>

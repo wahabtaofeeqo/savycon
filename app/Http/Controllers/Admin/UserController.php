@@ -62,7 +62,9 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,'.$user->id,
         ]);
 
+        $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
         if ($request->password) {
             $user->password = \Hash::make($request->password);
         }
