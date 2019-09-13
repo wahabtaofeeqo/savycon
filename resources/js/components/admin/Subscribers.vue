@@ -27,9 +27,13 @@
 				</div>
 
 				<!-- Pagination -->
-				<div class="paginator">
+				<div class="paginator btn-group">
 					<button class="btn btn-fill btn-primary" @click="fetchPaginateSubscribers(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
 						<i class="fa fa-arrow-left"></i> Prev
+					</button>
+
+					<button class="btn btn-fill btn-default" @click="fetchPaginateSubscribersWithIndex(pageno)" v-for="pageno in pagination.last_page" :disabled="pageno == pagination.current_page" :key="pageno" v-show="pagination.last_page > 1">
+						{{ pageno }}
 					</button>
 
 					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateSubscribers(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
@@ -88,6 +92,10 @@
             }, 
             fetchPaginateSubscribers(url) {
                 this.url = url;
+                this.loadSubscribers();
+            },
+            fetchPaginateSubscribersWithIndex(pageno) {
+                this.url = '/api/subscribers?page='+pageno;
                 this.loadSubscribers();
             },
 		},

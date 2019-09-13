@@ -27,7 +27,7 @@ class UserServiceController extends Controller
             'service.category',
             'city',
             'city.state'
-        ])->latest()->paginate(15);
+        ])->latest()->paginate(30);
 
         return response($services, 200);
     }

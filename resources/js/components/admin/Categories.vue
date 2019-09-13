@@ -83,16 +83,18 @@
 						</div>
 
 						<!-- Pagination -->
-						<div class="paginator">
+						<div class="paginator btn-group">
 							<button class="btn btn-fill btn-primary" @click="fetchPaginateCategories(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
 								<i class="fa fa-arrow-left"></i> Prev
 							</button>
 
-							<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateCategories(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
-								Next <i class="fa fa-arrow-right"></i>
+							<button class="btn btn-fill btn-default" @click="fetchPaginateCategoriesWithIndex(pageno)" v-for="pageno in pagination.last_page" :disabled="pageno == pagination.current_page" :key="pageno" v-show="pagination.last_page > 1">
+								{{ pageno }}
 							</button>
 
-							<div class="clearfix"></div>
+							<button class="btn btn-fill btn-primary" @click="fetchPaginateCategories(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
+								Next <i class="fa fa-arrow-right"></i>
+							</button>
 						</div>
 					</div>
 
@@ -208,6 +210,10 @@
             }, 
             fetchPaginateCategories(url) {
                 this.categoryURL = url;
+                this.loadCategories();
+            },
+            fetchPaginateCategoriesWithIndex(pageno) {
+                this.categoryURL = '/api/categories?page='+pageno;
                 this.loadCategories();
             },
 			deleteCategory(id) {
