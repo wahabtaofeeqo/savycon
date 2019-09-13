@@ -27,6 +27,7 @@ class CityController extends Controller
             'state'
         ])
         ->withCount('userServices')
+        ->orderBy('state_id', 'ASC')
         ->orderBy('name', 'ASC')
         ->paginate(20);
 
