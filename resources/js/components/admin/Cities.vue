@@ -62,19 +62,16 @@
 				</div>
 
 				<!-- Pagination -->
-				<div class="paginator btn-group">
-					<button class="btn btn-fill btn-primary" @click="fetchPaginateCities(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
-						<i class="fa fa-arrow-left"></i> Prev
-					</button>
-
-					<button class="btn btn-fill btn-default" @click="fetchPaginateCitiesWithIndex(pageno)" v-for="pageno in pagination.last_page" :disabled="pageno == pagination.current_page" :key="pageno" v-show="pagination.last_page > 1">
-						{{ pageno }}
-					</button>
-
-					<button class="btn btn-fill btn-primary" @click="fetchPaginateCities(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
-						Next <i class="fa fa-arrow-right"></i>
-					</button>
-				</div>
+				<paginate
+					:page-count="pagination.last_page || 0"
+					:page-range="5"
+					:margin-pages="5"
+					:click-handler="fetchPaginateCitiesWithIndex"
+					:prev-text="'Prev'"
+					:next-text="'Next'"
+					:container-class="'pagination'"
+					:page-class="'page-item'">
+				</paginate>
 			</div>
 		</div>
 	</div>
@@ -147,10 +144,6 @@
                 };
 
                 this.pagination = pagination;
-            }, 
-            fetchPaginateCities(url) {
-                this.url = url;
-                this.loadCities();
             },
             fetchPaginateCitiesWithIndex(pageno) {
                 this.url = '/api/city?page='+pageno;

@@ -50,22 +50,16 @@
 				</div>
 
 				<div class="col-md-12">
-					<!-- Pagination -->
-					<div class="paginator btn-group">
-						<button class="btn btn-fill btn-primary" @click="fetchPaginateMessages(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
-							<i class="fa fa-arrow-left"></i> Prev
-						</button>
-
-						<button class="btn btn-fill btn-default" @click="fetchPaginateMessagesWithIndex(pageno)" v-for="pageno in pagination.last_page" :disabled="pageno == pagination.current_page" :key="pageno" v-show="pagination.last_page > 1">
-							{{ pageno }}
-						</button>
-
-						<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateMessages(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
-							Next <i class="fa fa-arrow-right"></i>
-						</button>
-
-						<div class="clearfix"></div>
-					</div>
+					<paginate
+						:page-count="pagination.last_page || 0"
+						:page-range="5"
+						:margin-pages="5"
+						:click-handler="fetchPaginateMessagesWithIndex"
+						:prev-text="'Prev'"
+						:next-text="'Next'"
+						:container-class="'pagination'"
+						:page-class="'page-item'">
+					</paginate>
 				</div>
 			</div>
 		</div>
@@ -114,10 +108,6 @@
                 };
 
                 this.pagination = pagination;
-            }, 
-            fetchPaginateMessages(url) {
-                this.url = url;
-                this.loadMessages();
             },
             fetchPaginateMessagesWithIndex(pageno) {
                 this.url = '/api/messages?page='+pageno;

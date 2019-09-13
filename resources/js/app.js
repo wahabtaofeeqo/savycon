@@ -39,6 +39,10 @@ Vue.use(Loading, {
 // event emitter
 window.Fire = new Vue();
 
+// Paginator
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
 // Components
 import AdminDashboard from './components/admin/Dashboard.vue';
 import AdminProfile from './components/Profile.vue';

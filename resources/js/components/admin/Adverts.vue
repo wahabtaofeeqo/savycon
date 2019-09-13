@@ -98,21 +98,16 @@
 				</div>
 
 				<!-- Pagination -->
-				<div class="paginator btn-group">
-					<button class="btn btn-fill btn-primary" @click="fetchPaginateAdverts(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
-						<i class="fa fa-arrow-left"></i> Prev
-					</button>
-
-					<button class="btn btn-fill btn-default" @click="fetchPaginateAdvertsWithIndex(pageno)" v-for="pageno in pagination.last_page" :disabled="pageno == pagination.current_page" :key="pageno" v-show="pagination.last_page > 1">
-						{{ pageno }}
-					</button>
-
-					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateAdverts(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
-						Next <i class="fa fa-arrow-right"></i>
-					</button>
-
-					<div class="clearfix"></div>
-				</div>
+				<paginate
+					:page-count="pagination.last_page || 0"
+					:page-range="5"
+					:margin-pages="5"
+					:click-handler="fetchPaginateAdvertsWithIndex"
+					:prev-text="'Prev'"
+					:next-text="'Next'"
+					:container-class="'pagination'"
+					:page-class="'page-item'">
+				</paginate>
 			</div>
 		</div>
 	</div>
@@ -187,10 +182,6 @@
 
                 this.pagination = pagination;
             }, 
-            fetchPaginateAdverts(url) {
-                this.url = url;
-                this.loadAdverts();
-            },
             fetchPaginateAdvertsWithIndex(pageno) {
                 this.url = '/api/advert?page='+pageno;
                 this.loadAdverts();

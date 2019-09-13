@@ -48,17 +48,16 @@
 				</div>
 
 				<!-- Pagination -->
-				<div class="paginator">
-					<button class="btn btn-fill btn-primary" @click="fetchPaginateContact(pagination.prev_page_url)" :disabled="!pagination.prev_page_url" v-show="pagination.prev_page_url">
-						<i class="fa fa-arrow-left"></i> Prev
-					</button>
-
-					<button class="btn btn-fill btn-primary pull-right" @click="fetchPaginateContact(pagination.next_page_url)" :disabled="!pagination.next_page_url" v-show="pagination.next_page_url">
-						Next <i class="fa fa-arrow-right"></i>
-					</button>
-
-					<div class="clearfix"></div>
-				</div>
+				<paginate
+					:page-count="pagination.last_page || 0"
+					:page-range="5"
+					:margin-pages="5"
+					:click-handler="fetchPaginateServicesWithIndex"
+					:prev-text="'Prev'"
+					:next-text="'Next'"
+					:container-class="'pagination'"
+					:page-class="'page-item'">
+				</paginate>
 			</div>
 		</div>
 	</div>
@@ -107,8 +106,8 @@
 
                 this.pagination = pagination;
             }, 
-            fetchPaginateServices(url) {
-                this.url = url;
+            fetchPaginateServicessWithIndex(pageno) {
+                this.url = '/api/service?page='+pageno;
                 this.loadServices();
             },
 			deleteService(id) {
