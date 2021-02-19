@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::apiResources([
 	'service' => 'Vendor\ServiceController',
 	'userService' => 'Admin\UserServiceController',
@@ -31,7 +27,8 @@ Route::apiResources([
 	'contact' => 'General\ContactEnquiryController',
 	'categories' => 'Admin\CategoryController',
 	'sub-categories' => 'Admin\ServiceController',
-	'advert' => 'Admin\AdvertController'
+	'advert' => 'Admin\AdvertController',
+	'phonenumber' => 'General\PhonenumberController',
 ]);
 
 // Admin Usage
@@ -46,14 +43,37 @@ Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where(
 Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('id', '([0-9]+)');
 Route::get('/feature/service/{id}', 'Admin\UserServiceController@alterFeature')->where('id', '([0-9]+)');
 
+//Upload Services from Excel file
+Route::post('/uploadService', 'Admin\UserServiceController@store');
+Route::get('/activateService/{id}', 'Admin\UserServiceController@activateService');
+
+//Merge categories
+Route::post('/categoryMerge', 'Admin\CategoryController@merge');
+
+//
+Route::post('/usersNeed', 'UsersNeedController@store');
+
+//
+Route::delete('/deleteSubscriber/{id}', 'General\SubscriptionController@destroy')->where('id', '([0-9]+)');
+
+//Visitors
+Route::post('/visitors', 'UsersNeedController@visitor');
+Route::get('/visitors', 'UsersNeedController@index');
+
+//Newsletter
+Route::post('/subscribe', 'General\SubscriptionController@subscribe');
+
 // Search
 Route::get('/findService/{text?}/{location?}', 'SearchController@search')->where([
 	'/text', '.*',
 	'/location', '.*',
 ])->name('search');
-Route::get('/suggestService/{text?}', 'SearchController@suggestSearch')->where([
+Route::get('/suggestCategory/{text?}', 'SearchController@suggestSearch')->where([
 	'/text', '.*',
 ])->name('suggest.search');
+Route::get('/suggestLocation/{location?}', 'SearchController@suggestLocation')->where([
+	'/location', '.*',
+])->name('suggest.location');
 
 // Admin Search
 Route::get('/findAdminService/{text?}', 'SearchController@adminSearch')->where([
@@ -74,10 +94,17 @@ Route::get('/sub-category/{id}', 'CategoryController@showUserServicesFromSub')->
 Route::get('/sub-category/show/{id}', 'CategoryController@showSub')->where('id', '([0-9]+)');
 
 Route::get('/services', 'ServiceController@index')->name('services');
+Route::post('/servicespage', 'ServicePageController@store');
+Route::get('/servicepagerequests', 'ServicePageController@index');
 Route::get('/services/all', 'ServiceController@allServices');
 Route::get('/services/featured', 'ServiceController@featured');
 Route::get('/services/featured/{count}', 'ServiceController@limitedFeatured')->where('count', '([0-9]+)');
 Route::get('/service/{id}', 'ServiceController@show')->where('id', '([0-9]+)');
+
+// Services display for buyers on dashboard
+Route::get('/buyers/services/', 'ServiceController@buyerServices')->middleware('auth:api');
+// Requests display for vendors on dashboard
+Route::get('/vendors/requests/', 'User\UserRequestController@vendorRequests');
 
 // States and Cities
 Route::get('/states', 'LocationController@states')->name('state.all');

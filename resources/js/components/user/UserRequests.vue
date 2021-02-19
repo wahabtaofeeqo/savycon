@@ -17,7 +17,7 @@
 								<div class="header">
 									<h4 class="title">
 										{{ index+1 }}
-										<a :href="openRequest(request.id)" target="__blank" class="btn btn-sm btn-fill btn-success pull-right">View Service</a>
+										<a :href="openRequest(request.id)" target="__blank" class="btn btn-sm btn-fill btn-success pull-right">View Request</a>
 										<div class="clearfix"></div>
 									</h4>
 									<p class="category">{{ request.service.category.name }} > {{ request.service.name }}</p>

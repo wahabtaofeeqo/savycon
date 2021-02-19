@@ -27,9 +27,34 @@
         </div>
         <div v-else>
         	<blockquote>
-        		We have nothing to show you at the moment.<br>
+        		We have no adverts to show you at the moment.<br>
         		Do stay in touch ;)
         	</blockquote>
+        </div>
+
+        <!-- Services -->
+        <div class="row" v-if="services.length > 0">
+            <div class="col-sm-12">
+                <h4 class="text-primary">Related Services</h4>
+            </div>
+            <div class="col-md-4 col-lg-4" v-for="service in services">
+                <div class="card">
+                    <div class="card-heading">
+                        <img :src="'/images/services/'+service.image_1" alt="..." width="100" class="img-thumbnail">
+                        <span style="color: #000; font-weight: bold; font-size: 120%;">{{ service.title }}</span>
+                    </div>
+                    <div class="card-body" style="text-align: left; padding: 15px;">
+                        <div v-html="service.description.substr(0, 200)"></div>
+
+                        <a :href="'/service/'+service.id" target="__blank" class="btn btn-primary btn-fill">View Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <blockquote>
+                We have no services to show you at the moment.
+            </blockquote>
         </div>
 	</div>
 </template>
@@ -39,7 +64,9 @@
 		data() {
 			return {
 				adverts: [],
-				advertURL: '/api/adverts/dashboard/6'
+				advertURL: '/api/adverts/dashboard/6',
+
+                services: [],
 			}
 		},
 		methods: {
@@ -57,10 +84,22 @@
 			},
 			viewAdvertImage(image) {
 				return '/images/adverts/'+image
-			}
+			},
+            loadServices() {
+                axios.get('/api/buyers/services')
+                .then(response => {
+                    this.services = response.data.data
+                })
+            },
+            escapeHTML(text) {
+                var txt = document.createElement("textarea");
+                txt.innerHTML = text;
+                return txt.value;
+            }
 		},
 		created() {
 			this.loadAdverts()
+            this.loadServices()
 		},
 	}
 </script>

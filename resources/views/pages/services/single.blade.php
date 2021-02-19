@@ -93,9 +93,15 @@
 						<a href="{{ url('/'.Auth::user()->role.'/services/new/'.$service->id) }}" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8">Edit</a>
 						@endcan
 
-						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							{{ $service->title }} @if($service->featured == 1)<sup><span class="badge badge-primary">Featured</span></sup>@endif
-						</h4>
+						<div class="p-b-14">
+							<h4 class="mtext-105 cl2">
+								{{ $service->title }} 
+								@if($service->featured == 1)<sup><span class="badge badge-primary">Featured</span></sup>@endif
+							</h4>
+							<div title="Views">
+								<small><i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp; {{ $service->views }}</small>
+							</div>
+						</div>
 
 						<span class="mtext-106 cl2">
 							<b>₦</b> {{ $service->price < 5000 ? 'Contact for Price' : $service->price }} 
@@ -104,10 +110,14 @@
 								<i class="fa fa-map"></i>&nbsp;&nbsp;&nbsp; {{ $service->address }}<br>
 								{{ $service->landmark }}
 							</span>
+							<br>
+							<span style="font-size: 13px;" title="Created at">
+								<i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp; {{ $service->created_at->toDayDateTimeString() }}<br>
+							</span>
 						</span>
 
 						<p class="stext-102 cl3 p-t-23 p-b-50" style="white-space: pre-line;">
-							{{ str_limit($service->description, 100) }} <a href="#description-tab">Read more</a>
+							{!! str_limit($service->description, 100) !!} <a href="#description-tab">Read more</a>
 						</p>
 						
 						<div class="cl2">
@@ -115,22 +125,7 @@
 								Vendor's Contact Details
 							</span>
 
-							@auth
-							<p class="stext-102 cl3 m-t-10 font-weight-bold">{{ $service->user->name }}</p>
-							<div class="w-full m-t-15">
-                                <div class="header-cart-buttons flex-w w-full">
-									<a href="mailto:{{ $service->user->email }}" class="flex-c-m stext-101 cl2 size-107 bg2 bor2 hov-btn1 p-lr-15 trans-04 m-b-10 m-r-8">Mail</a>
-									<a href="tel:+234{{ $service->user->phone }}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10 m-r-8">Call</a>
-									<a href="https://api.whatsapp.com/send?phone={{ $service->user->phone }}" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8">WhatsApp</a>
-								</div>
-							</div>
-							@else
-							<div class="alert alert-primary">
-								Apparently, you have to be logged in to see the vendor's contact details
-							</div>
-
-							<button class="js-show-cart flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">Click to login</button>
-							@endauth
+							<drop-phone-number userservice="{{ $service }}"></drop-phone-number>
 
 							@cannot('updateService', $service)
 							<div class="alert alert-success">
@@ -212,7 +207,7 @@
 						<div class="tab-pane fade show active" id="description" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
 								<p class="stext-102 cl6" style="white-space: pre-line;">
-									{{ $service->description }}
+									{!! $service->description !!}
 								</p>
 							</div>
 						</div>

@@ -1,7 +1,7 @@
 <template>
 	<div>
     	<alert-error :form="form"></alert-error>
-
+    	
         <form method="POST" @submit.prevent="registerUser()" @keydown="form.onKeydown($event)">
         	<div class="form-group m-b-20">
         		<div class="bor8 how-pos4-parent">
@@ -184,10 +184,11 @@
 						})
 
 						setTimeout(() => {
-							window.location.href = '/home'
+							window.location.href = window.location.protocol + "//" + window.location.host + "/" + 'home'
 						}, 2000)
 					})
-					.catch(() => {
+					.catch((error) => {
+						console.log(error)
 						Swal.fire({
 							title: 'Oops...',
 							text: 'Something went horribly wrong!',

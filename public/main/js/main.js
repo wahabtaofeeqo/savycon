@@ -278,5 +278,172 @@
     });
 
 
+    //For Custom Dialog when users leaves services Page
+    $("a").click(function(e) {
+        e.preventDefault();
+        
+        const currentPage = window.location.href;
+        const url = $(this).attr('href');
+
+        const arr = currentPage.split("/");
+        const page = arr[arr.length - 1];
+        console.log(page);
+        if (page == 'services') {
+
+            Swal.fire({
+                title: '<strong>Just a moment!</strong>',
+                icon: 'info',
+                html: '<p class="py-2 text-muted"> Do you get what you want? if YES please click the link below and RATE us</p>',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText:
+                    '<i class="fa fa-thumbs-up"></i> Yes!',
+                cancelButtonText:
+                    '<i class="fa fa-thumbs-down"></i> No!',
+                footer: '<p class="text-success">Thanks for visiting!</p>'
+            }).then(async (result) => {
+
+                if (result.isConfirmed) {
+
+                    Swal.fire({
+                        text: 'Thanks for visiting!',
+                        toast: true,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        icon: 'success'
+                    });
+
+                    if (url != currentPage) {
+                        window.location.href = url;
+                    }
+                }
+                else {
+
+                    const { value: userInput } = await Swal.fire({
+                        title: 'Tell us what you need',
+                        input: 'textarea',
+                        showCancelButton: true,
+                        inputPlaceholder: 'Type.......',
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return "Please tell us what you need";
+                            }
+                        }
+                    });
+
+                    if (userInput) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/usersNeed',
+                            data: {need: userInput},
+                            success: function(response) {
+
+                                Swal.fire({
+                                    text: 'Thanks for visiting!',
+                                    toast: true,
+                                    position: 'bottom-right',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    icon: 'success'
+                                });
+
+                                if (url != window.location.href) {
+                                    window.location.href = url;
+                                }
+                            },
+                            error: function(err) {
+                               
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        else {
+            if (url != window.location.href) {
+                window.location.href = url;
+            }
+        }
+    });
+
+
+    const setCookie = function(name, value, expires) {
+
+        const date = new Date();
+        date.setTime(date.getTime + (expires * (24 * 60 * 60 * 1000)));
+        const exp = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + exp + ";path=/";
+    };
+
+    const getCookie = function(cookieName) {
+        const name = cookieName + "=";
+        const cookies = decodeURIComponent(document.cookie);
+        const parts = cookies.split(";");
+
+        for (var i = 0; i < parts.length; i++) {
+            
+            let c = parts[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+
+        return "";
+    };
+
+    //Newsletter Popup
+    const newsLetterBox = async function() {
+
+        if (getCookie("subscribe") != "") return;
+
+        const { value: email } = await Swal.fire({
+                title: 'Subscribe to Newsletter',
+                input: 'email',
+                showCancelButton: true,
+                inputPlaceholder: 'Email...',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "Enter Email!";
+                    }
+                }
+            });
+
+            if (email) {
+
+                const data = {
+                    email: email
+                };
+
+                axios.post('/api/subscribe', data).then(response => {
+                    setCookie("subscribe", email, 365);
+                    Swal.fire({
+                        text: 'Thanks for subscribing!',
+                        toast: true,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        icon: 'success'
+                    });
+                }).catch(err => {})
+            }
+        };
+
+    const popup = function() {
+     
+        const ip = '127.0.0.1';
+        axios.post('/api/visitors', {ip: ip}).then(async (response) => {
+            if (response.data.show) {
+                newsLetterBox();
+            }
+        }).catch(err => {});
+    };
+
+    setTimeout(popup, (1000 * 60 * 2))
 
 })(jQuery);

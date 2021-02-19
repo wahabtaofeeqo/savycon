@@ -85,4 +85,11 @@ class UserRequestController extends Controller
             'message' => 'Delete Complete'
         ], 200);
     }
+
+    public function vendorRequests()
+    {
+        $buyersRequests = UserRequest::where('address', 'LIKE', '%'.auth()->user()->city->name.'%')->inRandomOrder()->paginate(10);
+
+        return response($buyersRequests, 200);
+    }
 }

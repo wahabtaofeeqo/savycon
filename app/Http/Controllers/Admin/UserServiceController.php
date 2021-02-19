@@ -4,8 +4,15 @@ namespace SavyCon\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
-
+use Excel;
+use FastExcel;
+use Illuminate\Support\Facades\Hash;
 use SavyCon\Models\UserService;
+use SavyCon\Models\User;
+use SavyCon\Models\Category;
+use SavyCon\Models\City;
+use SavyCon\Models\Service;
+use SavyCon\Imports\UserServicesImport;
 
 class UserServiceController extends Controller
 {
@@ -38,9 +45,39 @@ class UserServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+       
+       $response = array('error' => FALSE, 'message' => '');
+
+       $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx'
+        ]);
+
+       if ($request->hasFile('file')) {
+
+            $path = $request->file('file');
+            $data = Excel::import(new UserServicesImport(1), $request->file('file'));
+            
+            $response['error'] = FALSE;
+            $response['message'] = 'Successfully uploaded';
+       }
+       else {
+        $response['error'] = TRUE;
+        $response['message'] = 'No File uploaded';
+       }
+       
+       return response($response, 200);
+    }
+
+    public function activateService($id) {
+        
+        $response = array('error' => FALSE, 'message' => 'Updated Successfully');
+
+        $service = UserService::find($id);
+        $service->active = 1;
+        $service->save();
+
+        return response($response, 200);
     }
 
     /**

@@ -5,6 +5,8 @@ namespace SavyCon\Console\Commands;
 use Illuminate\Console\Command;
 
 use SavyCon\Imports\UserServicesImport;
+use SavyCon\Models\User;
+use SavyCon\Models\UserService;
 
 class ImportUserServicesFromExcel extends Command
 {
@@ -13,7 +15,8 @@ class ImportUserServicesFromExcel extends Command
      *
      * @var string
      */
-    protected $signature = 'import:services {file? : Enter a file name}';
+    // protected $signature = 'import:services {file? : Enter a file name}';
+    protected $signature = 'import:services';
 
     /**
      * The console command description.
@@ -39,20 +42,12 @@ class ImportUserServicesFromExcel extends Command
      */
     public function handle()
     {
-        $file = ucwords($this->argument('file'));
-        if ($file === 'akwa-ibom') {
-            $file = 'Akwa-Ibom';
-        }
-        if ($file === 'cross-river') {
-            $file = 'Cross-River';
-        }
-
-        $state = $file;
+        // $file = $this->argument('file');
 
         $this->output->title('Starting import...');
-        
-        (new UserServicesImport($state))->withOutput($this->output)->import(public_path('states/state_'.$file.'.csv'));
-        
+
+        (new UserServicesImport(33))->withOutput($this->output)->import(public_path('states/state_Missing.csv'));
+
         $this->output->success('Import successful');
     }
 }

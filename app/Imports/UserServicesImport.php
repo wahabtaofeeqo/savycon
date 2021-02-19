@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
+// use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -23,7 +24,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 
-class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, WithBatchInserts, WithChunkReading, SkipsOnFailure, SkipsOnError
+//WithBatchInserts, WithChunkReading, SkipsOnFailure, SkipsOnError
+class UserServicesImport implements ToModel, WithHeadingRow
 {
     use Importable, SkipsFailures, SkipsErrors;
 
@@ -32,9 +34,8 @@ class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, Wi
     /**
     *   @param state's name
     */
-    public function __construct($state)
-    {
-        $this->state_id = State::where('name', $state)->first()->id;
+    public function __construct($id) {
+        $this->state_id = $id;
     }
 
     /**
@@ -42,92 +43,147 @@ class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, Wi
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
-    {
-        return new UserService([
-            'title' => $row['businessname'],
-            'description' => $row['shortdesc'],
-            'address' => $row['fulladdress'],
-            'landmark' => $row['landmark'],
-            'user_id' =>
-                empty(User::where('name', $row['contactperson'])->where('email', $row['email'])->first())
-                ?
-                    empty(User::where('name', $row['contactperson'])->where('phone', $row['phone'])->first())
+    public function model(array $row) {
+
+        // $title = $row['businessname'];
+        // $address = $row['address'];
+        // $state = $row['state'];
+        // $city = $row['city'];
+        // $category = $row['category'];
+        
+
+        // //UserID
+        // $user = User::where(['email' => $row['email'], 'phone' => $row['phone']])->first();
+        // $userID = 0;
+        // if (empty($user)) { //Create new User
+
+        //     $name = isset($row['contactperson']) ? $row['contactperson'] : 'John Doe';
+            
+        //     $emailCheck = User::where('email', $row['email'])->first();
+        //     if (empty($emailCheck)) {
+        //         $email = $row['email'] === 'nan' ? 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com' : $row['email'] ? $row['email'] : 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com';
+             
+        //     }
+        //     else {
+        //         $email = 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com';
+        //     }
+
+        //     $password = Hash::make($row['contactperson'] ? $row['contactperson'] : 'John Doe');
+        //     $phone = ($row['phone'] === 'nan') ? '8001002000' : substr($row['phone'] ? $row['phone'] : '8001002000', 1);
+        //     $role = 'vendor';
+        //     $city_id = empty(City::where('name', $row['city'])->first()) ?   
+        //                             City::create([
+        //                                 'name' => 
+        //                                     $row === 'nan'
+        //                                     ?   
+        //                                         State::find($this->state_id)->name.rand(1,1000000)
+        //                                     :   
+        //                                         $row['city']
+        //                                 ,
+        //                                 'state_id' => $this->state_id
+        //                             ])->id
+        //                         :   
+        //                         City::where('name', $row['city'])->first()->id;
+
+        //     $userID = User::create(['name' => $name, 'email' => $email, 'password' => $password, 'phone' => $phone, 'role' => $role, 'city_id' => $city_id])->id;
+        // }
+        // else {
+
+        //     $userID = User::where('name', $row['contactperson'])->where('phone', $row['phone'] ? $row['phone'] : '810000000')->first()->id
+        // }
+
+        $check = UserService::where('title', $row['businessname'])->first();
+        $state = State::where('name', $row['state'])->first();
+
+        if (empty($check)) {
+            return new UserService([
+
+                'title' => $row['businessname'],
+                'description' => $row['shortdesc'],
+                'address' => $row['fulladdress'],
+                'landmark' => $row['landmark'],
+                'user_id' =>
+                    empty(User::where('name', $row['contactperson'])->where('email', $row['email'])->first())
                     ?
-                        User::create([
-                            'name' => $row['contactperson'],
-                            'email' => 
-                                empty(User::where('email', $row['email'])->first())
-                                ?
-                                    $row['email'] === 'nan'
+                        empty(User::where('name', $row['contactperson'])->where('phone', $row['phone'])->first())
+                        ?
+                            User::create([
+                                'name' => $row['contactperson'] ? $row['contactperson'] : 'John Doe',
+                                'email' => 
+                                    empty(User::where('email', $row['email'])->first())
                                     ?
-                                        'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com'
+                                        $row['email'] === 'nan'
+                                        ?
+                                            'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com'
+                                        :
+                                            $row['email'] ? $row['email'] : 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com'
                                     :
-                                        $row['email']
-                                :
-                                    'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com'
-                            ,
-                            'password' => Hash::make($row['contactperson']),
-                            'phone' => ($row['phone'] === 'nan') ? '8001002000' : substr($row['phone'], 1),
-                            'role' => 'vendor',
-                            'city_id' => 
-                                empty(City::where('name', $row['city'])->first())
+                                        'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com'
+                                ,
+                                'password' => Hash::make($row['contactperson'] ? $row['contactperson'] : 'John Doe'),
+                                'phone' => ($row['phone'] === 'nan') ? '8001002000' : substr($row['phone'] ? $row['phone'] : '8001002000', 1),
+                                'role' => 'vendor',
+                                'city_id' => 
+                                    empty(City::where('name', $row['city'])->first())
+                                    ?   
+                                        City::create([
+                                            'name' => 
+                                                $row === 'nan'
+                                                ?   
+                                                    State::find($this->state_id)->name.rand(1,1000000)
+                                                :   
+                                                    $row['city']
+                                            ,
+                                            'state_id' => $this->state_id
+                                        ])->id
+                                    :   
+                                        City::where('name', $row['city'])->first()->id
+                                ,
+                            ])->id
+                        :
+                            User::where('name', $row['contactperson'])->where('phone', $row['phone'] ? $row['phone'] : '810000000')->first()->id
+                    : 
+                        User::where('name', $row['contactperson'])->where('email', $row['email'] ? $row['email'] : 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com')->first()->id
+                ,
+                'city_id' => City::firstOrCreate(
+                                    ['name' => $row['city']],
+                                    [
+                                        'name' => $row['city'],
+                                        'state_id' => $state->id
+                                    ]
+                                )->id
+                ,
+                'service_id' => 
+                    empty(Service::where('name', $row['category'] ? $row['category'] : 'nan')->first())
+                    ?   Service::create([
+                            'name' => 
+                                $row['category'] === 'nan'
                                 ?   
-                                    City::create([
-                                        'name' => 
-                                            $row === 'nan'
-                                            ?   
-                                                State::find($this->state_id)->name.rand(1,1000000)
-                                            :   
-                                                $row['city']
-                                        ,
-                                        'state_id' => $this->state_id
-                                    ])->id
+                                    'Category'.rand(1,1000000)
                                 :   
-                                    City::where('name', $row['city'])->first()->id
+                                    $row['category'] ? $row['category'] : 'nan'
+                            ,
+                            'category_id' => 
+                                empty(Category::where('name', (strpos($row['category'] ? $row['category'] : 'nan', ',') !== false) ? explode(',', $row['category'] ? $row['category'] : 'nan')[0] : $row['category'] ? $row['category'] : 'nan')
+                                    ->first())
+                                ?
+                                    Category::create([
+                                        'name' => (strpos($row['category'] ? $row['category'] : 'nan', ',') !== false)
+                                        ?
+                                            explode(',', $row['category'] ? $row['category'] : 'nan')[0]
+                                        :
+                                            $row['category'] ? $row['category'] : 'nan'
+                                    ])->id
+                                :
+                                    Category::where('name', (strpos($row['category'] ? $row['category'] : 'nan', ',') !== false) ? explode(',', $row['category'] ? $row['category'] : 'nan')[0] : $row['category'] ? $row['category'] : 'nan')
+                                    ->first()->id
                             ,
                         ])->id
-                    :
-                        User::where('name', $row['contactperson'])->where('phone', $row['phone'])->first()->id
-                : 
-                    User::where('name', $row['contactperson'])->where('email', $row['email'])->first()->id
-            ,
-            'city_id' => empty(City::where('name', $row['city'])->first())
-                ?   City::create([
-                        'name' => $row['city'],
-                        'state_id' => $this->state_id
-                    ])->id
-                :   City::where('name', $row['city'])->first()->id
-            ,
-            'service_id' => 
-                empty(Service::where('name', $row['category'])->first())
-                ?   Service::create([
-                        'name' => 
-                            $row['category'] === 'nan'
-                            ?   
-                                'Category'.rand(1,1000000)
-                            :   
-                                $row['category']
-                        ,
-                        'category_id' => 
-                            empty(Category::where('name', (strpos($row['category'], ',') !== false) ? explode(',', $row['category'])[0] : $row['category'])
-                                ->first())
-                            ?
-                                Category::create([
-                                    'name' => (strpos($row['category'], ',') !== false)
-                                    ?
-                                        explode(',', $row['category'])[0]
-                                    :
-                                        $row['category']
-                                ])->id
-                            :
-                                Category::where('name', (strpos($row['category'], ',') !== false) ? explode(',', $row['category'])[0] : $row['category'])
-                                ->first()->id
-                        ,
-                    ])->id
-                :   Service::where('name', $row['category'])->first()->id
-            ,
-        ]);
+                    :   Service::where('name', $row['category'] ? $row['category'] : 'nan')->first()->id
+                ,
+            ]);
+        }
+        
     }
 
     public function batchSize(): int
@@ -137,6 +193,6 @@ class UserServicesImport implements ToModel, WithHeadingRow, WithProgressBar, Wi
 
     public function chunkSize(): int
     {
-        return 10000;
+        return 500;
     }
 }

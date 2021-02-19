@@ -26,6 +26,7 @@
 								<th>Location</th>
 								<th>Category</th>
 								<th>No of Reviews</th>
+								<th>Views</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -37,6 +38,7 @@
 								<td>{{ service.city.name }}, {{ service.city.state.name }}</td>
 								<td>{{ service.service.category.name }}</td>
 								<td>{{ service.ratings.length }}</td>
+								<td>{{ service.views }}</td>
 								<td>
 									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
 									<router-link :to="{ name: 'VendorNewService', params: { id: service.id } }" class="btn btn-sm btn-info btn-fill">Edit</router-link>

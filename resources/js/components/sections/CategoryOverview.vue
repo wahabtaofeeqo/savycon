@@ -95,7 +95,7 @@
 											NONE AT THE MOMENT
 										</div>
 
-										<ul v-show="featuredServices.length > 0">
+										<ul v-show="featuredServices.length > 0" style="max-height: 400px; overflow-y: auto;">
 											<li class="flex-w flex-t p-b-30" v-for="service in featuredServices">
 												<a :href="openService(service.id)" class="wrap-pic-w size-214 hov-ovelay1 m-r-20">
 													<img :src="getPhoto(service)" alt="SERVICE">
@@ -123,7 +123,7 @@
 											NONE AT THE MOMENT
 										</div>
 
-										<ul v-show="categories.length > 0">
+										<ul v-show="categories.length > 0" style="max-height: 300px; overflow-y: auto;">
 											<li class="bor18" v-for="category in categories">
 												<a :href="openCategory(category.id)" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
 													{{ category.name }}

@@ -59,7 +59,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 col-lg-3 p-b-80">
+							<div class="col-md-4 col-lg-3 p-b-80" style="overflow: hidden;">
 								<div class="side-menu">
 									<!-- Search -->
 									<div class="bor17 of-hidden pos-relative">
@@ -93,11 +93,13 @@
 											NONE AT THE MOMENT
 										</div>
 
-										<ul v-show="featuredServices.length > 0">
+										<ul v-show="featuredServices.length > 0" style="max-height: 400px; overflow-y: auto;">
 											<li class="flex-w flex-t p-b-30" v-for="service in featuredServices">
-												<a :href="openService(service.id)" class="wra-pic-w size-214 hov-ovelay1 m-r-20">
-													<img :src="getPhoto(service)" alt="SERVICE">
-												</a>
+												<p>
+													<a :href="openService(service.id)" class="wra-pic-w size-214 hov-ovelay1 m-r-20">
+														<img :src="getPhoto(service)" alt="SERVICE" style="width: 100%;">
+													</a>
+												</p>
 
 												<div class="size-215 flex-col-t p-t-8">
 													<a :href="openService(service.id)" class="stext-116 cl8 hov-cl1 trans-04">

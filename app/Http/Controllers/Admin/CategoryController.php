@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use SavyCon\Http\Controllers\Controller;
 
 use SavyCon\Models\Category;
+use SavyCon\Models\Service;
+
 
 class CategoryController extends Controller
 {
@@ -55,9 +57,37 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
+    }
+
+    public function merge(Request $request) {
+        $response = array('error' => FALSE, 'message' => 'Merged Successfully');
+
+        $request->validate([
+            'categories' => 'required',
+            'parent' => 'required']);
+
+        $categories = $request->categories;
+        $parent = $request->parent;
+
+        $check = Category::firstOrCreate(['name' => $parent]);
+
+        $categories = explode(",", $categories);
+        foreach ($categories as $key => $id) {
+
+            //Get the Services by Category ID
+            $services = Service::where('category_id', $id)->get();
+            foreach ($services as $key => $service) {
+                $service->category_id = $check->id;
+                $service->save();
+            }
+
+            $category = Category::find($id);
+            $category->delete();
+        }
+
+        return response($response, 200);
     }
 
     /**

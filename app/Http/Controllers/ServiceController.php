@@ -70,4 +70,18 @@ class ServiceController extends Controller
 
         return response($services, 200);
     }
+
+    public function buyerServices()
+    {
+        $buyerServices = '';
+
+        $user_requests = auth()->user()->userRequests;
+        if (count($user_requests) > 0) {
+            foreach ($user_requests as $request) {
+                $buyerServices = UserService::where('title', 'LIKE', '%'.$request->title.'%')->where('city_id', $request->user->city_id)->paginate(10);
+            }
+        }
+
+        return response($buyerServices, 200);
+    }
 }

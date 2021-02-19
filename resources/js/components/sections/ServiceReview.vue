@@ -90,7 +90,6 @@
 		data() {
 			return {				
 				form: new Form({
-					id: '',
 					stars: 0,
 					comment: '',
 					service_id: this.service_id
@@ -139,14 +138,9 @@
 					container: this.$refs.reviewContainer,
 				})
 
-				this.form.post(this.url)
+				this.form.post('/api/rating')
 				.then(() => {
 					loader.hide()
-
-					Toast.fire({
-						type: 'success',
-						title: 'Thank You for dropping a review'
-					})
 
 					window.location.reload()
 				})

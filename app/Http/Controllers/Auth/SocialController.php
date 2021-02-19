@@ -7,6 +7,10 @@ use SavyCon\Http\Controllers\Controller;
 
 use Socialite;
 use SavyCon\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+use SavyCon\Jobs\Mails\User\WelcomeUserToSavycon;
+use SavyCon\Jobs\Mails\Admin\InformAdminOfNewUser;
 
 class SocialController extends Controller
 {
@@ -29,7 +33,7 @@ class SocialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($provider, $role)
+    public function handleProviderCallback($provider)
     {
     	try {
         	$user = Socialite::driver($provider)->user();
@@ -41,13 +45,18 @@ class SocialController extends Controller
         if ($existingUser) {
         	auth()->login($existingUser, true);
         } else {
-        	$new = new User();
-        	$new->name = $user->name;
-        	$new->email = $user->email;
-        	$new->role = $role;
-        	$user->save();
+        	$newuser = new User();
+        	$newuser->name = $user->name;
+            $newuser->password = Hash::make($user->email);
+        	$newuser->email = $user->email;
+        	$newuser->role = 'vendor';
+        	$newuser->save();
 
-        	auth()->login($new, true);
+            WelcomeUserToSavycon::dispatch($newuser)->delay(now()->addSeconds(15));
+            $admin = User::findOrFail(2);
+            InformAdminOfNewUser::dispatch($newuser, $admin)->delay(now()->addSeconds(30));
+
+        	auth()->login($newuser, true);
         }
 
         return redirect()->route('home');

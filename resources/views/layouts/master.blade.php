@@ -11,7 +11,8 @@
         <meta name="language" content="English">
         <meta name="keywords" content="freelance,jobs,career,service,vendor,worker">
 
-        <!-- Open Graph / Facebook -->
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+ <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
         <meta property="og:url" content="{{ route('index') }}">
         <meta property="og:title" content="@yield('title', 'SavyCon')">
@@ -93,6 +94,12 @@
 				            		</router-link>
 				            	</li>
 				            	<li class="nav-item">
+				            		<router-link :to="{ name: 'VisitorsStats' }">
+				            			<i class="pe-7s-map"></i>
+				            			<p>Visitors Stats</p>
+				            		</router-link>
+				            	</li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminStates' }">
 				            			<i class="pe-7s-map"></i>
 				            			<p>States</p>
@@ -150,6 +157,12 @@
 				            		<router-link :to="{ name: 'AdminContactMessages' }">
 				            			<i class="pe-7s-phone"></i>
 				            			<p>Contact Messages</p>
+				            		</router-link>
+				            	</li>
+								<li>
+				            		<router-link :to="{ name: 'AdminServicePages' }">
+				            			<i class="pe-7s-chat"></i>
+				            			<p>Service Page</p>
 				            		</router-link>
 				            	</li>
 				            	<li>
@@ -292,7 +305,7 @@
 								</ul>
 							</nav>
 							<p class="copyright pull-right">
-								&copy; @php echo date("Y") @endphp Developed by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
+								&copy; @php echo date("Y") @endphp <!-- Developed by <a href="{{ config('app.developer.website') }}">{{ config('app.developer.name') }} --></a>
 							</p>
 						</div>
 					</footer>

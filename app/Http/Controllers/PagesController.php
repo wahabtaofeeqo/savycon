@@ -35,6 +35,11 @@ class PagesController extends Controller
     	return view('pages.services');
     }
 
+    public function servicepage()
+    {
+    	return view('pages.services.servicePage');
+    }
+
     public function showService($id)
     {
         $service = UserService::withCount('ratings')->
@@ -43,6 +48,9 @@ class PagesController extends Controller
             'service',
             'service.category'
         ])->findOrFail($id);
+
+        $service->views += 1;
+        $service->save();
 
         $alreadyReviewed = null;
         $canComment = 1;

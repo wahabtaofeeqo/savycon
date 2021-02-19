@@ -34,11 +34,19 @@
 			                        </div>
 			                    </div>
 		                    </div>
+
 		                    <div class="form-group">
 	                        	<label for="title">Title</label>
 	                            <input v-model="form.title" type="text" name="title" placeholder="Title" class="form-control" :class="{ 'has-error':form.errors.has('title') }" id="title" required>
 	                            <has-error :form="form" field="title"></has-error>
 	                        </div>
+
+	                        <div class="form-group" v-if="editmode == true">
+	                        	<label for="phone">Phone</label>
+	                            <input v-model="form.user.phone" type="text" name="phone" placeholder="Phone" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" required>
+	                            <has-error :form="form" field="phone"></has-error>
+	                        </div>
+
 		                    <div class="form-group">
 	                        	<label for="description">Description</label>
 	                            <textarea class="form-control w-100" rows="5" v-model="form.description" name="description" placeholder="Describe your service" :class="{ 'has-error':form.errors.has('description') }" id="description" required></textarea>
@@ -161,6 +169,10 @@
 					image_3: '',
 					address: '',
 					landmark: '',
+					user: {
+						id: '',
+						phone: ''
+					},
 					service: {
 						id: '',
 						category: {
@@ -201,6 +213,8 @@
 					this.form.fill(response.data)
 					this.loadCategoryServices()
 					this.loadStateCities()
+
+					console.log(response.data);
 
 					loader.hide()
 				})
@@ -358,13 +372,15 @@
 					
 					window.location.href = '/vendor/services'
 				})
-				.catch(() => {
+				.catch((e) => {
 					Swal.fire({
 						title: 'Oops!',
 						text: 'Service was not updated for some reason',
 						type: 'error'
 					});
 
+					console.log(e);
+					
 					loader.hide();
 				})
 			},

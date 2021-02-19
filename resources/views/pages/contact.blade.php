@@ -83,6 +83,10 @@
                             @enderror
 						</div>
 
+						<div class="m-b-30">
+							{!! ReCaptcha::htmlFormSnippet() !!}
+						</div>
+
 						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
 							Submit
 						</button>
@@ -118,6 +122,9 @@
 
 							<p class="stext-115 cl1 size-213 p-t-18">
 								<a href="tel:{{ env('CONTACT_PHONE') }}">{{ env('CONTACT_PHONE') }}</a>
+							</p>
+							<p class="stext-115 cl1 size-213 p-t-18">
+								<a href="tel:{{ env('CONTACT_PHONE2') }}">{{ env('CONTACT_PHONE2') }}</a>
 							</p>
 						</div>
 					</div>

@@ -8,8 +8,14 @@ use SavyCon\Http\Controllers\Controller;
 
 use SavyCon\Http\Requests\StoreNewSubscription;
 
-class SubscriptionController extends Controller
-{
+class SubscriptionController extends Controller {
+
+    public function index() {
+        $list = Subscription::latest()->paginate(30);
+
+        return response($list, 200);
+    }
+
     public function store(StoreNewSubscription $request)
     {
         $validated = $request->validated();
@@ -21,10 +27,24 @@ class SubscriptionController extends Controller
         return redirect($request->page)->with('status', 'Thank you for subscribing');
     }
 
-    public function index()
-    {
-    	$list = Subscription::latest()->paginate(30);
 
-    	return response($list, 200);
+    public function subscribe(Request $request) {
+
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        
+        $subscription = Subscription::firstOrCreate(['email' => $request->email]);
+
+        $response = array('message' => 'Thank you for subscribing');
+        return response($response, 200);
+    }
+
+    public function destroy($id) {
+        $response = array('error' => FALSE, 'message' => '');
+        $user = Subscription::find($id);
+        $user->delete();
+        
+        return response($response, 200);
     }
 }

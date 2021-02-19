@@ -7,7 +7,7 @@ use SavyCon\Http\Controllers\Controller;
 
 use SavyCon\Http\Requests\StoreVendorService;
 use SavyCon\Http\Requests\UpdateVendorService;
-
+use SavyCon\Models\User;
 use SavyCon\Models\UserService;
 
 class ServiceController extends Controller
@@ -24,6 +24,7 @@ class ServiceController extends Controller
     	$services = auth()->user()->userServices()->with([
             'service',
             'service.category',
+            'user',
             'ratings',
             'city',
             'city.state'
@@ -69,6 +70,7 @@ class ServiceController extends Controller
         $service->image_3 = $request->image_3;
         $service->address = $request->address;
         $service->landmark = $request->landmark;
+        $service->active = 0;
         $service->user_id = auth('api')->user()->id;
         $service->city_id = $request->input('city.id');
         $service->service_id = $request->input('service.id');
@@ -83,6 +85,7 @@ class ServiceController extends Controller
             'service',
             'service.category',
             'city',
+            'user',
             'city.state'
         ])
         ->findOrFail($id);
@@ -138,6 +141,12 @@ class ServiceController extends Controller
             $request->merge(['image_3' => $name]);
             $service->image_3 = $request->image_3;
         }
+
+        $userID = $request->input('user.id');
+        $phone  = $request->input('user.phone');
+        $user = User::find($userID);
+        $user->phone = $phone;
+        $user->save();
 
         $service->title = $request->title;
         $service->description = $request->description;

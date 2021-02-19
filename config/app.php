@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://savycon.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -174,6 +175,8 @@ return [
         // SavyCon\Providers\BroadcastServiceProvider::class,
         SavyCon\Providers\EventServiceProvider::class,
         SavyCon\Providers\RouteServiceProvider::class,
+
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
 
     ],
 
@@ -225,7 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
     'developer' => [
@@ -234,7 +238,18 @@ return [
         'email' => 'folurinyinka@gmail.com',
         'whatsapp' => '2348135303377',
         'twitter' => '_fykay',
-        'instagram' => 'fykay'
+        'instagram' => 'fykay',
+        'website' => 'https://lavendar77.github.io',
+    ],
+
+    'second-developer' => [
+        'name' => 'Wahab Taofeek O.',
+        'phone' => '+2348136974417',
+        'email' => 'taofeekolamilekan218@gmail.com',
+        'whatsapp' => '2348136974417',
+        'twitter' => 'wahabtaofeeqo',
+        'instagram' => 'wahabtaofeeqo',
+        'website' => 'https://wahabtaofeeqo.github.io/resume',
     ],
 
 ];

@@ -78,7 +78,7 @@
                 			Please resolve as soon as you contact them
                 		</div>
                 	</div>
-                	<div class="col-md-4" v-for="(message, index) in messages">
+                	<div class="col-md-4" v-for="(message, index) in messages" :key="message.id">
 						<div class="card">
 							<div class="header">
 								<h4 class="title">
@@ -122,7 +122,7 @@
                 	<div class="col-sm-12">
                 		<h4 class="text-primary">Featured Adverts</h4>
                 	</div>
-                    <div class="col-md-4 col-lg-4" v-for="advert in adverts">
+                    <div class="col-md-4 col-lg-4" v-for="advert in adverts" :key="advert.id">
                         <div class="card card-user">
                             <div class="card-image">
                                 <a :href="advert.URL">
@@ -140,6 +140,22 @@
                                 </p>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Buyers Requests -->
+                <h4 class="text-primary">Nearby Buyer's Requests</h4>
+                <div class="row" v-show="userRequests.length > 0">
+                    <div class="col-md-4 col-lg-4" v-for="userRequest in userRequests" :key="userRequest.id">
+                    	<div class="card">
+		                    <div class="card-body" style="padding: 5%;">
+		                    	<div style="font-weight: bold; font-size: 130%; margin-bottom: 10px;">{{ userRequest.title }}</div>
+		                        <div v-html="userRequest.description.substr(0, 200)"></div>
+		                        <p>
+		                        	<a :href="'/buyers-requests/'+userRequest.id" target="__blank" class="btn btn-primary btn-sm btn-fill">View Request</a>
+		                        </p>
+		                    </div>
+		                </div>
                     </div>
                 </div>
             </div>
@@ -164,7 +180,9 @@
 				messagesURL: '/api/vendor/messages/',
 
 				adverts: [],
-				advertURL: '/api/adverts/dashboard/6'
+				advertURL: '/api/adverts/dashboard/6',
+
+				userRequests: []
 			}
 		},
 		methods: {
@@ -291,11 +309,18 @@
 			},
 			viewAdvertImage(image) {
 				return '/images/adverts/'+image
-			}
+			},
+			loadRequests() {
+				axios.get('/api/vendors/requests')
+				.then((response) => {
+					this.userRequests = response.data.data
+				})
+			},
 		},
 		created() {
 			this.getUserData()
 			this.loadAdverts()
+			this.loadRequests()
 
 			Fire.$on('refreshMessages', () => {
 				this.loadMessages()

@@ -26,7 +26,15 @@ class StoreNewContactEnquiry extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:contact_enquiries',
-            'message' => 'required|string|min:30'
+            'message' => 'required|string|min:30',
+            'g-recaptcha-response' => 'recaptcha',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'g-recaptcha-response.recaptcha' => 'Please validate the reCAPTCHA box',
         ];
     }
 }

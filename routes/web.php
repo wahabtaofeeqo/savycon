@@ -11,12 +11,20 @@
 |
 */
 
+Route::get('/testmail', function () {
+	\Illuminate\Support\Facades\Mail::html('<h1>Hi</h1>', function ($message) {
+	   $message->subject('App is live!');
+	   $message->to('folurinyinka@gmail.com');
+	});
+});
+
 // Home
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/index', 'PagesController@index');
 
 // Services
 Route::get('/services', 'PagesController@services')->name('services');
+Route::get('/servicepage', 'PagesController@servicepage')->name('servicepage');
 Route::get('/services/user/{id}', 'PagesController@userServices')->where('/id', '([0-9]+)')->name('services.user');
 Route::get('/our-services', 'PagesController@services');
 Route::get('/service/{id}', 'PagesController@showService')->where('/id', '([0-9]+)')->name('service.single');
@@ -65,9 +73,12 @@ Auth::routes(['verify' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Donate
+Route::get('/donate', 'General\DonateController@index')->name('donate');
+
 // Socialite
-Route::get('/social/redirect/{provider}/{role}', 'Auth\SocialController@redirectToProvider')->where('provider', 'twitter|linkedin|google|facebook')->name('social.redirect');
-Route::get('/social/callback/{provider}/{role}', 'Auth\SocialController@handleProviderCallback')->where('provider', 'twitter|linkedin|google|facebook');
+Route::get('/social/redirect/{provider}', 'Auth\SocialController@redirectToProvider')->where('provider', 'twitter|linkedin|google|facebook')->name('social.redirect');
+Route::get('/social/callback/{provider}', 'Auth\SocialController@handleProviderCallback')->where('provider', 'twitter|linkedin|google|facebook');
 
 Route::middleware(['role:admin'])->group(function () {
 	Route::prefix('admin')->group(function () {		

@@ -9,6 +9,7 @@ use SavyCon\Models\UserService;
 use SavyCon\Models\City;
 use SavyCon\Models\State;
 use SavyCon\Models\Search;
+use SavyCon\Models\Category;
 
 class SearchController extends Controller
 {
@@ -22,25 +23,48 @@ class SearchController extends Controller
         	}
 
             $city = City::where('name', $address)->first();
+            $state = State::where('name', $address)->first();
 
-            if (isset($city)) {
-                $services = $this->appendCityStructure($city, $text, $address);
-            } else {
+            if (!empty($state)) {
+                $services = $state->userServices()
+                    ->where('active', 1)
+                    ->where('description', 'LIKE', '%'.$text.'%')
+                    ->with('user', 'service', 'service.category', 'city', 'city.state')
+                    ->paginate(20);
+            }
+            else if (!empty($city)) {
+                $category = Category::where('name', $text)->first();
+                
+                if (!empty($category)) {
+                    $services = $category->userServices()
+                        ->where('active', 1)
+                        ->where('city_id', $city->id)
+                        ->where('description', 'LIKE', '%'.$text.'%')
+                        ->with('user', 'service', 'service.category', 'city', 'city.state')
+                        ->paginate(20);
+                } else {
+                    $services = $city->userServices()
+                        ->where('active', 1)
+                        ->where('description', 'LIKE', '%'.$text.'%')
+                        ->with('user', 'service', 'service.category', 'city', 'city.state')
+                        ->paginate(20);
+                }
+            } 
+            else {
                 $services = UserService::with([
                         'user',
                         'service',
                         'service.category',
                         'city',
                         'city.state'
-                    ])
-                    ->where([
-                        ['address', 'LIKE', '%'.$address.'%'],
+                    ])->where([
                         ['title', 'LIKE', '%'.$text.'%'],
+                        ['address', 'LIKE', '% '.$address.' %'],
                         ['active', '1'],
                     ])
                     ->orWhere([
-                        ['address', 'LIKE', '%'.$address.'%'],
                         ['description', 'LIKE', '%'.$text.'%'],
+                        ['address', 'LIKE', '% '.$address.' %'],
                         ['active', '1'],
                     ])
                     ->paginate(20);
@@ -113,25 +137,35 @@ class SearchController extends Controller
 
     public function suggestSearch($text = null)
     {
-        $services = UserService::with([
-            'city',
-            'city.state'
-        ])->where([
-            ['title', 'LIKE', '%'.$text.'%'],
-            ['active', '1'],
-        ])
-        ->orWhere([
-            ['description', 'LIKE', '%'.$text.'%'],
-            ['active', '1'],
-        ])
+        $categories = Category::where('name', 'LIKE', '%'.$text.'%')->distinct()->get();
+
+        return response($categories, 200);
+    }
+
+    public function suggestLocation($location = null)
+    {
+        $locations = City::where('name', 'LIKE', '% '.$location.' %')
+        ->orWhere('name', 'LIKE', ''.$location.' %')
+        ->orWhere('name', 'LIKE', '% '.$location.'')
+        ->orWhere('name', 'LIKE', '%'.$location.'%')
+        ->distinct()
         ->get();
 
-        return response($services, 200);
+        if (!count($locations)) {
+            $locations = State::where('name', 'LIKE', '% '.$location.' %')
+            ->orWhere('name', 'LIKE', ''.$location.' %')
+            ->orWhere('name', 'LIKE', '% '.$location.'')
+            ->orWhere('name', 'LIKE', '%'.$location.'%')
+            ->distinct()
+            ->get();
+        }
+
+        return response($locations, 200);
     }
 
     private function collectSearch($text = null)
     {
-        return $services = UserService::with([
+        return UserService::with([
             'user',
             'service',
             'service.category',
@@ -146,30 +180,5 @@ class SearchController extends Controller
                 ['active', '1'],
             ])
             ->paginate(20);
-    }
-
-    private function appendCityStructure(City $city, $text, $address)
-    {
-        $services = UserService::with([
-                'user',
-                'service',
-                'service.category',
-                'city',
-                'city.state'
-            ])
-            ->where([
-                ['address', 'LIKE', '%'.$address.'%'],
-                ['city_id', $city->id],
-                ['title', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->orWhere([
-                ['address', 'LIKE', '%'.$address.'%'],
-                ['description', 'LIKE', '%'.$text.'%'],
-                ['active', '1'],
-            ])
-            ->paginate(20);
-
-        return $services;
     }
 }

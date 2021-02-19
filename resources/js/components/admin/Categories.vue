@@ -7,6 +7,12 @@
 					<button class="pull-right btn btn-primary btn-fill" @click="openModal" v-show="!createmode">Add New</button>
 					<button class="pull-right btn btn-default btn-fill" @click="openModal" v-show="createmode">Close Form</button>
 					<div class="clearfix"></div>
+
+					<p>
+						<button v-show="mergeArray.length > 1" class="btn btn-info px-3" @click="mergeCategories">
+							Merge Categories
+						</button>
+					</p>
 				</h4>
 				<p class="category">All categories</p>
 
@@ -76,6 +82,9 @@
 											<button class="btn btn-sm btn-success btn-fill" @click="showServices(category)">Show Sub-categories</button>
 											<button class="btn btn-sm btn-primary btn-fill" @click="editCategory(category)">Edit</button>
 											<button class="btn btn-sm btn-danger btn-fill" @click="deleteCategory(category.id)">Delete</button>
+										</td>
+										<td>
+											<input type="checkbox" :value="category.id" @change="updateMergeArray">
 										</td>
 									</tr>
 								</tbody>
@@ -170,9 +179,71 @@
 
 				categoryURL: '/api/categories/',
 				serviceURL: '/api/sub-categories/',
+
+				mergeArray: [],
 			}
 		},
 		methods: {
+
+			updateMergeArray(event) {
+
+				const id = event.target.getAttribute('value');
+				var found = false;
+
+				if (this.mergeArray.length > 0) {
+					for (var i = 0; i < this.mergeArray.length; i++) {
+						if (this.mergeArray[i] == id) {
+							found = true;
+
+							//Delete the element
+							this.mergeArray.splice(i, 1);
+							break;
+						}
+					}
+				}
+
+				if (!found) {
+					this.mergeArray.push(id);
+				}
+			},
+
+			async mergeCategories() {
+				if (this.mergeArray.length > 1) {
+					const str = this.mergeArray.join(",");
+					const { value: name } = await Swal.fire({
+							icon: 'info',
+	                        title: 'Parent Category?',
+	                        input: 'text',
+	                        showCancelButton: true,
+	                        inputPlaceholder: 'Name....',
+	                        inputValidator: (value) => {
+	                            if (!value) {
+	                                return "Enter Category Name";
+	                            }
+	                        }
+	                });
+
+	                if (name) {
+
+	                	const loader = this.$loading.show();
+	                	const data = {categories: str, parent: name};
+
+	                	axios.post('/api/categoryMerge', data).then(response => {
+	                		Swal.fire({
+								type: 'success',
+								title: 'Categories were merged successfully'
+							});
+							
+	                		loader.hide();
+	                		this.loadCategories();
+
+	                	}).catch(err => {
+	                		loader.hide();
+	                	})
+	                }
+				}
+			},
+
 			loadCategories() {
 				const loader = this.$loading.show()
 
@@ -221,7 +292,7 @@
 				Swal.fire({
 					title: 'Are you sure?',
 					text: 'This action cannot be reverted',
-					type: 'warning',
+					icon: 'warning',
 					showCancelButton: true,
                     confirmButtonText: 'Yes, delete it!'
 				})
@@ -496,9 +567,6 @@
 			Fire.$on('refreshSubCategories', () => {
 				this.loadServices(this.serviceForm.category.id)
 			})
-		},
-		mounted() {
-
 		}
 	}
 </script>

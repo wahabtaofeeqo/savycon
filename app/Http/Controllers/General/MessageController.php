@@ -102,7 +102,8 @@ class MessageController extends Controller
     {
         $messages = [];
 
-        $services = auth()->user()->userServices()->get();
+        if(count($messages) > 0) {
+            $services = auth()->user()->userServices()->get();
         if (!is_null($services)) {
             foreach ($services as $service) {
                 if (!is_null($service->messages()->get())) {
@@ -116,5 +117,8 @@ class MessageController extends Controller
         }
 
         return response($messages, 200);
+        }
+        return response($messages, 200);
+        
     }
 }

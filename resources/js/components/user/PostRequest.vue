@@ -41,8 +41,8 @@
                     <div class="row">
                         <div class="col-12">
                         	<label for="description">Description</label>
-                            <textarea rows="10" class="form-control" :class="{ 'has-error':form.errors.has('description') }" v-model="form.description" id="description" placeholder="Describe your project in the simplest language... (Min: 100)" minlength="100" required></textarea>
-                            <span class="help-block text-primary">Please describe with up to 100 characters long, so your to-be assistant is clear on the details</span>
+                            <textarea rows="10" class="form-control" :class="{ 'has-error':form.errors.has('description') }" v-model="form.description" id="description" placeholder="Describe your project in the simplest language... (Min: 50)" minlength="50" required></textarea>
+                            <span class="help-block text-primary">Please describe with up to 50 characters long, so your to-be assistant is clear on the details</span>
                             <has-error :form="form" field="description"></has-error>
                         </div>
                     </div>

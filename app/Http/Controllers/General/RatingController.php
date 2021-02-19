@@ -30,6 +30,8 @@ class RatingController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth:api');
+
         $this->validate($request, [
             'stars' => 'required|integer',
             'comment' => 'required',
@@ -44,7 +46,10 @@ class RatingController extends Controller
 
         NotifyUserOnNewServiceReview::dispatch($rating)->delay(now()->addSeconds(15));
 
-        return response($rating, 200);
+        return response([
+            'rating' => $rating,
+            'msg' => 'ok'
+        ], 200);
     }
 
     /**

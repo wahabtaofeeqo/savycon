@@ -32,6 +32,12 @@ window.Toast = Toast;
 // Overlay loader
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import VueClipboard from 'vue-clipboard2'
+import VueSocialSharing from 'vue-social-sharing'
+ 
+Vue.use(VueSocialSharing);
+ 
+Vue.use(VueClipboard)
 Vue.use(Loading, {
 	loader: 'bars',
 });
@@ -55,6 +61,7 @@ import AdminVendors from './components/admin/Vendors.vue';
 import AdminUsers from './components/admin/Users.vue';
 import AdminSubscribers from './components/admin/Subscribers.vue';
 import AdminMessages from './components/admin/Messages.vue';
+import AdminServicePages from './components/admin/ServicePages.vue';
 import AdminUnfoundSearches from './components/admin/UnfoundSearches.vue';
 import AdminContactMessages from './components/admin/Contacts.vue';
 import AdminAdverts from './components/admin/Adverts.vue';
@@ -68,6 +75,7 @@ import UserDashboard from './components/user/Dashboard.vue';
 import UserRequests from './components/user/UserRequests.vue';
 import PostRequest from './components/user/PostRequest.vue';
 import UserProfile from './components/Profile.vue';
+import VisitorsStats from './components/admin/Stats.vue';
 
 import ErrorPage from './components/404.vue';
 
@@ -78,6 +86,11 @@ const routes = [
 		name: 'AdminDashboard',
 		path: '/admin/',
 		component: AdminDashboard
+	},
+	{
+		name: 'VisitorsStats',
+		path: '/admin/stats',
+		component: VisitorsStats
 	},
 	{
 		name: 'AdminServices',
@@ -123,6 +136,11 @@ const routes = [
 		name: 'AdminMessages',
 		path: '/admin/messages',
 		component: AdminMessages
+	},
+	{
+		name: 'AdminServicePages',
+		path: '/admin/servicepages',
+		component: AdminServicePages
 	},
 	{
 		name: 'AdminUnfoundSearches',
@@ -214,7 +232,10 @@ Vue.component('footer-categories', require('./components/sections/FooterCategori
 Vue.component('load-services-in-category', require('./components/sections/CategoryOverview.vue').default);
 Vue.component('load-services-in-sub-category', require('./components/sections/SubCategoryOverview.vue').default);
 Vue.component('service-review', require('./components/sections/ServiceReview.vue').default);
+Vue.component('donate-page', require('./components/Donate.vue').default);
 Vue.component('message', require('./components/sections/Message.vue').default);
+Vue.component('drop-phone-number', require('./components/sections/DropPhoneNumber.vue').default);
+Vue.component('service-page', require('./components/ServicePage.vue').default);
 
 // Goodshare
 import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
@@ -236,9 +257,13 @@ const app = new Vue({
     		Fire.$emit('searching')
     	},
     	getMyLocation() {
-    		$('#location_search_button').css('color', '#1ba285')
-
-    		console.log('Use my location')
+			fetch('https://ipapi.co/json/')
+			.then((response) => {
+				response.json()
+				.then((data) => {
+					this.global_search_address = data.city
+				})
+			})
     	}
     },
     components: {

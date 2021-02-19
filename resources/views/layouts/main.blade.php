@@ -10,6 +10,7 @@
                 <meta name="robots" content="index, follow">
                 <meta name="language" content="English">
                 <meta name="keywords" content="freelance,jobs,career,service,vendor,worker">
+                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
                 <!-- Open Graph / Facebook -->
                 <meta property="og:type" content="website">
@@ -47,6 +48,7 @@
                 <link rel="stylesheet" href="{{ asset('main/vendor/perfect-scrollbar/perfect-scrollbar.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/css/util.css') }}">
                 <link rel="stylesheet" href="{{ asset('main/css/main.css') }}">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" integrity="sha512-ueOUZQS58VJTTpBFO5ZgfygAYtDbPQ1Ipxyia/sLIKnaJj33SmJL5w0Vsvd8V65dUKMGp59owE9qOiK07Q5xGA==" crossorigin="anonymous" />
 
                 <style scoped>
                         .isotope-grid {
@@ -69,6 +71,8 @@
                                 left: 18px;
                         }
                 </style>
+
+                {!! htmlScriptTagJsApi() !!}
 
                 <!-- Google Tag Manager -->
                 <script>
@@ -112,8 +116,14 @@
                                                                         <li class="@yield('activeAbout')">
                                                                                 <a href="{{ route('about') }}">About</a>
                                                                         </li>
+                                                                        <li class="@yield('activeServicePage')">
+                                                                                <a href="{{ route('servicepage') }}">Service Page</a>
+                                                                        </li>
                                                                         <li class="@yield('activeContact')">
                                                                                 <a href="{{ route('contact') }}">Contact</a>
+                                                                        </li>
+                                                                         <li class="@yield('activeDonation')">
+                                                                                <a href="{{ route('donate') }}" class="btn btn-danger px-3 text-white">Donate</a>
                                                                         </li>
                                                                         @auth
                                                                         <li class="">
@@ -281,7 +291,7 @@
                                                         </span>
                                                 </div>
 
-                                                <div class="sidebar-gallery w-full">
+                                                <!-- <div class="sidebar-gallery w-full">
                                                         <span class="mtext-101 cl5">
                                                                 Developer
                                                         </span>
@@ -289,6 +299,10 @@
                                                         <p class="stext-108 cl6 p-t-27">
                                                                 <p>{{ config('app.developer.name') }}</p>
                                                                 <div class="p-t-0">
+                                                                        <a href="{{ config('app.developer.website') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                                <i class="fa fa-globe"></i>
+                                                                        </a>
+
                                                                         <a href="mailto:{{ config('app.developer.email') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                                                                                 <i class="fa fa-envelope"></i>
                                                                         </a>
@@ -310,7 +324,7 @@
                                                                         </a>
                                                                 </div>
                                                         </p>
-                                                </div>
+                                                </div> -->
                                         </div>
                                 </div>
                         </aside>
@@ -426,6 +440,20 @@
                                                                 <a href="{{ env('CONTACT_TWITTER') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                                                                         <i class="fa fa-twitter"></i>
                                                                 </a>
+
+                                                                <a href="{{ env('CONTACT_LINKEDIN') }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                                                        <i class="fa fa-linkedin"></i>
+                                                                </a>
+                                                        </div>
+
+                                                        <div class="p-t-27">
+                                                                <a class="fs-18 m-r-16">
+                                                                        <img src="{{ asset('images/store/playstore.png') }}" height="30px" width="30px" />
+                                                                </a>
+
+                                                                <a class="fs-18 m-r-16">
+                                                                        <img src="{{ asset('images/store/appstore.jpg') }}"  height="30px" width="90px" />
+                                                                </a>
                                                         </div>
                                                 </div>
 
@@ -476,7 +504,7 @@
                                         <div class="p-t-40">
                                                 <p class="stext-107 cl6 txt-center">
                                                         Copyright &copy; @php echo date("Y") @endphp All rights reserved
-                                                        <br>Developed by <a href="tel:{{ config('app.developer.phone') }}">{{ config('app.developer.name') }}</a>
+                                                        </a>
                                                 </p>
                                         </div>
                                 </div>
@@ -490,12 +518,39 @@
                         </div>
                 </div>
 
+                <div class="modal fade" tabindex="-1" id="newsletterModal" role="dialog">
+                        <div class="modal-dialog  modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                        <div class="modal-body">
+                                                <p>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                                                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                                </p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+
+
+
                 <script src="{{ asset('js/app.js') }}"></script>
 
                 <!-- Core -->
+                <!-- JavaScript Bundle with Popper -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
                 <script src="{{ asset('main/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
                 <script src="{{ asset('main/vendor/animsition/js/animsition.min.js') }}"></script>
 
+        
                 <!-- For slider -->
                 <script src="{{ asset('main/vendor/slick/slick.min.js') }}"></script>
                 <script src="{{ asset('main/js/slick-custom.js') }}"></script>
@@ -520,6 +575,7 @@
                 </script>
 
                 <script src="{{ asset('main/vendor/isotope/isotope.pkgd.min.js') }}"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.min.js" integrity="sha512-TiVoRGEsF9wHGd7p/rVhfV7jD6QVtKi+p/VB1cwB1WUfOqwwFfYxLRU2AmuANeHFAt9AYumc6ssSaUjIGTAK1w==" crossorigin="anonymous"></script>
 
                 <script src="{{ asset('main/vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
                 <script>
@@ -537,7 +593,6 @@
                                 })
                         });
                 </script>
-
                 <script src="{{ asset('main/js/main.js') }}"></script>
         </body>
 </html>

@@ -21,6 +21,9 @@
 							<tr v-for="(user, index) in subscribers">
 								<td>{{ index+1 }}</td>
 								<td>{{ user.email }}</td>
+								<td>
+									<button class="btn btn-sm btn-danger btn-fill" @click="deleteUser(user.id)">Delete</button>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -89,6 +92,25 @@
                 this.url = '/api/subscribers?page='+pageno;
                 this.loadSubscribers();
             },
+            deleteUser(id) {
+            	Swal.fire({
+            		icon: 'warning',
+					title: 'Are you sure?',
+					text: 'This action cannot be reverted',
+					showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!'
+				}).then(response => {
+					const loader = this.$loading.show();
+					if (response.isConfirmed) {
+						axios.delete('/api/deleteSubscriber/' + id).then(response => {
+							loader.hide();
+							this.loadSubscribers();
+						}).catch(err => {
+							loader.hide();
+						})
+					}
+				})
+            }
 		},
 		created() {
 			this.loadSubscribers();
