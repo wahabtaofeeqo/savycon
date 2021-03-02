@@ -2476,6 +2476,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2484,10 +2510,12 @@ __webpack_require__.r(__webpack_exports__);
         content: "",
         description: "",
         category: "",
+        subcategory: "",
         phonenumber: "",
         whatsapp: ""
       }),
       categories: {},
+      subcategories: {},
       url: "/api/servicespage",
       categoryURL: "/api/category"
     };
@@ -2500,18 +2528,28 @@ __webpack_require__.r(__webpack_exports__);
         _this.categories = response.data;
       });
     },
-    createServicePage: function createServicePage() {
+    loadSubCategories: function loadSubCategories() {
       var _this2 = this;
 
       var loader = this.$loading.show();
+      axios.get('/api/category/services/' + this.form.category).then(function (response) {
+        loader.hide();
+        _this2.subcategories = response.data;
+      });
+    },
+    createServicePage: function createServicePage() {
+      var _this3 = this;
+
+      var loader = this.$loading.show();
+      console.log(this.form);
       this.form.post(this.url).then(function () {
         Swal.fire({
-          type: "success",
+          icon: "success",
           title: "Request submitted successfully.",
           text: "We will reload the page now..."
         });
 
-        _this2.form.reset();
+        _this3.form.reset();
 
         setTimeout(function () {
           window.location.reload();
@@ -2520,7 +2558,7 @@ __webpack_require__.r(__webpack_exports__);
         Swal.fire({
           title: "Oops!",
           text: "request was not sent for some reason",
-          type: "error"
+          icon: "error"
         });
         loader.hide();
       });
@@ -5295,6 +5333,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5337,7 +5376,8 @@ __webpack_require__.r(__webpack_exports__);
     fetchPaginateContactWithIndex: function fetchPaginateContactWithIndex(pageno) {
       this.url = "/api/contact?page=" + pageno;
       this.loadMessages();
-    } // resolveMessage(id) {
+    },
+    // resolveMessage(id) {
     //   const loader = this.$loading.show();
     //   axios
     //     .delete("/api/contact/" + id)
@@ -5357,7 +5397,37 @@ __webpack_require__.r(__webpack_exports__);
     //       loader.hide();
     //     });
     // },
+    deleteService: function deleteService(id) {
+      var _this2 = this;
 
+      Swal.fire({
+        title: 'Delete this?',
+        icon: 'info',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes!',
+        cancelButtonText: 'No!',
+        footer: '<small class="text-danger">Can not be recovered!</small>'
+      }).then(function (response) {
+        if (response.isConfirmed) {
+          var loader = _this2.$loading.show();
+
+          axios["delete"]('/api/deleteService/' + id).then(function (response) {
+            loader.hide();
+            Swal.fire({
+              icon: "success",
+              title: "Deleted successfully"
+            });
+          })["catch"](function (err) {
+            loader.hide();
+            Swal.fire({
+              icon: "error",
+              title: "Could not be deleted!"
+            });
+          });
+        }
+      });
+    }
   },
   created: function created() {
     this.loadMessages(); // Fire.$on("refreshMessages", () => {
@@ -6021,6 +6091,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -6132,6 +6211,56 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    editUser: function editUser(user) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _yield$Swal$fire, email, loader, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return Swal.fire({
+                  icon: 'info',
+                  input: 'email',
+                  inputValue: user.email,
+                  showCancelButton: true,
+                  inputValidator: function inputValidator(value) {
+                    if (!value) {
+                      return 'Email cannot be empty';
+                    }
+                  }
+                });
+
+              case 2:
+                _yield$Swal$fire = _context.sent;
+                email = _yield$Swal$fire.value;
+
+                if (email != user.email) {
+                  loader = _this3.$loading.show();
+                  data = {
+                    email: email,
+                    id: user.id
+                  };
+                  axios.post('/api/editSubscriber/', data).then(function (response) {
+                    loader.hide();
+
+                    _this3.loadSubscribers();
+                  })["catch"](function (err) {
+                    loader.hide();
+                  });
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   created: function created() {
@@ -6997,6 +7126,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -91961,23 +92093,29 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: { id: "category", required: "" },
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "category",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "category",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return _vm.loadSubCategories()
+                                }
+                              ]
                             }
                           },
                           [
@@ -91998,6 +92136,73 @@ var render = function() {
                                   _vm._v(
                                     "\n                      " +
                                       _vm._s(category.name) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("label", { attrs: { for: "subcategory" } }, [
+                          _vm._v("Sub Category")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.subcategory,
+                                expression: "form.subcategory"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { id: "subcategory", required: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "subcategory",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("Choose a Sub Category")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.subcategories, function(sub) {
+                              return _c(
+                                "option",
+                                { key: sub.id, domProps: { value: sub.name } },
+                                [
+                                  _vm._v(
+                                    "\n                      " +
+                                      _vm._s(sub.name) +
                                       "\n                    "
                                   )
                                 ]
@@ -92172,7 +92377,8 @@ var render = function() {
                         attrs: {
                           rows: "5",
                           name: "description",
-                          placeholder: "Describe your service",
+                          placeholder:
+                            "Describe your service, Add your Address...",
                           id: "description",
                           required: ""
                         },
@@ -92196,7 +92402,9 @@ var render = function() {
                       })
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _vm._m(0)
                 ])
               ]),
               _vm._v(" "),
@@ -92218,7 +92426,25 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check my-3" }, [
+      _c("input", {
+        staticClass: "form-check-input",
+        attrs: { type: "checkbox", required: "" }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        { staticClass: "form-check-label", attrs: { for: "checkbox" } },
+        [_vm._v("\n                Terms and Condition\n              ")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -96266,7 +96492,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", { staticClass: "page-header" }, [
+    _c("h1", { staticClass: "page-header h4" }, [
       _vm._v("\n    Service Page Requests\n    "),
       _c("span", { staticClass: "badge badge-primary" }, [
         _vm._v(_vm._s(_vm.pagination.total_items))
@@ -96357,7 +96583,20 @@ var render = function() {
                       _c("p", { staticStyle: { "white-space": "pre-line" } }, [
                         _vm._v(_vm._s(message.description))
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteService(message.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
                   ])
                 ])
               ])
@@ -97214,6 +97453,19 @@ var render = function() {
                       _c("td", [_vm._v(_vm._s(user.email))]),
                       _vm._v(" "),
                       _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-info btn-fill mx-3",
+                            on: {
+                              click: function($event) {
+                                return _vm.editUser(user)
+                              }
+                            }
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "button",
                           {
@@ -98657,13 +98909,13 @@ var render = function() {
               "flex-c-m stext-101 cl2 size-107 bg2 bor2 hov-btn1 p-lr-15 trans-04 m-b-10 m-r-8",
             attrs: { href: "mailto:" + _vm.service.user.email }
           },
-          [_vm._v("Mail")]
+          [_vm._v("Email: " + _vm._s(_vm.service.user.email))]
         ),
         _vm._v(" "),
         _c(
           "button",
           {
-            staticClass: "btn btn-xs btn-primary",
+            staticClass: "btn btn-xs btn-primary d-none",
             staticStyle: { "margin-right": "10px", height: "32px" },
             on: {
               click: function($event) {
@@ -98681,13 +98933,13 @@ var render = function() {
               "flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10 m-r-8",
             attrs: { href: "tel:+234" + _vm.service.user.phone }
           },
-          [_vm._v("Call")]
+          [_vm._v("Call: " + _vm._s(_vm.service.user.phone))]
         ),
         _vm._v(" "),
         _c(
           "button",
           {
-            staticClass: "btn btn-xs btn-primary",
+            staticClass: "btn btn-xs btn-primary d-none",
             staticStyle: { "margin-right": "10px", height: "32px" },
             on: {
               click: function($event) {
@@ -98710,7 +98962,7 @@ var render = function() {
               target: "_blank"
             }
           },
-          [_vm._v("WhatsApp")]
+          [_vm._v("WhatsApp: " + _vm._s(_vm.service.user.phone))]
         )
       ])
     ])
@@ -99690,7 +99942,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "p-b-10" }, [
       _c("h3", { staticClass: "ltext-103 cl5" }, [
-        _vm._v("\n          Services Overview\n          "),
+        _vm._v("\n          Services Overvieww\n          "),
         _c(
           "div",
           {

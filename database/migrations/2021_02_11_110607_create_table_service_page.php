@@ -16,6 +16,7 @@ class CreateTableServicePage extends Migration
         Schema::create('servicepage', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('category');
+            $table->string('subcategory');
             $table->string('content')->unique();
             $table->longText('description');
             $table->string('phonenumber');

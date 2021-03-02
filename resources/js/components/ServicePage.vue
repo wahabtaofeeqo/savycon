@@ -21,14 +21,33 @@
                       class="form-control"
                       id="category"
                       v-model="form.category"
-                      required
-                    >
+                      required @change="loadSubCategories()">
                       <option disabled value="">Choose a category</option>
                       <option
                         v-for="category in categories"
                         :key="category.id"
                         v-bind:value="category.name">
                         {{ category.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="subcategory">Sub Category</label>
+                    <select
+                      class="form-control"
+                      id="subcategory"
+                      v-model="form.subcategory"
+                      required>
+                      <option disabled value="">Choose a Sub Category</option>
+                      <option
+                        v-for="sub in subcategories"
+                        :key="sub.id"
+                        v-bind:value="sub.name">
+                        {{ sub.name }}
                       </option>
                     </select>
                   </div>
@@ -83,13 +102,20 @@
                   rows="5"
                   v-model="form.description"
                   name="description"
-                  placeholder="Describe your service"
+                  placeholder="Describe your service, Add your Address..."
                   :class="{ 'has-error': form.errors.has('description') }"
                   id="description"
                   required
                 ></textarea>
                 <has-error :form="form" field="description"></has-error>
               </div>
+
+             <div class="form-check my-3">
+                <input class="form-check-input" type="checkbox" required>
+                <label class="form-check-label" for="checkbox">
+                  Terms and Condition
+                </label>
+            </div>
             </div>
           </div>
 
@@ -118,11 +144,13 @@ export default {
         content: "",
         description: "",
         category: "",
+        subcategory: "",
         phonenumber: "",
         whatsapp: "",
       }),
 
       categories: {},
+      subcategories: {},
 
       url: "/api/servicespage",
 
@@ -135,14 +163,23 @@ export default {
         this.categories = response.data;
       });
     },
+    loadSubCategories() {
+       const loader = this.$loading.show();
+       axios.get('/api/category/services/' + this.form.category)
+       .then((response) => {
+        loader.hide();
+        this.subcategories = response.data;
+      });
+    },
     createServicePage() {
       const loader = this.$loading.show();
 
+      console.log(this.form);
       this.form
         .post(this.url)
         .then(() => {
           Swal.fire({
-            type: "success",
+            icon: "success",
             title: "Request submitted successfully.",
             text: "We will reload the page now...",
           });
@@ -158,7 +195,7 @@ export default {
           Swal.fire({
             title: "Oops!",
             text: "request was not sent for some reason",
-            type: "error",
+            icon: "error",
           });
 
           loader.hide();

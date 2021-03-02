@@ -22,6 +22,7 @@
 								<td>{{ index+1 }}</td>
 								<td>{{ user.email }}</td>
 								<td>
+									<button class="btn btn-sm btn-info btn-fill mx-3" @click="editUser(user)">Edit</button>
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteUser(user.id)">Delete</button>
 								</td>
 							</tr>
@@ -110,6 +111,36 @@
 						})
 					}
 				})
+            },
+
+            async editUser(user) {
+
+            	const { value: email } = await Swal.fire({
+            		icon: 'info',
+					input: 'email',
+					inputValue: user.email,
+					showCancelButton: true,
+					inputValidator: (value) => {
+					    if (!value) {
+					      return 'Email cannot be empty'
+					    }
+					}
+				})
+
+				if (email != user.email) {
+
+					const loader = this.$loading.show();
+					const data = {
+						email: email,
+						id: user.id
+					};
+				  	axios.post('/api/editSubscriber/', data).then(response => {
+						loader.hide();
+						this.loadSubscribers();
+					}).catch(err => {
+						loader.hide();
+					})
+				}
             }
 		},
 		created() {

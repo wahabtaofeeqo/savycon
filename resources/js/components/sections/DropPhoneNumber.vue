@@ -7,20 +7,23 @@
         <!-- :href="'mailto:' + service.user.email" -->
         <a :href="'mailto:' + service.user.email"
           class="flex-c-m stext-101 cl2 size-107 bg2 bor2 hov-btn1 p-lr-15 trans-04 m-b-10 m-r-8"
-          >Mail</a>
-          <button class="btn btn-xs btn-primary" style="margin-right: 10px;
+          >Email: {{service.user.email}}</a>
+
+          <button class="btn btn-xs btn-primary d-none" style="margin-right: 10px;
     height: 32px;" @click="doCopyEmail()">Copy</button>
         <!-- :href="'tel:+234' + service.user.phone" -->
+
         <a :href="'tel:+234' + service.user.phone"
           class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10 m-r-8"
-          >Call</a>
-         <button class="btn btn-xs btn-primary" style="margin-right: 10px;
+          >Call: {{service.user.phone}}</a>
+
+         <button class="btn btn-xs btn-primary d-none" style="margin-right: 10px;
     height: 32px;" @click="doCopyPhoneNumber()">Copy</button>
 
         <a
           :href="'https://api.whatsapp.com/send?phone=234' + service.user.phone" target="_blank"
           class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn2 p-lr-15 trans-04 m-b-10 m-r-8"
-          >WhatsApp</a
+          >WhatsApp: {{service.user.phone}}</a
         >
       </div>
     </div>

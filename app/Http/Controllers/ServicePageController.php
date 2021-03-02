@@ -18,6 +18,7 @@ class ServicePageController extends Controller
     public function store(Request $request) {
         $request->validate([
             'category' => 'required',
+            'subcategory' => 'required',
             'content' => 'required',
             'phonenumber' => 'required',
             'whatsapp' => 'required',
@@ -26,6 +27,7 @@ class ServicePageController extends Controller
 
         ServicePage::create([
             'category' => $request->category,
+            'subcategory' => $request->subcategory,
             'content' => $request->content,
             'description' => $request->description,
             'phonenumber' => $request->phonenumber,
@@ -35,4 +37,14 @@ class ServicePageController extends Controller
         return response(array('status' => 'success', 'message' => 'Inserted'));
     }
 
+    public function deleteService($id) {
+        $response = array('error' => FALSE, 'message' => 'Deleted: ' . $id);
+
+        $servicepage = ServicePage::find($id);
+        if ($servicepage) {
+            $servicepage->delete();
+        }
+
+        return response($response, 200);
+    }
 }

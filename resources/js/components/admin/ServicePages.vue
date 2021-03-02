@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="page-header">
+    <h1 class="page-header h4">
       Service Page Requests
       <span class="badge badge-primary">{{ pagination.total_items }}</span>
     </h1>
@@ -49,6 +49,7 @@
                 <label>Description</label>
                 <p style="white-space: pre-line">{{ message.description }}</p>
               </div>
+              <button class="btn btn-sm btn-danger" @click="deleteService(message.id)">Delete</button>
             </div>
           </div>
         </div>
@@ -144,6 +145,40 @@ export default {
     //       loader.hide();
     //     });
     // },
+    deleteService(id) {
+      Swal.fire({
+          title: 'Delete this?',
+          icon: 'info',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Yes!',
+          cancelButtonText: 'No!',
+          footer: '<small class="text-danger">Can not be recovered!</small>'
+      }).then(response => {
+        if (response.isConfirmed) {
+
+            const loader = this.$loading.show();
+
+            axios.delete('/api/deleteService/' + id)
+            .then(response => {
+              loader.hide();
+              Swal.fire({
+                icon: "success",
+                title: "Deleted successfully",
+              });
+            })
+            .catch(err => {
+              loader.hide();
+              Swal.fire({
+                icon: "error",
+                title: "Could not be deleted!",
+              });
+            });
+        }
+      })
+
+     
+    }
   },
   created() {
     this.loadMessages();

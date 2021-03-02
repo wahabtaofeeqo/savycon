@@ -55,6 +55,10 @@ Route::post('/usersNeed', 'UsersNeedController@store');
 
 //
 Route::delete('/deleteSubscriber/{id}', 'General\SubscriptionController@destroy')->where('id', '([0-9]+)');
+Route::post('/editSubscriber', 'General\SubscriptionController@edit');
+
+//Delete service of 'need a Service'
+Route::delete('deleteService/{id}', 'ServicePageController@deleteService')->where('id', '([0-9]+)');
 
 //Visitors
 Route::post('/visitors', 'UsersNeedController@visitor');
@@ -88,6 +92,7 @@ Route::get('/category/limited', 'CategoryController@limitedIndex');
 Route::get('/category/show/{id}', 'CategoryController@show')->where('id', '([0-9]+)');
 Route::get('/category/{id}', 'CategoryController@showUserServices')->where('id', '([0-9]+)');
 Route::get('/category/services/{id}', 'CategoryController@services')->where('id', '([0-9]+)');
+Route::get('/category/services/{name}', 'CategoryController@servicesFromCategory')->where('name', '([a-zA-Z]+)');
 
 // Sub-categories
 Route::get('/sub-category/{id}', 'CategoryController@showUserServicesFromSub')->where('id', '([0-9]+)');

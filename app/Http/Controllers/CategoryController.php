@@ -31,8 +31,12 @@ class CategoryController extends Controller
     public function services($id)
     {
     	$category = Category::findOrFail($id);
-
     	return response($category->services, 200);
+    }
+
+    public function servicesFromCategory($name) {
+        $category = Category::where('name', $name)->first();
+        return response($category->services, 200);
     }
 
     public function showUserServices($id) 

@@ -40,6 +40,22 @@ class SubscriptionController extends Controller {
         return response($response, 200);
     }
 
+    public function edit(Request $request) {
+
+        $response = array('error' => FALSE, 'message' => '');
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $sub = Subscription::find($request->id);
+        if ($sub) {
+            $sub->email = $request->email;
+            $sub->save();
+        }
+
+        return response($response, 200);
+    }
+
     public function destroy($id) {
         $response = array('error' => FALSE, 'message' => '');
         $user = Subscription::find($id);
