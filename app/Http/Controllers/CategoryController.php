@@ -73,6 +73,12 @@ class CategoryController extends Controller
         return response($services, 200);
     }
 
+    // Services
+    public function subCategories() {
+        $services = Service::latest()->paginate(20);
+        return response($services, 200);
+    }
+
     public function showSub($id)
     {
         $sub_category = Service::with([

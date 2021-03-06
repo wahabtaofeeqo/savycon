@@ -24,16 +24,23 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                        	<label for="phone">Phone number</label>
-                            <div class="input-group">
-                            	<div class="input-group-addon" id="addon-phone">+234</div>
-                            	<input v-model="form.phone" type="tel" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
-                            </div>
+                  
+                    	<div class="col-md-8">
+                    		<label for="phone">Phone number</label>
+	                        <div class="input-group">
+	                           	<div class="input-group-addon" id="addon-phone">{{form.code}}</div>
+	                            <input v-model="form.phone" type="tel" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
+	                        </div>
 
-                            <span class="help-block text-info"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>
-                            <has-error :form="form" field="phone"></has-error>
-                        </div>
+	                        <span class="help-block text-info"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>
+	                        <has-error :form="form" field="phone"></has-error>
+                    	</div>
+
+                    	<div class="col-md-4">
+                    		<label for="code">Country Code</label>
+                    		<input type="text" v-model="form.code" name="code" class="form-control" placeholder="+xxxxxx">
+                    		<span class="help-block text-info">Optional (+234) by default</span>
+                    	</div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -74,6 +81,7 @@
 					name: '',
 					phone: '',
 					email: '',
+					code: '',
 					city: {
 						id: '',
 						state: {

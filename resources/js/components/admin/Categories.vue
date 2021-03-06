@@ -426,7 +426,7 @@
 
 				this.serviceMode = true
 				this.selectedCategory = category.name
-
+ 
 				this.serviceForm.reset()
 				this.serviceCreateMode = false
 				this.serviceEditMode = false

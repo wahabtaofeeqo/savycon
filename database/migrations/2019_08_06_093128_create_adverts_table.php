@@ -21,6 +21,7 @@ class CreateAdvertsTable extends Migration
             $table->longText('states')->nullable();
             $table->string('image')->default('banner.jpg');
             $table->string('layer')->default('all');
+            $table->string('package')->nullable();
             $table->timestamps();
         });
     }

@@ -100,6 +100,16 @@
 				            		</router-link>
 				            	</li>
 				            	<li class="nav-item">
+				            		<router-link :to="{ name: 'NewServices' }">
+				            			<i class="pe-7s-map"></i>
+				            			<p>New Services 
+				            				<span class="badge badge-danger"> 
+				            					{{session()->get('services')}}
+				            				</span>
+				            			</p>
+				            		</router-link>
+				            	</li>
+				            	<li class="nav-item">
 				            		<router-link :to="{ name: 'AdminStates' }">
 				            			<i class="pe-7s-map"></i>
 				            			<p>States</p>
@@ -115,6 +125,12 @@
 				            		<router-link :to="{ name: 'AdminCategories' }">
 				            			<i class="pe-7s-way"></i>
 				            			<p>Categories</p>
+				            		</router-link>
+				            	</li>
+				            	<li class="nav-item">
+				            		<router-link :to="{ name: 'AdminSubCategories' }">
+				            			<i class="pe-7s-way"></i>
+				            			<p>Sub Categories</p>
 				            		</router-link>
 				            	</li>
 				            	<li class="nav-item">
@@ -196,6 +212,12 @@
 				            		<router-link :to="{ name: 'VendorNewService' }">
 				            			<i class="pe-7s-plug"></i>
 				            			<p>Add New Service</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'VendorAdvertise' }">
+				            			<i class="pe-7s-portfolio"></i>
+				            			<p>Advertise</p>
 				            		</router-link>
 				            	</li>
 				            	@endcan

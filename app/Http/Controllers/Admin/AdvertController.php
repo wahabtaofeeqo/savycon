@@ -57,6 +57,7 @@ class AdvertController extends Controller
         $advert->description = $request->description;
         $advert->URL = $request->URL;
         $advert->layer = $request->layer;
+        $advert->package = $request->package;
         $advert->image = $request->image;
         $advert->save();
         

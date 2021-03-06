@@ -55,6 +55,7 @@ import AdminProfile from './components/Profile.vue';
 import AdminStates from './components/admin/States.vue';
 import AdminCities from './components/admin/Cities.vue';
 import AdminCategories from './components/admin/Categories.vue';
+import AdminSubCategories from './components/admin/SubCategories.vue';
 import AdminServices from './components/admin/Services.vue';
 import AdminNewService from './components/admin/NewService.vue';
 import AdminVendors from './components/admin/Vendors.vue';
@@ -69,6 +70,7 @@ import AdminAdverts from './components/admin/Adverts.vue';
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
 import VendorServices from './components/vendor/Services.vue';
+import VendorAdvertise from './components/vendor/Advertise.vue';
 import VendorNewService from './components/vendor/NewService.vue';
 
 import UserDashboard from './components/user/Dashboard.vue';
@@ -76,6 +78,7 @@ import UserRequests from './components/user/UserRequests.vue';
 import PostRequest from './components/user/PostRequest.vue';
 import UserProfile from './components/Profile.vue';
 import VisitorsStats from './components/admin/Stats.vue';
+import NewServices from './components/admin/NewServices.vue';
 
 import ErrorPage from './components/404.vue';
 
@@ -93,6 +96,11 @@ const routes = [
 		component: VisitorsStats
 	},
 	{
+		name: 'NewServices',
+		path: '/admin/newservices',
+		component: NewServices
+	},
+	{
 		name: 'AdminServices',
 		path: '/admin/services',
 		component: AdminServices
@@ -101,6 +109,11 @@ const routes = [
 		name: 'AdminCategories',
 		path: '/admin/categories',
 		component: AdminCategories
+	},
+	{
+		name: 'AdminSubCategories',
+		path: '/admin/subcategories',
+		component: AdminSubCategories
 	},
 	{
 		name: 'AdminStates',
@@ -173,6 +186,11 @@ const routes = [
 		name: 'VendorServices',
 		path: '/vendor/services',
 		component: VendorServices
+	},
+	{
+		name: 'VendorAdvertise',
+		path: '/vendor/advertise',
+		component: VendorAdvertise
 	},
 	{
 		name: 'VendorNewService',

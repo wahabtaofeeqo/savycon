@@ -34,7 +34,7 @@ class UserServiceController extends Controller
             'service.category',
             'city',
             'city.state'
-        ])->latest()->paginate(30);
+        ])->where('active', 1)->latest()->paginate(30);
 
         return response($services, 200);
     }
@@ -81,14 +81,22 @@ class UserServiceController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display non activated services.
      *
-     * @param  int  $id
+     * @param  int  $active
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+
+    public function show($active = 0) {
+        $services = UserService::with([
+            'user',
+            'service',
+            'service.category',
+            'city',
+            'city.state'
+        ])->where('active', 0)->latest()->paginate(30);
+
+        return response($services, 200);
     }
 
     /**

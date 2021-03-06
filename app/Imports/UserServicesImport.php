@@ -95,6 +95,8 @@ class UserServicesImport implements ToModel, WithHeadingRow
         $check = UserService::where('title', $row['businessname'])->first();
         $state = State::where('name', $row['state'])->first();
 
+        $second_phone = ($row['secondphone'] === 'nan') ? '' : substr($row['secondphone'] ? $row['secondphone'] : '8001002000', 1);
+        
         if (empty($check)) {
             return new UserService([
 
@@ -122,6 +124,7 @@ class UserServicesImport implements ToModel, WithHeadingRow
                                 ,
                                 'password' => Hash::make($row['contactperson'] ? $row['contactperson'] : 'John Doe'),
                                 'phone' => ($row['phone'] === 'nan') ? '8001002000' : substr($row['phone'] ? $row['phone'] : '8001002000', 1),
+                                'second_phone' => $second_phone,
                                 'role' => 'vendor',
                                 'city_id' => 
                                     empty(City::where('name', $row['city'])->first())
@@ -134,7 +137,7 @@ class UserServicesImport implements ToModel, WithHeadingRow
                                                 :   
                                                     $row['city']
                                             ,
-                                            'state_id' => $this->state_id
+                                            'state_id' => $state->id
                                         ])->id
                                     :   
                                         City::where('name', $row['city'])->first()->id

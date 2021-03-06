@@ -50,6 +50,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->city_id = $request->city_id;
+        $user->code = $request->code;
         $user->save();
 
     	return response($user, 200);

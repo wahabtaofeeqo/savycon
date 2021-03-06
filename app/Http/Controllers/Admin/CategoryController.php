@@ -90,6 +90,32 @@ class CategoryController extends Controller
         return response($response, 200);
     }
 
+    public function mergeSubcategories(Request $request) {
+
+        $response = array('error' => FALSE, 'message' => 'Merged Successfully');
+
+        $request->validate([
+            'services' => 'required',
+            'parent' => 'required',
+            'category' => 'required']);
+
+        $parent = $request->parent;
+        $services = $request->services;
+        $category = $request->category;
+        
+        $services = explode(",", $services);
+        $check = Service::firstOrCreate(['name' => $parent], ['category_id' => $category]);
+        if ($check) {
+            foreach ($services as $key => $id) {
+                //Get the Services by ID
+                $service = Service::findOrFail($id);
+                $service->delete();
+            }
+        }
+
+        return response($response, 200);
+    }
+
     /**
      * Update the specified resource in storage.
      *

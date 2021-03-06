@@ -79,6 +79,13 @@
                 />
                 <has-error :form="form" field="title"></has-error>
               </div>
+
+              <div class="form-group" v-if="editmode == true">
+                  <label for="phone">Phone</label>
+                  <input v-model="form.user.phone" type="text" name="phone" placeholder="Phone" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" required>
+                  <has-error :form="form" field="phone"></has-error>
+              </div>
+
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea
@@ -357,6 +364,10 @@ export default {
         image_3: "",
         address: "",
         landmark: "",
+        user: {
+            id: '',
+            phone: ''
+        },
         // featured: "",
         service: {
           id: "",

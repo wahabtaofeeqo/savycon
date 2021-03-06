@@ -43,12 +43,16 @@ Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where(
 Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('id', '([0-9]+)');
 Route::get('/feature/service/{id}', 'Admin\UserServiceController@alterFeature')->where('id', '([0-9]+)');
 
+//
+//Route::get('/userService', 'Admin\UserServiceController@services');
+
 //Upload Services from Excel file
 Route::post('/uploadService', 'Admin\UserServiceController@store');
 Route::get('/activateService/{id}', 'Admin\UserServiceController@activateService');
 
-//Merge categories
+//Merge
 Route::post('/categoryMerge', 'Admin\CategoryController@merge');
+Route::post('/mergeSubcategories', 'Admin\CategoryController@mergeSubcategories');
 
 //
 Route::post('/usersNeed', 'UsersNeedController@store');
@@ -96,6 +100,7 @@ Route::get('/category/services/{name}', 'CategoryController@servicesFromCategory
 
 // Sub-categories
 Route::get('/sub-category/{id}', 'CategoryController@showUserServicesFromSub')->where('id', '([0-9]+)');
+Route::get('/sub-category', 'CategoryController@subCategories'); 
 Route::get('/sub-category/show/{id}', 'CategoryController@showSub')->where('id', '([0-9]+)');
 
 Route::get('/services', 'ServiceController@index')->name('services');

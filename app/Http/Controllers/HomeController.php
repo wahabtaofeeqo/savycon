@@ -3,6 +3,7 @@
 namespace SavyCon\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SavyCon\Models\UserService;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return redirect()->route(auth()->user()->role);
+    public function index() {
+
+        $count = UserService::where('active', 0)->count();
+        return redirect()->route(auth()->user()->role)->with(['services' => $count]);
     }
 }

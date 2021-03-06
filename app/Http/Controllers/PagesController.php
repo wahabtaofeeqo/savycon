@@ -26,7 +26,8 @@ class PagesController extends Controller
 
     	return view('pages.index', [
             'featured_services' => $featured_services,
-            'adverts' => $adverts
+            'adverts' => $adverts,
+            'services' => 0,
         ]);
     }
 
