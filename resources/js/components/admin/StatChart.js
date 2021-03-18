@@ -6,6 +6,6 @@ export default {
 	mixins: [reactiveProp],
 	props: ['options'],
 	mounted () {
-		this.renderChart(this.chartData, this.options);
+		this.renderChart(this.chartData, this.options, {responsive: true, maintainAspectRatio: false});
 	}
 }

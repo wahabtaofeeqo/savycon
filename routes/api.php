@@ -66,7 +66,7 @@ Route::delete('deleteService/{id}', 'ServicePageController@deleteService')->wher
 
 //Visitors
 Route::post('/visitors', 'UsersNeedController@visitor');
-Route::get('/visitors', 'UsersNeedController@index');
+Route::get('/visitors/{type}', 'UsersNeedController@index');
 
 //Newsletter
 Route::post('/subscribe', 'General\SubscriptionController@subscribe');
@@ -121,6 +121,14 @@ Route::get('/states', 'LocationController@states')->name('state.all');
 Route::get('/states/cities/{id}', 'LocationController@cities')->where('id', '([0-9]+)');
 
 Route::get('/adverts/dashboard/{limit}', 'General\AdvertController@dashboard')->where('limit', '([0-9]+)');
+Route::get('/activate-advert/{id}', 'General\AdvertController@activate')->where('id', '[0-9]+');
+Route::get('/delete-adverts', 'General\AdvertController@delete');
+
+//
+Route::post('donation', 'General\DonateController@donate');
+Route::post('add-donator', 'General\DonateController@addDonator');
+
+
 
 // Counters
 Route::prefix('counter')->group(function() {

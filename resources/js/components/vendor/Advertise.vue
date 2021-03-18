@@ -203,29 +203,70 @@
 				const loader = this.$loading.show()
 
 				this.form.post(this.url)
-				.then(() => {
-					Swal.fire({
-						type: 'success',
-						title: 'Advert was successfully created',
-					})
+				.then((response) => {
+					// Swal.fire({
+					// 	type: 'success',
+					// 	title: 'Advert was successfully created',
+					// })
 
 					//this.createmode = false
 					this.form.reset()
 
 					//Fire.$emit('refreshAdverts')
 
-					loader.hide()
+					loader.hide();
+
+					this.makePayment(response.data.id);
+
 				})
-				.catch(() => {
+				.catch((err) => {
 					Swal.fire({
 						type: 'error',
 						title: 'Oops...',
 						text: 'Something went wrong'
 					})
 
+					console.log(err);
+
 					loader.hide()
 				})
 			},
+
+			makePayment(id) {
+			    FlutterwaveCheckout({
+			      	public_key: "FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X", 
+			      	tx_ref: "hooli-tx-1920bbtyt",
+			      	amount: 20,
+			      	currency: "NGN",
+			      	country: "NG",
+			      	payment_options: "card, mobilemoneyghana, ussd",
+			      	customer: {
+			        	email: "tao@yahoo.com",
+			        	phone_number: "2340812345643",
+			        	name: "Advertisement",
+			      	},
+			      	callback: function (data) {
+
+			        	if (data.status == "successful") {
+			        		axios.get('/api/activate-advert/' + id)
+				      		.then(response => {
+				      			
+				      		})
+				      		.catch(err => {
+				      			
+				      		})
+			        	}
+			      	},
+			      	onclose: function() {
+			        	console.log("Closed");
+			      	},
+			      	customizations: {
+			        	title: "Advertisement Fee",
+			        	description: "Payment for prodcuts been advertised.",
+			      	},
+			    });
+			},
+
 			deleteAdvert(id) {
 				Swal.fire({
 					title: 'Are you sure?',

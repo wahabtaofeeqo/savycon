@@ -435,15 +435,22 @@
         };
 
     const popup = function() {
-     
-        const ip = '127.0.0.1';
-        axios.post('/api/visitors', {ip: ip}).then(async (response) => {
-            if (response.data.show) {
-                newsLetterBox();
-            }
-        }).catch(err => {});
+
+        
     };
 
-    setTimeout(popup, (1000 * 60 * 2))
+    const getIp = function() {
+        axios.get('https://api.ipify.org?format=json')
+        .then(response => {
+            axios.post('/api/visitors', {ip: response.data.ip}).then(async (response) => {
+                if (response.data.show) {
+                    newsLetterBox();
+                }
+            }).catch(err => {});
+        }).catch(err => {});
+    }
+
+    getIp();
+    setTimeout(popup, (1000));
 
 })(jQuery);

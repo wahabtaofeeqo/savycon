@@ -335,6 +335,7 @@
 			</div>
 		</div>
 
+		<script src="https://checkout.flutterwave.com/v3.js"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
 	    <script src="{{ asset('master/js/bootstrap-checkbox-radio-switch.js') }}"></script>
 	    <script src="{{ asset('master/js/light-bootstrap-dashboard.js') }}"></script>

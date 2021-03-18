@@ -22,13 +22,43 @@ class PagesController extends Controller
             'service.category'
         ])->where('active', 1)->get();
 
-        $adverts = Advert::inRandomOrder()->where('layer', 'home')->orWhere('layer', 'all')->limit(6)->get();
+        if (!session('advertsDeleted', false)) {
+            $this->deleteAds();
+        }
+
+        //$adverts = Advert::inRandomOrder()->where('layer', 'home')->orWhere('layer', 'all')->limit(6)->get();
+        $adverts = Advert::inRandomOrder()->where('layer', 'home')->where('active', 1)->get();
 
     	return view('pages.index', [
             'featured_services' => $featured_services,
             'adverts' => $adverts,
             'services' => 0,
         ]);
+    }
+
+    private function deleteAds() {
+
+        $advertsToDelete = Advert::whereDate('created_at', '<', date("Y-m-d"))->get();
+        foreach ($advertsToDelete as $key => $advert) {
+            $this->deleteAd($advert);
+        }
+
+        session('advertsDeleted', true);
+    }
+
+    private function deleteAd($advert) {
+
+        $today = date_create(date('Y-m-d'));
+        $created = date_create(date('Y-m-d', strtotime($advert->created_at)));
+
+        $days = intval(date_diff($created, $today, TRUE)->format('%a'));
+
+        if ($advert->package == 'month' && $days >= 30) {
+            $advert->delete();
+        }
+        elseif ($advert->package == 'week' && $days >= 7) {
+            $advert->delete();
+        }
     }
 
     public function services()

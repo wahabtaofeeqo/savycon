@@ -1866,6 +1866,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1877,8 +1928,19 @@ __webpack_require__.r(__webpack_exports__);
       //paystack public key
       email: "foobar@example.com",
       // Customer email
-      amount: 1000000 // in kobo
-
+      amount: 1000000,
+      // in kobo
+      form: new Form({
+        email: '',
+        phone: '',
+        amount: '',
+        currency: ''
+      }),
+      currencies: [{
+        code: 'NGN'
+      }, {
+        code: 'USD'
+      }]
     };
   },
   methods: {
@@ -1887,6 +1949,37 @@ __webpack_require__.r(__webpack_exports__);
     },
     close: function close() {
       console.log("Payment closed");
+    },
+    makeDonation: function makeDonation() {
+      this.makePayment();
+    },
+    makePayment: function makePayment() {
+      var form = this.form;
+      FlutterwaveCheckout({
+        public_key: "FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X",
+        tx_ref: "hooli-tx-1920bbtyt",
+        amount: this.form.amount,
+        currency: this.form.currency,
+        country: this.form.currency == "NGN" ? "NG" : "US",
+        payment_options: "card, mobilemoneyghana, ussd",
+        customer: {
+          email: this.form.email,
+          phone_number: this.form.phone,
+          name: "Donator"
+        },
+        callback: function callback(data) {
+          axios.post('/api/add-donator', form).then(function (response) {
+            console.log(response); //location.reload();
+          })["catch"](function (err) {});
+        },
+        onclose: function onclose() {
+          location.reload();
+        },
+        customizations: {
+          title: "Donation",
+          description: "Payment for donation on Savycon"
+        }
+      });
     }
   },
   computed: {
@@ -6403,6 +6496,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -6410,39 +6513,69 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      url: '/api/visitors',
-      collection: {}
+      url: '/api/visitors/',
+      collection: {},
+      options: [],
+      type: 'monthly',
+      monthly: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      weekly: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      //daily: ['0-3am', '3-6am', '6-9am', '9-12pm', '12-3pm', '3-6pm', '6-9pm', '9-11pm'],
+      daily: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
     };
   },
   methods: {
-    loadVisitorsStat: function loadVisitorsStat() {
+    loadVisitorsStat: function loadVisitorsStat(type) {
       var _this = this;
 
       var loader = this.$loading.show();
-      axios.get(this.url).then(function (response) {
-        console.log(response);
-
-        _this.fillData(response.data);
+      axios.get(this.url + type).then(function (response) {
+        _this.prepareData(response.data);
 
         loader.hide();
       })["catch"](function (err) {
-        console.log(err);
         loader.hide();
       });
     },
+    prepareData: function prepareData(data) {
+      var prep = {
+        type: this.type,
+        labels: '',
+        data: data
+      };
+
+      if (this.type == 'monthly') {
+        prep.labels = this.monthly;
+        prep.data = [data[0].total, data[1].total, data[2].total, data[3].total, data[4].total, data[5].total, data[6].total, data[7].total, data[8].total, data[9].total, data[10].total, data[11].total];
+      }
+
+      if (this.type == 'weekly') {
+        prep.labels = this.weekly;
+        prep.data = [data[0].total, data[1].total, data[2].total, data[3].total, data[4].total, data[5].total, data[6].total];
+      }
+
+      if (this.type == 'daily') {
+        prep.labels = this.daily;
+        prep.data = [data[0].total, data[1].total, data[2].total, data[3].total, data[4].total, data[5].total, data[6].total, data[7].total, data[8].total, data[9].total, data[10].total, data[11].total];
+      }
+
+      this.fillData(prep);
+    },
     fillData: function fillData(data) {
       this.collection = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        labels: data.labels,
         datasets: [{
           label: 'Visitor Stats',
           backgroundColor: '#f87979',
-          data: [data[0].total, data[1].total, data[2].total, data[3].total, data[4].total, data[5].total, data[6].total, data[7].total, data[8].total, data[9].total, data[10].total, data[11].total]
+          data: data.data
         }]
       };
+    },
+    loadStats: function loadStats() {
+      this.loadVisitorsStat(this.type);
     }
   },
   created: function created() {
-    this.loadVisitorsStat();
+    this.loadVisitorsStat(this.type);
   }
 });
 
@@ -9397,23 +9530,53 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var loader = this.$loading.show();
-      this.form.post(this.url).then(function () {
-        Swal.fire({
-          type: 'success',
-          title: 'Advert was successfully created'
-        }); //this.createmode = false
-
+      this.form.post(this.url).then(function (response) {
+        // Swal.fire({
+        // 	type: 'success',
+        // 	title: 'Advert was successfully created',
+        // })
+        //this.createmode = false
         _this3.form.reset(); //Fire.$emit('refreshAdverts')
 
 
         loader.hide();
-      })["catch"](function () {
+
+        _this3.makePayment(response.data.id);
+      })["catch"](function (err) {
         Swal.fire({
           type: 'error',
           title: 'Oops...',
           text: 'Something went wrong'
         });
+        console.log(err);
         loader.hide();
+      });
+    },
+    makePayment: function makePayment(id) {
+      FlutterwaveCheckout({
+        public_key: "FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X",
+        tx_ref: "hooli-tx-1920bbtyt",
+        amount: 20,
+        currency: "NGN",
+        country: "NG",
+        payment_options: "card, mobilemoneyghana, ussd",
+        customer: {
+          email: "tao@yahoo.com",
+          phone_number: "2340812345643",
+          name: "Advertisement"
+        },
+        callback: function callback(data) {
+          if (data.status == "successful") {
+            axios.get('/api/activate-advert/' + id).then(function (response) {})["catch"](function (err) {});
+          }
+        },
+        onclose: function onclose() {
+          console.log("Closed");
+        },
+        customizations: {
+          title: "Advertisement Fee",
+          description: "Payment for prodcuts been advertised."
+        }
       });
     },
     deleteAdvert: function deleteAdvert(id) {
@@ -91908,32 +92071,267 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "paystack",
-        {
-          attrs: {
-            amount: _vm.amount,
-            email: _vm.email,
-            paystackkey: _vm.paystackkey,
-            reference: _vm.reference,
-            callback: _vm.callback,
-            close: _vm.close,
-            embed: false
-          }
-        },
-        [
-          _c("i", { staticClass: "fas fa-money-bill-alt" }),
-          _vm._v("\n\t       Make Payment\n\t    ")
-        ]
-      )
-    ],
-    1
-  )
+  return _c("div", [
+    _c("div", { staticClass: "col-md-6 mx-auto" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("p", { staticClass: "card-subtitle py-3 mb-4" }, [
+            _vm._v(
+              "\n\t\t\t\t\tLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n\t\t\t\t\ttempor incididunt.\n\t\t\t\t"
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              attrs: { method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.makeDonation()
+                },
+                keydown: function($event) {
+                  return _vm.form.onKeydown($event)
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "form-group m-b-20" },
+                [
+                  _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.email,
+                          expression: "form.email"
+                        }
+                      ],
+                      staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                      class: { "has-error": _vm.form.errors.has("email") },
+                      attrs: {
+                        type: "email",
+                        name: "email",
+                        placeholder: "Your Email",
+                        id: "email",
+                        autofocus: "on",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "email", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("i", { staticClass: "how-pos4 pointer-none fa fa-user" })
+                  ]),
+                  _vm._v(" "),
+                  _c("has-error", { attrs: { form: _vm.form, field: "email" } })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group m-b-20" },
+                [
+                  _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.amount,
+                          expression: "form.amount"
+                        }
+                      ],
+                      staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                      class: { "has-error": _vm.form.errors.has("amount") },
+                      attrs: {
+                        type: "number",
+                        name: "amount",
+                        placeholder: "Amount",
+                        id: "amount",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.amount },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "amount", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass: "how-pos4 pointer-none fa fa-money"
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.form, field: "amount" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group m-b-20" },
+                [
+                  _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.phone,
+                          expression: "form.phone"
+                        }
+                      ],
+                      staticClass: "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                      class: { "has-error": _vm.form.errors.has("phone") },
+                      attrs: {
+                        type: "tel",
+                        name: "phone",
+                        placeholder: "Phone number",
+                        id: "phone",
+                        "aria-describedby": "addon-phone",
+                        minlength: "10",
+                        maxlength: "10",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.phone },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "phone", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "how-pos4 pointer-none phone" })
+                  ]),
+                  _vm._v(" "),
+                  _c("has-error", { attrs: { form: _vm.form, field: "phone" } })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group m-b-20" },
+                [
+                  _c("div", { staticClass: "bor8 how-pos4-parent" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.currency,
+                            expression: "form.currency"
+                          }
+                        ],
+                        staticClass:
+                          "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                        class: { "has-error": _vm.form.errors.has("currency") },
+                        attrs: {
+                          name: "currency",
+                          id: "currency",
+                          required: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.form,
+                              "currency",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Select your Currency")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.currencies, function(c) {
+                          return _c(
+                            "option",
+                            { key: c.code, domProps: { value: c.code } },
+                            [_vm._v(_vm._s(c.code))]
+                          )
+                        })
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass: "how-pos4 pointer-none fa fa-money"
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("has-error", {
+                    attrs: { form: _vm.form, field: "currency" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group m-b-20" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "flex-c-m stext-101 cl0 size-121 bg1 bor3 hov-btn1 p-lr-15 trans-04",
+                    attrs: { type: "submit", disabled: _vm.form.busy }
+                  },
+                  [_vm._v("Continue")]
+                )
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header d-none" }, [
+      _c("h4", { staticClass: "card-title mb-0" }, [_vm._v("Do")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -98744,6 +99142,50 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("div", { staticClass: "mb-5 col-md-6 mb-5" }, [
+        _c("label", { attrs: { for: "type" } }, [_vm._v("User Statistics")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.type,
+                expression: "type"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.type = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.loadStats
+              ]
+            }
+          },
+          [
+            _c("option", { attrs: { value: "weekly" } }, [_vm._v("Weekly")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "monthly" } }, [_vm._v("Monthly")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "daily" } }, [_vm._v("Daily")])
+          ]
+        )
+      ]),
+      _vm._v(" "),
       _c("stat-chart", {
         attrs: { "chart-data": _vm.collection, options: _vm.options }
       })
@@ -121736,7 +122178,10 @@ var reactiveProp = vue_chartjs__WEBPACK_IMPORTED_MODULE_0__["mixins"].reactivePr
   mixins: [reactiveProp],
   props: ['options'],
   mounted: function mounted() {
-    this.renderChart(this.chartData, this.options);
+    this.renderChart(this.chartData, this.options, {
+      responsive: true,
+      maintainAspectRatio: false
+    });
   }
 });
 
@@ -121884,15 +122329,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/admin/SubCategories.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SubCategories_vue_vue_type_template_id_9de5acbe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SubCategories.vue?vue&type=template&id=9de5acbe& */ "./resources/js/components/admin/SubCategories.vue?vue&type=template&id=9de5acbe&");
 /* harmony import */ var _SubCategories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SubCategories.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/SubCategories.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _SubCategories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _SubCategories_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -121922,7 +122366,7 @@ component.options.__file = "resources/js/components/admin/SubCategories.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/admin/SubCategories.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -26,7 +26,7 @@ class StoreAdvert extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
-            'URL' => 'required|active_url',
+            //'URL' => 'required|active_url',
             'image' => 'required',
             'layer' => 'required',
         ];
