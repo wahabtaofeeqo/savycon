@@ -188,6 +188,12 @@
 				            		</router-link>
 				            	</li>
 				            	<li>
+				            		<router-link :to="{ name: 'AdminPayments' }">
+				            			<i class="pe-7s-search"></i>
+				            			<p>Payments</p>
+				            		</router-link>
+				            	</li>
+				            	<li>
 				            		<router-link :to="{ name: 'AdminProfile' }">
 				            			<i class="pe-7s-user"></i>
 				            			<p>Profile</p>
@@ -214,7 +220,7 @@
 				            			<p>Add New Service</p>
 				            		</router-link>
 				            	</li>
-				            	<li>
+				            	<li style="display: none;">
 				            		<router-link :to="{ name: 'VendorAdvertise' }">
 				            			<i class="pe-7s-portfolio"></i>
 				            			<p>Advertise</p>

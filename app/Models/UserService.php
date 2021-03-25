@@ -34,4 +34,9 @@ class UserService extends Model
     {
         return $this->hasMany('SavyCon\Models\UserServiceMessage');
     }
+
+    public function payments()
+    {
+        return $this->hasMany('SavyCon\Models\Payment');
+    }
 }

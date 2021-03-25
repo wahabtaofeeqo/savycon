@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use SavyCon\Models\User;
 use SavyCon\Http\Requests\StoreUserData;
 use SavyCon\Http\Requests\UpdateUserData;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -49,8 +50,11 @@ class ProfileController extends Controller
     	$user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->second_phone = $request->second_phone;
         $user->city_id = $request->city_id;
         $user->code = $request->code;
+        $user->code_second = $request->code_second;
+
         $user->save();
 
     	return response($user, 200);
@@ -65,5 +69,15 @@ class ProfileController extends Controller
     	return response([
     		'message' => 'Delete Complete!'
     	], 200);
+    }
+
+    public function changePassword(Request $request) {
+        $request->validate(['password' => 'required']);
+
+        $user = auth()->user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response(array('error' => FALSE, 'message' => 'Password Updated'), 200);
     }
 }

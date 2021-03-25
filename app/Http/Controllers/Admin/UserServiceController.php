@@ -11,6 +11,7 @@ use SavyCon\Models\UserService;
 use SavyCon\Models\User;
 use SavyCon\Models\Category;
 use SavyCon\Models\City;
+use SavyCon\Models\Payment;
 use SavyCon\Models\Service;
 use SavyCon\Imports\UserServicesImport;
 
@@ -147,6 +148,44 @@ class UserServiceController extends Controller
     public function alterFeature($id)
     {
         $service = UserService::findOrFail($id);
+
+        if ($service->featured == 0) {
+            $service->featured = 1;
+        } else {
+            $service->featured = 0;
+        }
+
+        $service->save();
+
+        return response([
+            'message' => 'Success'
+        ], 200);
+    }
+
+    public function feature(Request $request) {
+
+        $request->validate(
+            [
+                'id' => 'required',
+                'transaction' => 'required',
+                'ref' => 'required',
+                'amount' => 'required',
+                'package' => 'required'
+            ]);
+
+        $user = auth()->user();
+        $service = UserService::findOrFail($request->id);
+
+        $payment = new Payment();
+        $payment->user_id = $user->id;
+        $payment->transaction_id = $request->transaction;
+        $payment->reference = $request->ref;
+        $payment->type = $request->type;
+        $payment->user_service_id = $service->id;
+        $payment->package = $request->package;
+        $payment->amount = $request->amount;
+
+        $payment->save();
 
         if ($service->featured == 0) {
             $service->featured = 1;

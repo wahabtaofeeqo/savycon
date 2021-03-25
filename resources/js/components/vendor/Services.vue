@@ -43,6 +43,7 @@
 									<a :href="viewService(service.id)" class="btn btn-sm btn-success btn-fill" target="__blank">View</a>
 									<router-link :to="{ name: 'VendorNewService', params: { id: service.id } }" class="btn btn-sm btn-info btn-fill">Edit</router-link>
 									<button class="btn btn-sm btn-danger btn-fill" @click="deleteService(service.id)">Delete</button>
+									<a v-if="service.featured == 0" :href="promoteService(service.id)" class="btn btn-sm btn-primary btn-fill">Promote</a>
 								</td>
 							</tr>
 						</tbody>
@@ -148,6 +149,10 @@
 			},
 			viewService(id) {
             	return '/service/'+id;
+            },
+
+            promoteService(id) {
+            	return '/vendor/promote/'+id;
             },
 		},
 		created() {

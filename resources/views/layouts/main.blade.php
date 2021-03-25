@@ -447,12 +447,12 @@
                                                         </div>
 
                                                         <div class="p-t-27">
-                                                                <a class="fs-18 m-r-16">
-                                                                        <img src="{{ asset('images/store/playstore.png') }}" height="30px" width="30px" />
+                                                                <a class="fs-18 m-r-16 mb-2 d-block">
+                                                                    <img src="{{ asset('images/store/google-play.png') }}" />
                                                                 </a>
 
-                                                                <a class="fs-18 m-r-16">
-                                                                        <img src="{{ asset('images/store/appstore.jpg') }}"  height="30px" width="90px" />
+                                                                <a class="fs-18 m-r-16 d-block">
+                                                                    <img src="{{ asset('images/store/app-store.png') }}"   />
                                                                 </a>
                                                         </div>
                                                 </div>

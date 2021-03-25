@@ -62,6 +62,9 @@ Route::get('/terms-and-conditions', 'PagesController@terms');
 // How it works
 Route::get('/how-it-works', 'PagesController@howItWorks')->name('howItWorks');
 
+//Invoice
+Route::get('/invoice/{id}', 'PagesController@invoice');
+
 // Privacy policy
 Route::get('/privacy-policy', 'PagesController@privacyPolicy')->name('privacyPolicy');
 Route::get('/privacy', 'PagesController@privacyPolicy');

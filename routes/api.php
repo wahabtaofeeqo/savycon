@@ -29,6 +29,7 @@ Route::apiResources([
 	'sub-categories' => 'Admin\ServiceController',
 	'advert' => 'Admin\AdvertController',
 	'phonenumber' => 'General\PhonenumberController',
+	'payments' => 'PaymentController',
 ]);
 
 // Admin Usage
@@ -42,6 +43,10 @@ Route::get('/users/user', 'Admin\UserController@users');
 Route::get('/suspend/user/{id}', 'Admin\UserController@alterSuspension')->where('id', '([0-9]+)');
 Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('id', '([0-9]+)');
 Route::get('/feature/service/{id}', 'Admin\UserServiceController@alterFeature')->where('id', '([0-9]+)');
+Route::post('/feature/service', 'Admin\UserServiceController@feature');
+
+//Password update
+Route::post('profile/password', 'ProfileController@changePassword');
 
 //
 //Route::get('/userService', 'Admin\UserServiceController@services');

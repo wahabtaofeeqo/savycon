@@ -1,8 +1,12 @@
 <template>
 	<div>
 		<div class="card">
+
+			<div style="padding: 10px">
+				<button class="btn btn-danger" @click="changePassword">Change Password <i class="fa fa-lock"></i></button>
+			</div>
 			<div class="header">
-				<h4 class="card-title">Edit your Profile</h4>
+				<h4 class="card-title" style="margin-top: 0;">Edit your Profile</h4>
 				<p class="category">Change what is only required</p>
 			</div>
 			<div class="content">
@@ -29,7 +33,7 @@
                     		<label for="phone">Phone number</label>
 	                        <div class="input-group">
 	                           	<div class="input-group-addon" id="addon-phone">{{form.code}}</div>
-	                            <input v-model="form.phone" type="tel" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
+	                            <input v-model="form.phone" type="tel" name="phone" placeholder="Phone number" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" id="phone" aria-describedby="addon-phone" maxlength="10" required>
 	                        </div>
 
 	                        <span class="help-block text-info"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>
@@ -42,6 +46,27 @@
                     		<span class="help-block text-info">Optional (+234) by default</span>
                     	</div>
                     </div>
+
+                    <div class="row">
+                  
+                    	<div class="col-md-8">
+                    		<label for="phone">Second Phone number</label>
+	                        <div class="input-group">
+	                           	<div class="input-group-addon" id="addon-phone">{{form.code_second}}</div>
+	                            <input v-model="form.second_phone" type="tel" name="second_phone" placeholder="Second Phone number" class="form-control" :class="{ 'has-error':form.errors.has('second_phone') }" id="second_phone" aria-describedby="addon-phone" maxlength="10">
+	                        </div>
+
+	                        <span class="help-block text-info d-none" style="display: none;"><i class="fa fa-info-circle"></i> WhatsApp number preferably</span>
+	                        <!-- <has-error :form="form" field="phone"></has-error> -->
+                    	</div>
+
+                    	<div class="col-md-4">
+                    		<label for="code">Country Code</label>
+                    		<input type="text" v-model="form.code_second" name="code_second" class="form-control" placeholder="+xxxxxx">
+                    		<span class="help-block text-info d-none" style="display: none;">Optional (+234) by default</span>
+                    	</div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                         	<label for="state">State</label>
@@ -82,6 +107,8 @@
 					phone: '',
 					email: '',
 					code: '',
+					second_phone: '',
+					code_second: '',
 					city: {
 						id: '',
 						state: {
@@ -130,6 +157,7 @@
 
 				axios.get(this.url)
 				.then((response) => {
+					console.log(response);
 					this.form.fill(response.data)
 
 					this.loadCities()
@@ -148,7 +176,7 @@
 				this.form.put(this.url+'/'+this.form.id)
 				.then(() => {
 					Swal.fire({
-						type: 'success',
+						icon: 'success',
 						title: 'Profile was updated successfully',
 					})
 
@@ -159,6 +187,52 @@
 					loader.hide()
 				})
 			},
+
+			async changePassword() {
+				const { value: password } = await Swal.fire({
+	                title: 'New Password?',
+	                input: 'password',
+	                showCancelButton: true,
+	                inputPlaceholder: 'Password...',
+	                inputValidator: (value) => {
+	                    if (!value || value.length < 8) {
+	                        return "Password must be at least 8 characters";
+	                    }
+	                }
+	            });
+
+	            if (password != '' && password.length >= 8) {
+	            	Swal.fire({
+					  title: 'Do you want to save the changes?',
+					  showCancelButton: true,
+					  confirmButtonText: `Change`,
+					})
+					.then((result) => {
+					  
+					  	if (result.isConfirmed) {
+					    	this.updatePassword(password);
+					  	}
+					})
+	            }
+			},
+
+			updatePassword(password) {
+				const loader = this.$loading.show();
+				axios.post('/api/profile/password', {password: password})
+				.then(response => {
+					console.log(response);
+					Swal.fire({
+						icon: 'success',
+					  	title: 'Password Update successfully',
+					});
+				})
+				.catch(err => {
+					console.log(err);
+				})
+				.finally(() => {
+					loader.hide();
+				})
+			}
 		},
 		created() {
 			this.loadStates()

@@ -1,6 +1,7 @@
 <?php
-
 namespace SavyCon\Http\Controllers;
+
+ini_set('max_execution_time', 300);
 
 use Illuminate\Http\Request;
 
@@ -9,6 +10,7 @@ use SavyCon\Models\UserService;
 use SavyCon\Models\UserRequest;
 use SavyCon\Models\User;
 use SavyCon\Models\Category;
+use SavyCon\Models\Payment;
 use SavyCon\Models\Service;
 use SavyCon\Models\UserServiceRating;
 
@@ -16,15 +18,17 @@ class PagesController extends Controller
 {
     public function index()
     {
+
+        //Check for Due featured services and unfeature them
+        if (!session('promotionChecked', false)) {
+            $this->unfeatureServices();
+        }
+
         $featured_services = UserService::inRandomOrder()->where('featured', '1')->with([
             'user',
             'service',
             'service.category'
         ])->where('active', 1)->get();
-
-        if (!session('advertsDeleted', false)) {
-            $this->deleteAds();
-        }
 
         //$adverts = Advert::inRandomOrder()->where('layer', 'home')->orWhere('layer', 'all')->limit(6)->get();
         $adverts = Advert::inRandomOrder()->where('layer', 'home')->where('active', 1)->get();
@@ -34,6 +38,33 @@ class PagesController extends Controller
             'adverts' => $adverts,
             'services' => 0,
         ]);
+    }
+
+    private function unfeatureServices() {
+
+        $payments = Payment::whereDate('created_at', '<', date("Y-m-d"))->with('userService')->get();
+        foreach ($payments as $key => $payment) {
+            $this->unfeatureService($payment);
+        }
+    }
+
+    private function unfeatureService($payment) {
+
+        $today = date_create(date('Y-m-d'));
+        $created = date_create(date('Y-m-d', strtotime($payment->created_at)));
+
+        $days = intval(date_diff($created, $today, TRUE)->format('%a'));
+
+        $service = UserService::findOrFail($payment->user_service_id);
+        
+        if ($payment->package == 'month' && $days >= 30) {
+            $service->featured = 0;
+            $service->save();
+        }
+        elseif ($payment->package == 'week' && $days >= 7) {
+            $service->featured = 0;
+            $service->save();
+        }
     }
 
     private function deleteAds() {
@@ -204,5 +235,15 @@ class PagesController extends Controller
         }
 
         return $average;
+    }
+
+    public function invoice($id) {
+
+         $payment = Payment::with([
+            'user',
+            'userService'
+        ])->where('id', $id)->first();
+
+        return view('pages.invoice', ['payment' => $payment]);
     }
 }

@@ -66,6 +66,7 @@ import AdminServicePages from './components/admin/ServicePages.vue';
 import AdminUnfoundSearches from './components/admin/UnfoundSearches.vue';
 import AdminContactMessages from './components/admin/Contacts.vue';
 import AdminAdverts from './components/admin/Adverts.vue';
+import AdminPayments from './components/admin/Payments.vue';
 
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
@@ -80,10 +81,13 @@ import UserProfile from './components/Profile.vue';
 import VisitorsStats from './components/admin/Stats.vue';
 import NewServices from './components/admin/NewServices.vue';
 
+
+import PromoteService from './components/Promote.vue';
 import ErrorPage from './components/404.vue';
 
 // Routes
 const routes = [
+
 	// Admin
 	{
 		name: 'AdminDashboard',
@@ -94,6 +98,11 @@ const routes = [
 		name: 'VisitorsStats',
 		path: '/admin/stats',
 		component: VisitorsStats
+	},
+	{
+		name: 'AdminPayments',
+		path: '/admin/payments',
+		component: AdminPayments
 	},
 	{
 		name: 'NewServices',
@@ -186,6 +195,11 @@ const routes = [
 		name: 'VendorServices',
 		path: '/vendor/services',
 		component: VendorServices
+	},
+	{
+		name: 'PromoteService',
+		path: '/vendor/promote/:id',
+		component: PromoteService
 	},
 	{
 		name: 'VendorAdvertise',

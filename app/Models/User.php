@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->hasMany('SavyCon\Models\UserService');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('SavyCon\Models\Payment');
+    }
+
     public function userRequests()
     {
         return $this->hasMany('SavyCon\Models\UserRequest');
