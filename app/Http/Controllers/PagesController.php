@@ -260,6 +260,8 @@ class PagesController extends Controller
         $uid = request()->get('id');
         $service = request()->get('service');
         
+        $data['expired'] = FALSE;
+        
         $details = ServiceLink::where(['uid' => $uid, 'service' => $service])->first();
         if ($details) {
             

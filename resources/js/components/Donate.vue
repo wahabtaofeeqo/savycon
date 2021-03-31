@@ -119,12 +119,12 @@
 		    makePayment() {
 
 		    	const form = this.form;
-		    	this.form.reset();
 		    	
-		    	form.user = this.user.id;
+		    	form.user = (this.user) ? this.user.id : 0;
+		    	form.name = (this.user) ? this.user.name : 'Donator';
 
 			    FlutterwaveCheckout({
-			      	public_key: "FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X", 
+			      	public_key: "FLWPUBK-3df0eb38dcdc8322952c52b996faa710-X", 
 			      	tx_ref: "hooli-tx-1920bbtyt",
 			      	amount: this.form.amount,
 			      	currency: this.form.currency,
@@ -133,7 +133,7 @@
 			      	customer: {
 			        	email: this.form.email,
 			        	phone_number: this.form.phone,
-			        	name: "Donator",
+			        	name: this.form.name,
 			      	},
 			      	callback: (data) => {
 			      		
@@ -148,6 +148,7 @@
 			      		axios.post('/api/add-donator', post)
 			      		.then(response => {
 			      			location.href = '/thank-you';
+			      			this.form.reset();
 			      		})
 			      		.catch(err => {
 			      			console.log(err);
