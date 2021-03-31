@@ -12,6 +12,7 @@ use SavyCon\Models\User;
 use SavyCon\Models\Category;
 use SavyCon\Models\Payment;
 use SavyCon\Models\Service;
+use SavyCon\Models\ServiceLink;
 use SavyCon\Models\UserServiceRating;
 
 class PagesController extends Controller
@@ -55,15 +56,16 @@ class PagesController extends Controller
 
         $days = intval(date_diff($created, $today, TRUE)->format('%a'));
 
-        $service = UserService::findOrFail($payment->user_service_id);
-        
-        if ($payment->package == 'month' && $days >= 30) {
-            $service->featured = 0;
-            $service->save();
-        }
-        elseif ($payment->package == 'week' && $days >= 7) {
-            $service->featured = 0;
-            $service->save();
+        $service = UserService::find($payment->user_service_id);
+        if ($service) {
+            if ($payment->package == 'month' && $days >= 30) {
+                $service->featured = 0;
+                $service->save();
+            }
+            elseif ($payment->package == 'week' && $days >= 7) {
+                $service->featured = 0;
+                $service->save();
+            }
         }
     }
 
@@ -181,6 +183,11 @@ class PagesController extends Controller
     	return view('pages.contact');
     }
 
+    public function thankYou()
+    {
+        return view('pages.thanks');
+    }
+
     public function terms()
     {
     	return view('pages.terms');
@@ -245,5 +252,29 @@ class PagesController extends Controller
         ])->where('id', $id)->first();
 
         return view('pages.invoice', ['payment' => $payment]);
+    }
+
+    public function serviceDetails()
+    {
+        
+        $uid = request()->get('id');
+        $service = request()->get('service');
+        
+        $details = ServiceLink::where(['uid' => $uid, 'service' => $service])->first();
+        if ($details) {
+            
+            $data['details'] = $details;
+            $today = date_create(date('Y-m-d H:i:s'));
+            $created = date_create(date('Y-m-d H:i:s', strtotime($details->created_at)));
+
+            if ($created->diff($today)->h > 3) {
+                $data['expired'] = TRUE;
+            }
+        }
+        else {
+            return view('404');
+        }
+
+        return view('pages.serviceDetails', $data);
     }
 }

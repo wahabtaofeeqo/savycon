@@ -5,6 +5,7 @@ namespace SavyCon\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SavyCon\Models\ServicePage;
+use SavyCon\Models\ServiceLink;
 
 class ServicePageController extends Controller
 {
@@ -44,6 +45,32 @@ class ServicePageController extends Controller
         if ($servicepage) {
             $servicepage->delete();
         }
+
+        return response($response, 200);
+    }
+
+    public function serviceLink(Request $request) {
+
+        $request->validate([
+            'service' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'currency' => 'required',
+        ]);
+
+        $uid = uniqid();
+
+        ServiceLink::create([
+            'service' => $request->service,
+            'price' => $request->price,
+            'uid' => $uid,
+            'currency' => $request->currency,
+            'description' => $request->description]);
+
+        $service = urlencode(strtolower($request->service));
+
+        $link = url("service-details?service=$service&id=$uid");
+        $response = array('error' => FALSE, 'message' => '', 'link' => $link);
 
         return response($response, 200);
     }

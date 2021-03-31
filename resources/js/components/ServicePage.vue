@@ -102,7 +102,7 @@
                   rows="5"
                   v-model="form.description"
                   name="description"
-                  placeholder="Describe your service, Add your Address..."
+                  placeholder="Describe your service, Add your Address, Phone Number and Whatsapp Number..."
                   :class="{ 'has-error': form.errors.has('description') }"
                   id="description"
                   required
@@ -119,11 +119,7 @@
             </div>
           </div>
 
-          <button
-            class="btn btn-primary btn-fill"
-            :disabled="form.busy"
-            type="submit"
-          >
+          <button class="btn btn-primary btn-fill px-5" :disabled="form.busy" type="submit">
             Submit
           </button>
 
@@ -181,14 +177,14 @@ export default {
           Swal.fire({
             icon: "success",
             title: "Request submitted successfully.",
-            text: "We will reload the page now...",
+            text: "Thank You! We will get back to you.",
           });
 
           this.form.reset();
 
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 2000);
         })
         .catch((e) => {
           
@@ -198,6 +194,9 @@ export default {
             icon: "error",
           });
 
+          //loader.hide();
+        }).
+        finally(() => {
           loader.hide();
         });
     },

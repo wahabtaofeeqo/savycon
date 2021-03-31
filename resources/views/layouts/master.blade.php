@@ -226,6 +226,12 @@
 				            			<p>Advertise</p>
 				            		</router-link>
 				            	</li>
+				            	<li>
+				            		<router-link :to="{ name: 'VendorPayments' }">
+				            			<i class="pe-7s-search"></i>
+				            			<p>Payments</p>
+				            		</router-link>
+				            	</li>
 				            	@endcan
 				            	<li>
 				            		<router-link :to="{ name: 'VendorProfile' }">

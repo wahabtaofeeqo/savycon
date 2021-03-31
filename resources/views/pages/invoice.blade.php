@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="invoice">
+	<div class="wrapper">
 		<div class="container py-3">
 			<div class="col-md-10 col-lg-8 mx-auto">
 				<div class="card bg-white" id="invoice">

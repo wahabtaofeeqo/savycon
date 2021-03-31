@@ -63,10 +63,11 @@ import AdminUsers from './components/admin/Users.vue';
 import AdminSubscribers from './components/admin/Subscribers.vue';
 import AdminMessages from './components/admin/Messages.vue';
 import AdminServicePages from './components/admin/ServicePages.vue';
+import AdminServiceLink from './components/admin/ServiceLink.vue';
 import AdminUnfoundSearches from './components/admin/UnfoundSearches.vue';
 import AdminContactMessages from './components/admin/Contacts.vue';
 import AdminAdverts from './components/admin/Adverts.vue';
-import AdminPayments from './components/admin/Payments.vue';
+import Payments from './components/admin/Payments.vue';
 
 import VendorDashboard from './components/vendor/Dashboard.vue';
 import VendorProfile from './components/Profile.vue';
@@ -95,6 +96,11 @@ const routes = [
 		component: AdminDashboard
 	},
 	{
+		name: 'AdminServiceLink',
+		path: '/admin/servicelink',
+		component: AdminServiceLink
+	},
+	{
 		name: 'VisitorsStats',
 		path: '/admin/stats',
 		component: VisitorsStats
@@ -102,7 +108,7 @@ const routes = [
 	{
 		name: 'AdminPayments',
 		path: '/admin/payments',
-		component: AdminPayments
+		component: Payments
 	},
 	{
 		name: 'NewServices',
@@ -190,6 +196,11 @@ const routes = [
 		name: 'VendorDashboard',
 		path: '/vendor/',
 		component: VendorDashboard
+	},
+	{
+		name: 'VendorPayments',
+		path: '/vendor/payments',
+		component: Payments
 	},
 	{
 		name: 'VendorServices',

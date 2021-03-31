@@ -2,10 +2,15 @@
   <div>
 
     <div class="bg-info" style="background: red;">
-      <div class="col-md-12 mb-4">
+      <div class="col-md-6 mb-4" style="margin-top: 10px; margin-bottom: 10px;">
          <input type="file" name="file" v-on:change="prepareFile" class="mb-4">
       </div>
-      <div class="col-md-12">
+
+      <div class="col-md-6 mb-4" style="margin-bottom: 10px; margin-top: 10px;">
+        <a href="#" class="btn btn-info px-5 btn-sm" @click="showFormat">View Excel cells</a>
+      </div>
+
+      <div class="col-md-12" style="margin-bottom: 10px;">
         <button class="btn btn-sm btn-danger" @click="uploadFile">Upload New Service</button>
       </div>
     </div>
@@ -351,6 +356,13 @@ export default {
           loader.hide();
         });
     },
+
+    showFormat() {
+      Swal.fire({
+            icon: "info",
+            html: "<strong>businessname, email, category, state, city, contactperson, fulladdress, landmark, phone and secondphone</strong>",
+      });
+    }
   },
   created() {
     this.loadServices();

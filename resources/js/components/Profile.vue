@@ -189,30 +189,44 @@
 			},
 
 			async changePassword() {
-				const { value: password } = await Swal.fire({
-	                title: 'New Password?',
-	                input: 'password',
+				const { value: passwords } = await Swal.fire({
+	                title: 'Change Password?',
+	                html:
+				    '<input id="swal-input1" type="password" placeholder="New Password" class="swal2-input">' +
+				    '<input id="swal-input2" type="password" placeholder="Confirm Password" class="swal2-input">',
+				  	focusConfirm: false,
+				  	preConfirm: () => {
+				    	return [
+				      		document.getElementById('swal-input1').value,
+				      		document.getElementById('swal-input2').value
+				    	]	
+				  	},
 	                showCancelButton: true,
-	                inputPlaceholder: 'Password...',
-	                inputValidator: (value) => {
-	                    if (!value || value.length < 8) {
-	                        return "Password must be at least 8 characters";
-	                    }
-	                }
 	            });
 
-	            if (password != '' && password.length >= 8) {
-	            	Swal.fire({
-					  title: 'Do you want to save the changes?',
-					  showCancelButton: true,
-					  confirmButtonText: `Change`,
-					})
-					.then((result) => {
-					  
-					  	if (result.isConfirmed) {
-					    	this.updatePassword(password);
-					  	}
-					})
+	            var password = passwords[0];
+	            if (passwords && (passwords[0] == passwords[1])) {
+
+		            if (password != '' && password.length >= 8) {
+		            	Swal.fire({
+		            		icon: 'warning',
+						  	title: 'Do you want to save the changes?',
+						  	showCancelButton: true,
+						  	confirmButtonText: `Change`,
+						})
+						.then((result) => {
+						  
+						  	if (result.isConfirmed) {
+						    	this.updatePassword(password);
+						  	}
+						})
+		            }
+		            else {
+		            	this.toast('Password must be at least 8 characters', 'info');
+		            }
+	            }
+	            else {
+	            	this.toast('The two Passwords matched', 'info');
 	            }
 			},
 
@@ -232,6 +246,17 @@
 				.finally(() => {
 					loader.hide();
 				})
+			},
+
+			toast(message, type) {
+				Swal.fire({
+                    text: message,
+                    toast: true,
+                    position: 'bottom-right',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    icon: type
+                });
 			}
 		},
 		created() {

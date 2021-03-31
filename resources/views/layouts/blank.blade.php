@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@yield('title') | {{ config('app.name') }}</title>
+
 	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
@@ -15,19 +21,19 @@
     		height: 100%;
     	}
 
-    	.invoice {
+    	.wrapper {
     		height: 100%;
     	}
     </style>
 </head>
-<body class="bg-white">
+<body>
 
-	<div id="app"></div>
-
-    @yield('content')
+	@yield('content')
 
     <script src="{{ asset('main/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('main/vendor/jspdf/dist/jspdf.umd.js') }}"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+
     <script type="text/javascript">
 
         $(".download").click(function(e) {
@@ -47,6 +53,65 @@
             })
         })
 
+
+
+        $("#btnContinueService").click(function(e) {
+
+            const info = {
+                amount: $(this).attr('data-price'),
+                currency: $(this).attr('data-currency'),
+                service: $(this).attr('data-service'),
+                name: "<?=request()->user()->name; ?>",
+                email: "<?=request()->user()->email; ?>",
+                phone: "<?=request()->user()->phone; ?>",
+                description: $(this).attr('data-desc'),
+            }
+
+            makePayment(info);
+        })
+
+        function makePayment(info) {
+                
+            FlutterwaveCheckout({
+                public_key: "FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X", 
+                tx_ref: "hooli-tx-1920bbtyt",
+                amount: info.amount,
+                currency: info.currency,
+                country: (info.currency == "NGN") ? "NG" : "US",
+                payment_options: "card, mobilemoneyghana, ussd",
+                customer: {
+                    email: info.email,
+                    phone_number: info.phone,
+                    name: info.name,
+                },
+                callback: (data) => {
+                        
+                    const post = {
+                        transaction: data.transaction_id,
+                        ref: data.flw_ref,
+                        type: 'service',
+                        service: info.service,
+                        amount: info.amount,
+                        description: info.description,
+                    };
+
+                    axios.post('/api/service-payment', post)
+                    .then(response => {
+                        location.href = '/donated';
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                },
+                onclose: function() {
+            
+                },
+                customizations: {
+                    title: "Service Payment",
+                    description: "Payment for Service on Savycon",
+                },
+            });
+        }
     </script>
 </body>
 </html>

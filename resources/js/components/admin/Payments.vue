@@ -21,7 +21,7 @@
 							<tr v-for="(payment, index) in payments">
 								<td>{{ index + 1 }}</td>
 								<td>{{ payment.type }}</td>
-								<td>{{ payment.user.name }}</td>
+								<td><span v-if="payment.user != null">{{ payment.user.name }}</span></td>
 								<td>{{ payment.amount }}</td>
 								<td>{{ payment.created_at }}</td>
 								<td>
@@ -128,6 +128,24 @@
                 this.url = '/api/payments?page='+pageno;
                 this.loadPayments();
             },
+
+            loadUser() {
+            	const loader = this.$loading.show()
+
+				axios.get('/api/profile')
+				.then((response) => {
+
+					this.user = response.data;
+					this.url = '/api/payments/user/' + this.user.id;
+					this.loadPayments(this.user.id);
+				})
+				.catch(() => {
+			
+				})
+				.finally(() => {
+					loader.hide();
+				})
+            }
 		},
 
 		data() {
@@ -136,12 +154,20 @@
 
 				url: '/api/payments',
 
-				pagination: {}
+				pagination: {},
+
+				user: {}
 			}
 		},
 
 		created() {
-			this.loadPayments();
+			const path = this.$route.path;
+			if (path.indexOf('/vendor') != -1) {
+				this.loadUser();
+			}
+			else {
+				this.loadPayments();
+			}
 		},
 
 		mounted() {},

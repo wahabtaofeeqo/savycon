@@ -45,8 +45,11 @@ Route::get('/ban/service/{id}', 'Admin\UserServiceController@alterBan')->where('
 Route::get('/feature/service/{id}', 'Admin\UserServiceController@alterFeature')->where('id', '([0-9]+)');
 Route::post('/feature/service', 'Admin\UserServiceController@feature');
 
+Route::post('/service-link', 'ServicePageController@serviceLink');
+Route::get('/payments/user/{id}', 'PaymentController@index')->where('id', '([0-9]+)');
+
 //Password update
-Route::post('profile/password', 'ProfileController@changePassword');
+Route::post('/profile/password', 'ProfileController@changePassword');
 
 //
 //Route::get('/userService', 'Admin\UserServiceController@services');
@@ -134,7 +137,6 @@ Route::post('donation', 'General\DonateController@donate');
 Route::post('add-donator', 'General\DonateController@addDonator');
 
 
-
 // Counters
 Route::prefix('counter')->group(function() {
 	Route::get('states', 'General\CounterController@totalStates');
@@ -170,3 +172,7 @@ Route::prefix('counter')->group(function() {
 		Route::get('rating', 'General\CounterController@averageUserRating');
 	});
 });
+
+
+//
+Route::post('service-payment', 'PaymentController@servicePayment')->middleware('auth:api');

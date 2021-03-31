@@ -1,5 +1,10 @@
 <template>
   <div>
+
+    <div style="padding: 10px">
+      <a href="servicelink" class="btn btn-primary px-5">Generate Link</a>
+    </div>
+
     <h1 class="page-header h4">
       Service Page Requests
       <span class="badge badge-primary">{{ pagination.total_items }}</span>

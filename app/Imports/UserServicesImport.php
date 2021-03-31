@@ -45,53 +45,6 @@ class UserServicesImport implements ToModel, WithHeadingRow
     */
     public function model(array $row) {
 
-        // $title = $row['businessname'];
-        // $address = $row['address'];
-        // $state = $row['state'];
-        // $city = $row['city'];
-        // $category = $row['category'];
-        
-
-        // //UserID
-        // $user = User::where(['email' => $row['email'], 'phone' => $row['phone']])->first();
-        // $userID = 0;
-        // if (empty($user)) { //Create new User
-
-        //     $name = isset($row['contactperson']) ? $row['contactperson'] : 'John Doe';
-            
-        //     $emailCheck = User::where('email', $row['email'])->first();
-        //     if (empty($emailCheck)) {
-        //         $email = $row['email'] === 'nan' ? 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com' : $row['email'] ? $row['email'] : 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com';
-             
-        //     }
-        //     else {
-        //         $email = 'savycon'.rand(1,1000000).'freelance'.rand(1,1000000).'@gmail.com';
-        //     }
-
-        //     $password = Hash::make($row['contactperson'] ? $row['contactperson'] : 'John Doe');
-        //     $phone = ($row['phone'] === 'nan') ? '8001002000' : substr($row['phone'] ? $row['phone'] : '8001002000', 1);
-        //     $role = 'vendor';
-        //     $city_id = empty(City::where('name', $row['city'])->first()) ?   
-        //                             City::create([
-        //                                 'name' => 
-        //                                     $row === 'nan'
-        //                                     ?   
-        //                                         State::find($this->state_id)->name.rand(1,1000000)
-        //                                     :   
-        //                                         $row['city']
-        //                                 ,
-        //                                 'state_id' => $this->state_id
-        //                             ])->id
-        //                         :   
-        //                         City::where('name', $row['city'])->first()->id;
-
-        //     $userID = User::create(['name' => $name, 'email' => $email, 'password' => $password, 'phone' => $phone, 'role' => $role, 'city_id' => $city_id])->id;
-        // }
-        // else {
-
-        //     $userID = User::where('name', $row['contactperson'])->where('phone', $row['phone'] ? $row['phone'] : '810000000')->first()->id
-        // }
-
         $check = UserService::where('title', $row['businessname'])->first();
         $state = State::where('name', $row['state'])->first();
 

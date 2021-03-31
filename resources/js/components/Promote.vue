@@ -12,17 +12,16 @@
 
 					<img :src="setPath()" style="height: 150px;" alt="Service Logo">
 
-					<p class="card-text text-muted" style="padding: 10px 0px;">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua.
+					<p class="card-text small" style="padding: 10px 0px;">
+						Select a promotion plan to feature you service on the website for a specified number of days. Week (7 days) and Month (30 days)
 					</p>
 
 					<div class="form-group">
 						<label>Promotion Package</label>
 						<select name="package" class="form-control" v-model="package">
 							<option value="" disabled="">Select a Package</option>
-							<option value="week">Week</option>
-							<option value="month">Month</option>
+							<option value="week">Week - #2, 000</option>
+							<option value="month">Month - #6,000</option>
 						</select>
 					</div>
 
@@ -87,7 +86,7 @@
 			process() {
 				if (this.package != '') {
 					const data = {
-						amount: 200,
+						amount: (this.package == 'month') ? 6000 : 2000,
 						email: this.user.email,
 						phone: this.user.phone_number,
 						name: this.user.name,

@@ -25,6 +25,7 @@ Route::get('/index', 'PagesController@index');
 // Services
 Route::get('/services', 'PagesController@services')->name('services');
 Route::get('/servicepage', 'PagesController@servicepage')->name('servicepage');
+Route::get('/service-details', 'PagesController@serviceDetails')->middleware('auth');
 Route::get('/services/user/{id}', 'PagesController@userServices')->where('/id', '([0-9]+)')->name('services.user');
 Route::get('/our-services', 'PagesController@services');
 Route::get('/service/{id}', 'PagesController@showService')->where('/id', '([0-9]+)')->name('service.single');
@@ -78,6 +79,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Donate
 Route::get('/donate', 'General\DonateController@index')->name('donate');
+Route::get('/thank-you', 'PagesController@thankYou')->name('thankYou');
 
 // Socialite
 Route::get('/social/redirect/{provider}', 'Auth\SocialController@redirectToProvider')->where('provider', 'twitter|linkedin|google|facebook')->name('social.redirect');

@@ -8,9 +8,8 @@
 				</div>
 
 				<div class="card-body">
-					<p class="card-subtitle py-3 mb-4">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt.
+					<p class="card-subtitle text-center py-3 mb-4">
+						Support Donation!
 					</p>
 
 					<form method="POST" @submit.prevent="makeDonation()" @keydown="form.onKeydown($event)">
@@ -83,6 +82,8 @@
 					currency: '',
 				}),
 
+				user: {},
+
 				currencies: [
 					{
 						code: 'NGN'
@@ -95,13 +96,21 @@
 		},
 
 		methods: {
-			callback: function(response){
-		        console.log(response)
-		    },
-		      
-		    close: function(){
-		       console.log("Payment closed")
-		    },
+
+			loadUser() {
+            	const loader = this.$loading.show()
+
+				axios.get('/api/profile')
+				.then((response) => {
+					this.user = response.data;
+				})
+				.catch(() => {
+			
+				})
+				.finally(() => {
+					loader.hide();
+				})
+            },
 
 		    makeDonation() {
 		    	this.makePayment()
@@ -110,6 +119,10 @@
 		    makePayment() {
 
 		    	const form = this.form;
+		    	this.form.reset();
+		    	
+		    	form.user = this.user.id;
+
 			    FlutterwaveCheckout({
 			      	public_key: "FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X", 
 			      	tx_ref: "hooli-tx-1920bbtyt",
@@ -124,17 +137,24 @@
 			      	},
 			      	callback: (data) => {
 			      		
-			      		axios.post('/api/add-donator', form)
+			      		const post = {
+			        		transaction: data.transaction_id,
+			        		ref: data.flw_ref,
+			        		type: 'donation',
+			        		amount: this.form.amount,
+			        		user: this.form.user
+			        	};
+
+			      		axios.post('/api/add-donator', post)
 			      		.then(response => {
-			      			console.log(response);
-			      			//location.reload();
+			      			location.href = '/thank-you';
 			      		})
 			      		.catch(err => {
-			      			
+			      			console.log(err);
 			      		})
 			      	},
 			      	onclose: function() {
-			        	location.reload();
+			        	//location.reload();
 			      	},
 			      	customizations: {
 			        	title: "Donation",
@@ -156,6 +176,10 @@
 		    }
 		},
 
-		mounted() {}
+		mounted() {},
+
+		created() {
+			this.loadUser();
+		}
 	}
 </script>
