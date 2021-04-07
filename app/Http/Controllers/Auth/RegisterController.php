@@ -68,7 +68,7 @@ class RegisterController extends Controller
      * @return \SavyCon\User
      */
     protected function create(array $data) {
-        
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -76,13 +76,13 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'role' => $data['role'],
             'city_id' => $data['city_id']
-        ]);
+        ]); 
 
         WelcomeUserToSavycon::dispatch($user)->delay(now()->addSeconds(15));
 
         $admin = User::findOrFail(2);
         InformAdminOfNewUser::dispatch($user, $admin)->delay(now()->addSeconds(30));
 
-        return response($user);
+        return $user;
     }
 }

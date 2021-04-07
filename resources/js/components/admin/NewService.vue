@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="card">
       <div class="header">
         <h4 class="card-title">
@@ -236,7 +237,7 @@
                         @change="updateImage1"
                       />
                       <img
-                        src=""
+                        src="/images/upload.png"
                         alt="Drag or Click to Upload"
                         id="dropzone-image1"
                         class="dropzone-image"
@@ -266,7 +267,7 @@
                         @change="updateImage2"
                       />
                       <img
-                        src=""
+                        src="/images/upload.png"
                         alt="Drag or Click to Upload"
                         id="dropzone-image2"
                         class="dropzone-image"
@@ -296,7 +297,7 @@
                         @change="updateImage3"
                       />
                       <img
-                        src=""
+                        src="/images/upload.png"
                         alt="Drag or Click to Upload"
                         id="dropzone-image3"
                         class="dropzone-image"

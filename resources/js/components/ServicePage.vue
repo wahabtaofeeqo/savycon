@@ -17,7 +17,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label for="category">Category</label>
-                    <select
+                    <!-- <select
                       class="form-control"
                       id="category"
                       v-model="form.category"
@@ -29,7 +29,8 @@
                         v-bind:value="category.name">
                         {{ category.name }}
                       </option>
-                    </select>
+                    </select> -->
+                    <input type="text" class="form-control" id="category" placeholder="Enter Category" v-model="form.category" required @input="getCategories($event)" @keydown="onKey($event)">
                   </div>
                 </div>
               </div>
@@ -37,7 +38,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label for="subcategory">Sub Category</label>
-                    <select
+                    <!-- <select
                       class="form-control"
                       id="subcategory"
                       v-model="form.subcategory"
@@ -49,7 +50,8 @@
                         v-bind:value="sub.name">
                         {{ sub.name }}
                       </option>
-                    </select>
+                    </select> -->
+                    <input type="text" class="form-control" id="subcategory" placeholder="Enter Service" v-model="form.subcategory" required @input="getSubCategories($event)" @keydown="onKey($event)">
                   </div>
                 </div>
               </div>
@@ -151,6 +153,10 @@ export default {
       url: "/api/servicespage",
 
       categoryURL: "/api/category",
+
+      focus: -1,
+
+      selectedId: -1,
     };
   },
   methods: {
@@ -167,6 +173,139 @@ export default {
         this.subcategories = response.data;
       });
     },
+
+    getCategories(e) {
+      if (this.form.category.length >= 2) {
+
+        console.log(this.form.category);
+        const url = '/api/categories/' + this.form.category;
+
+          axios.get(url)
+          .then(response => {
+            this.autoComplete(e, response.data);
+          })
+          .catch(err => {
+            console.log('Could not fetch Category ' + err)
+          })
+        }
+        else {
+          this.closeList();
+        }
+    },
+
+    autoComplete: function(e, collection, sub = false) {
+
+      this.closeList();
+      if (collection.length == 0) return;
+
+      const input = e.target;
+      const wrapper = document.createElement("DIV");
+      wrapper.setAttribute("class", "autocomplete-items");
+
+      const component = this; // The Component ref
+      e.target.parentNode.appendChild(wrapper);
+
+                if (collection.length > 0) {
+                    for (var i = 0; i < collection.length; i++) {
+
+                        const val = this.form.city;
+                        let current = collection[i];
+                        const item = document.createElement("DIV");
+
+                        // if (current.name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        //     b = "<strong>" + current.name.substr(0, val.length) + "</strong>";
+                        //     b.innerHTML += current.name.substr(val.length);
+                        //     b.innerHTML += "<input type='hidden' value='" + current.name + "'>";
+                        // }
+
+
+                        item.innerHTML = current.name;
+                        item.innerHTML += "<input type='hidden' value='" + current.name + "'>";
+                        item.innerHTML += "<input type='hidden' value='" + current.id + "'>";
+
+                        item.addEventListener("click", function(e) {
+                            component.closeList();
+                            const value = this.getElementsByTagName("input")[0].value;
+                            component.selectedId = this.getElementsByTagName("input")[1].value; // Id of the selected Item
+
+                            if (sub) {
+                              component.form.subcategory = value;
+                            }
+                            else {
+                              component.form.category = value;
+                            }
+                        });
+
+                        wrapper.appendChild(item);
+                    }
+                }
+    },
+
+    setActive(elements) {
+        this.removeActive(elements);
+
+        if (this.focus >= elements.length) this.focus = 0;
+        if (this.focus < 0) this.focus = (elements.length - 1);
+                
+        elements[this.focus].classList.add("autocomplete-active");
+    },
+
+    removeActive(elements) {
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].classList.remove("autocomplete-active");
+      }
+    },
+
+    closeList: function() {
+                const x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+    },
+
+    onKey(e) {
+
+                const wrapper = document.getElementsByClassName("autocomplete-items");
+                if (wrapper && wrapper.length > 0) {
+                    const elements = wrapper[0].getElementsByTagName('div');
+                    if (e.keyCode == 40) {
+                        this.focus++;
+                        this.setActive(elements);
+                    }
+
+                    if (e.keyCode == 30) {
+                        this.focus--;
+                        this.setActive(elements);
+                    }
+
+                    if (e.keyCode == 13) {
+                        if (this.focus > -1 && elements) {
+                            e.preventDefault();
+                            elements[this.focus].click();
+                        }
+                    }
+                }
+    },
+
+    getSubCategories(e) {
+      if (this.form.category.length >= 2) {
+
+        console.log(this.form.subcategory);
+        const url = '/api/subcategories/' + this.form.subcategory + '/' + this.selectedId;
+
+          axios.get(url)
+          .then(response => {
+            this.autoComplete(e, response.data, true);
+          })
+          .catch(err => {
+            console.log('Could not fetch Category ' + err)
+          })
+        }
+        else {
+          this.closeList();
+        }
+    },
+
     createServicePage() {
       const loader = this.$loading.show();
 
@@ -205,7 +344,8 @@ export default {
     this.loadCategories();
   },
   mounted() {},
-};
+}
+
 </script>
 
 <style scoped>
@@ -227,4 +367,48 @@ export default {
   background: lightgray;
   border-radius: 10px;
 }
+
+.autocomplete {
+      /*the container must be positioned relative:*/
+      position: relative;
+      display: inline-block;
+}
+
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      border-bottom: none;
+      border-top: none;
+      height: auto;
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 99;
+      /*position the autocomplete items to be the same width as the container:*/
+      top: 100%;
+      left: 0;
+      right: 0;
+    }
+
+    .autocomplete-items p {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .autocomplete-items div {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      border-bottom: 1px solid #d4d4d4;
+    }
+
+    .autocomplete-items div:hover {
+      /*when hovering an item:*/
+      background-color: #e9e9e9;
+    }
+
+  .autocomplete-active {
+      /*when navigating through the items using the arrow keys:*/
+      background-color: DodgerBlue !important;
+      color: #ffffff;
+  }
 </style>

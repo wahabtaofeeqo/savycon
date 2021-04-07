@@ -79,7 +79,7 @@
 											NONE AT THE MOMENT
 										</div>
 
-										<div class="flex-w m-r--5" v-show="subCategories.length > 0">
+										<div class="flex-w m-r--5" v-show="subCategories.length > 0" style="max-height: 400px; overflow-y: auto;">
 											<a :href="openSubCategory(sub.id)" :key="sub.id" v-for="sub in subCategories" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
 												{{ sub.name.toUpperCase() }}
 											</a>

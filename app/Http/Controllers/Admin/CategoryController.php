@@ -36,8 +36,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required']);
+
         $category = new Category();
         $category->name = $request->name;
+
         if (!empty($request->image_tag)) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_tag, 0, strpos($request->image_tag, ';')))[1])[1];
 
@@ -47,7 +52,6 @@ class CategoryController extends Controller
         }
 
         $category->save();
-
         return response($category, 200);
     }
 
@@ -84,7 +88,9 @@ class CategoryController extends Controller
             }
 
             $category = Category::find($id);
-            $category->delete();
+            if ($category->id != $check->id) {
+                $category->delete();
+            }
         }
 
         return response($response, 200);

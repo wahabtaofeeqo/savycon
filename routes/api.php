@@ -100,6 +100,8 @@ Route::get('/findAdminVendor/{text?}', 'SearchController@adminSearchVendor')->wh
 ])->name('admin.search.vendor');
 
 Route::get('/category', 'CategoryController@index');
+Route::get('/categories/{category}', 'CategoryController@categories');
+Route::get('/subcategories/{service}/{categoryid}', 'ServiceController@services');
 Route::get('/category/limited', 'CategoryController@limitedIndex');
 Route::get('/category/show/{id}', 'CategoryController@show')->where('id', '([0-9]+)');
 Route::get('/category/{id}', 'CategoryController@showUserServices')->where('id', '([0-9]+)');
@@ -173,6 +175,8 @@ Route::prefix('counter')->group(function() {
 	});
 });
 
+
+Route::get('/user-need-session', 'UsersNeedController@needSession');
 
 //
 Route::post('service-payment', 'PaymentController@servicePayment')->middleware('auth:api');

@@ -25,7 +25,7 @@ Route::get('/index', 'PagesController@index');
 // Services
 Route::get('/services', 'PagesController@services')->name('services');
 Route::get('/servicepage', 'PagesController@servicepage')->name('servicepage');
-Route::get('/service-details', 'PagesController@serviceDetails')->middleware('auth');
+Route::get('/service-details', 'PagesController@serviceDetails');
 Route::get('/services/user/{id}', 'PagesController@userServices')->where('/id', '([0-9]+)')->name('services.user');
 Route::get('/our-services', 'PagesController@services');
 Route::get('/service/{id}', 'PagesController@showService')->where('/id', '([0-9]+)')->name('service.single');

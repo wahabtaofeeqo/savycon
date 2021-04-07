@@ -52,7 +52,7 @@
 		methods: {
 			createLink() {
 				const loader = this.$loading.show();
-				console.log(this.form);
+				
 				axios.post('/api/service-link', this.form)
 				.then((response) => {
 					this.form.reset();

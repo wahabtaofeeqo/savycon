@@ -26,7 +26,7 @@
 							<div class="input-group-addon">Name</div>
 							<input type="text" name="name" v-model="form.name" class="form-control" :class="{ 'has-error':form.errors.has('name') }" placeholder="Name" autofocus="on" required>
 							<div class="input-group-addon">Image Tag</div>
-							<input type="file" name="image_tag" class="form-control" id="image_tag" accept="image/*" @change="updateImageTag" required>
+							<input type="file" name="image_tag" class="form-control" id="image_tag" accept="image/*" @change="updateImageTag">
 							<div class="input-group-btn">
 								<button type="submit" :disabled="form.busy" class="btn btn-primary btn-fill" v-show="!editmode">Create</button>
 								<button type="submit" :disabled="form.busy" class="btn btn-success btn-fill" v-show="editmode">Update</button>
@@ -369,7 +369,7 @@
 				this.form.post(this.categoryURL)
 				.then(() => {
 					Swal.fire({
-						type: 'success',
+						icon: 'success',
 						title: 'Category was successfully created',
 					})
 

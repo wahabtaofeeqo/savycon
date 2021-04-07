@@ -39,35 +39,37 @@ class ServiceController extends Controller
 
     	$validated = $request->validated();
 
+        $service = new UserService();
         if ($request->image_1) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_1, 0, strpos($request->image_1, ';')))[1])[1];
 
             \Image::make($request->image_1)->save('images/services/'.$name);
             
             $request->merge(['image_1' => $name]);
+            $service->image_1 = $request->image_1;
         }
+
         if ($request->image_2) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_2, 0, strpos($request->image_2, ';')))[1])[1];
 
             \Image::make($request->image_2)->save('images/services/'.$name);
             
             $request->merge(['image_2' => $name]);
+            $service->image_2 = $request->image_2;
         }
+
         if ($request->image_3) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_3, 0, strpos($request->image_3, ';')))[1])[1];
 
             \Image::make($request->image_3)->save('images/services/'.$name);
             
             $request->merge(['image_3' => $name]);
+            $service->image_3 = $request->image_3;
         }
 
-        $service = new UserService();
         $service->title = $request->title;
         $service->description = $request->description;
         $service->price = $request->price;
-        $service->image_1 = $request->image_1;
-        $service->image_2 = $request->image_2;
-        $service->image_3 = $request->image_3;
         $service->address = $request->address;
         $service->landmark = $request->landmark;
         $service->active = 0;
@@ -161,6 +163,21 @@ class ServiceController extends Controller
     }
 
     public function delete($id)
+    {
+        $this->authorize('isActiveVendorOrAdmin');
+        
+        $service = UserService::findOrFail($id);
+
+        $this->deleteServiceImages($service);
+
+        $service->delete();
+
+        return response([
+            'message' => 'Delete Complete'
+        ], 200);
+    }
+
+    public function destroy($id)
     {
         $this->authorize('isActiveVendorOrAdmin');
         

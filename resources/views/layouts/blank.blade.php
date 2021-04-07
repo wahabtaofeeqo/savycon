@@ -61,9 +61,9 @@
                 amount: $(this).attr('data-price'),
                 currency: $(this).attr('data-currency'),
                 service: $(this).attr('data-service'),
-                name: "<?=request()->user()->name; ?>",
-                email: "<?=request()->user()->email; ?>",
-                phone: "<?=request()->user()->phone; ?>",
+                name: "<?php (request()->user()) ? request()->user()->name : 'Savycon' ?>",
+                email: "<?php (request()->user()) ? request()->user()->email : 'user@savycon.com'; ?>",
+                phone: "<?php (request()->user()) ? request()->user()->phone : '' ?>",
                 description: $(this).attr('data-desc'),
             }
 

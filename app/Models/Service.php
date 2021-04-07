@@ -24,4 +24,8 @@ class Service extends Model
     {
         return $this->hasMany('SavyCon\Models\UserRequest');
     }
+
+    public function scopeWhereLike($query, $column, $value, $columnCat, $valueCat) {
+        return $query->where($column, 'LIKE', "%$value%")->where($columnCat, $valueCat);
+    }
 }

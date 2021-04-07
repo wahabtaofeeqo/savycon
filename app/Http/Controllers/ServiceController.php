@@ -5,6 +5,7 @@ namespace SavyCon\Http\Controllers;
 use Illuminate\Http\Request;
 
 use SavyCon\Models\UserService;
+use SavyCon\Models\Service;
 
 class ServiceController extends Controller
 {
@@ -83,5 +84,9 @@ class ServiceController extends Controller
         }
 
         return response($buyerServices, 200);
+    }
+
+    public function services($name, $id) {
+        return Service::whereLike('name', $name, 'category_id', $id)->limit(10)->get();
     }
 }

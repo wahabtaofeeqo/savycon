@@ -23,6 +23,7 @@
 			                            	<option disabled value="">Choose a category</option>
 			                            	<option v-for="category in categories" :key="category.id" v-bind:value="category.id">{{ category.name }}</option>
 			                        	</select>
+			                        	
 			                        </div>
 			                        <div class="col-md-6">
 			                        	<label for="service">Sub-Category</label>
@@ -104,7 +105,7 @@
 					                	<label for="image_1">Image 1</label>
 					                	<div class="dropzone">
 					                		<input type="file" name="image_1" class="form-control dropzone-file" id="image_1" accept="image/*" @change="updateImage1">
-					                		<img src="" alt="Drag or Click to Upload" id="dropzone-image1" class="dropzone-image">
+					                		<img src="/images/upload.png" alt="Drag or Click to Upload" id="dropzone-image1" class="dropzone-image">
 					                	</div>
 					                	
 					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
@@ -117,10 +118,10 @@
 					                	<label for="image_2">Image 2</label>
 					                	<div class="dropzone">
 					                		<input type="file" name="image_2" class="form-control dropzone-file" id="image_2" accept="image/*" @change="updateImage2">
-					                		<img src="" alt="Drag or Click to Upload" id="dropzone-image2" class="dropzone-image">
+					                		<img src="/images/upload.png" alt="Drag or Click to Upload" id="dropzone-image2" class="dropzone-image">
 					                	</div>
 					                	
-					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
+					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Optional</small>
 					                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
 					                	<has-error :form="form" field="image_2"></has-error>
 					                </div>
@@ -130,10 +131,10 @@
 					                	<label for="image_3">Image 3</label>
 					                	<div class="dropzone">
 					                		<input type="file" name="image_3" class="form-control dropzone-file" id="image_3" accept="image/*" @change="updateImage3">
-					                		<img src="" alt="Drag or Click to Upload" id="dropzone-image3" class="dropzone-image">
+					                		<img src="/images/upload.png" alt="Drag or Click to Upload" id="dropzone-image3" class="dropzone-image">
 					                	</div>
 					                	
-					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Required</small>
+					                	<small class="help-block text-info" v-show="!editmode"><i class="fa fa-info-circle"></i> Optional</small>
 					                	<small class="help-block text-info" v-show="editmode"><i class="fa fa-info-circle"></i> Ignore if you do not wish to change</small>
 					                	<has-error :form="form" field="image_3"></has-error>
 					                </div>

@@ -287,79 +287,22 @@
 
         const arr = currentPage.split("/");
         const page = arr[arr.length - 1];
-        console.log(page);
+
         if (page == 'services') {
 
-            Swal.fire({
-                title: '<strong>Just a moment!</strong>',
-                icon: 'info',
-                html: '<p class="py-2 text-muted"> Do you get what you want? if YES please click the link below and RATE us</p>',
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonText:
-                    '<i class="fa fa-thumbs-up"></i> Yes!',
-                cancelButtonText:
-                    '<i class="fa fa-thumbs-down"></i> No!',
-                footer: '<p class="text-success">Thanks for visiting!</p>'
-            }).then(async (result) => {
-
-                if (result.isConfirmed) {
-
-                    Swal.fire({
-                        text: 'Thanks for visiting!',
-                        toast: true,
-                        position: 'bottom-right',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        icon: 'success'
-                    });
-
-                    if (url != currentPage) {
-                        window.location.href = url;
-                    }
+            axios.get('/api/user-need-session')
+            .then((response) => {
+                
+                if (!response.data.asked) {
+                    needPopup(url, currentPage);
                 }
                 else {
-
-                    const { value: userInput } = await Swal.fire({
-                        title: 'Tell us what you need',
-                        input: 'textarea',
-                        showCancelButton: true,
-                        inputPlaceholder: 'Type.......',
-                        inputValidator: (value) => {
-                            if (!value) {
-                                return "Please tell us what you need";
-                            }
-                        }
-                    });
-
-                    if (userInput) {
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/api/usersNeed',
-                            data: {need: userInput},
-                            success: function(response) {
-
-                                Swal.fire({
-                                    text: 'Thanks for visiting!',
-                                    toast: true,
-                                    position: 'bottom-right',
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                    icon: 'success'
-                                });
-
-                                if (url != window.location.href) {
-                                    window.location.href = url;
-                                }
-                            },
-                            error: function(err) {
-                               
-                            }
-                        });
-                    }
+                    window.location.href = url;
                 }
-            });
+            })
+            .catch((err) => {
+                console.log(err);
+            })
         }
         else {
             if (url != window.location.href) {
@@ -368,6 +311,77 @@
         }
     });
 
+    const needPopup = function(url, currentPage) {
+        Swal.fire({
+            title: '<strong>Just a moment!</strong>',
+            icon: 'info',
+            html: '<p class="py-2 text-muted"> Do you get what you want? if YES please click the link below and RATE us</p>',
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText: '<i class="fa fa-thumbs-up"></i> Yes!',
+            cancelButtonText: '<i class="fa fa-thumbs-down"></i> No!',
+                footer: '<p class="text-success">Thanks for visiting!</p>'
+        }).then(async (result) => {
+
+            if (result.isConfirmed) {
+
+                Swal.fire({
+                        text: 'Thanks for visiting!',
+                        toast: true,
+                        position: 'bottom-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        icon: 'success'
+                });
+
+                if (url != currentPage) {
+                    window.location.href = url;
+                }
+            }
+            else {
+                    
+                const { value: userInput } = await Swal.fire({
+                    title: 'Tell us what you need',
+                    input: 'textarea',
+                    showCancelButton: true,
+                    inputPlaceholder: 'Type.......',
+                    inputValidator: (value) => {
+                            if (!value) {
+                                return "Please tell us what you need";
+                            }
+                        }
+                    });
+
+                if (userInput) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/usersNeed',
+                        data: {need: userInput},
+                        success: function(response) {
+
+                            console.log(response);
+                            Swal.fire({
+                                text: 'Thanks for visiting!',
+                                toast: true,
+                                position: 'bottom-right',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                icon: 'success'
+                            });
+
+                            if (url != window.location.href) {
+                                window.location.href = url;
+                            }
+                        },
+                        error: function(err) {
+                               
+                        }
+                    });
+                }
+            }
+        });
+    }
 
     const setCookie = function(name, value, expires) {
 
@@ -450,7 +464,6 @@
         }).catch(err => {});
     }
 
-    getIp();
-    setTimeout(popup, (1000));
+    setTimeout(getIp, (1000));
 
 })(jQuery);

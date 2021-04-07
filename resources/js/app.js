@@ -18,6 +18,9 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 Vue.use(VueAxios, axios);
 
+//Store
+import store from './store';
+
 // Sweet Alert
 import Swal from 'sweetalert2';
 window.Swal = Swal;
@@ -291,6 +294,7 @@ import VueGoodshareEmail from "vue-goodshare/src/providers/Email.vue";
 const app = new Vue({
     el: '#app',
     router,
+    store,
     data: {
     	global_search: '',
     	global_search_address: '',
@@ -299,6 +303,7 @@ const app = new Vue({
     	searchServices() {
     		Fire.$emit('searching')
     	},
+    	
     	getMyLocation() {
 			fetch('https://ipapi.co/json/')
 			.then((response) => {

@@ -216,6 +216,12 @@
                                                 <li>
                                                         <a href="{{ route('about') }}">About</a>
                                                 </li>
+                                                 <li>
+                                                        <a href="{{ route('donate') }}">Donate</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('servicepage') }}">Service Page</a>
+                                                </li>
                                                 <li>
                                                         <a href="{{ route('contact') }}">Contact</a>
                                                 </li>
@@ -354,8 +360,10 @@
 
                                                 <a href="{{ route('home') }}"class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn1 p-lr-15 trans-04">Go to your Dashboard</a>
 
-                                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn1 p-lr-15 trans-04">Logout</a>
+                                                <button onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="flex-c-m stext-101 cl0 size-107 bg1 bor2 hov-btn1 p-lr-15 trans-04">
+                                                    Logout
+                                                </button>
 
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                     @csrf

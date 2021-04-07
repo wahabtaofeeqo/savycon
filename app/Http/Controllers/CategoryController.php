@@ -87,4 +87,8 @@ class CategoryController extends Controller
 
         return response($sub_category, 200);
     }
+
+    public function categories($name) {
+        return Category::whereLike('name', $name)->limit(10)->get();
+    }
 }

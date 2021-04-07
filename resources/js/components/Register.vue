@@ -99,7 +99,7 @@
 					password: '',
 					password_confirmation: '',
 					role: '',
-					city: {
+			 		city: {
 						id: '',
 						state: {
 							id: ''
@@ -178,7 +178,7 @@
 					this.form.post(this.url)
 					.then(() => {
 						Swal.fire({
-							type: 'success',
+							icon: 'success',
 							title: 'Yay!!!',
 							text: 'You will be redirected now...'
 						})
@@ -192,7 +192,7 @@
 						Swal.fire({
 							title: 'Oops...',
 							text: 'Something went horribly wrong!',
-							type: 'error'
+							icon: 'error'
 						})
 
 						loader.hide()

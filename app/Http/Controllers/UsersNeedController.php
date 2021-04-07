@@ -117,7 +117,9 @@ class UsersNeedController extends Controller {
        $un->content = $request->need;
        $un->save();
 
+       session(['needSession' => TRUE]);
        $response['message'] = 'Sent Successfully';
+       $response['session'] = session('needSession', false);
        
        return response($response, 200);
     }
@@ -157,6 +159,14 @@ class UsersNeedController extends Controller {
       $ranges = [];
 
       return $hour;
+    }
+
+    public function needSession(Request $request) {
+
+      $response = array('show' => FALSE, 'message' => '');
+      $response['asked'] = session('needSession');
+
+      return response($response, 200);
     }
 
     /**

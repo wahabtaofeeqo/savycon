@@ -19,4 +19,8 @@ class Category extends Model
     {
     	return $this->hasManyThrough('SavyCon\Models\UserService', 'SavyCon\Models\Service');
     }
+
+    public function scopeWhereLike($query, $column, $value) {
+        return $query->where($column, 'LIKE', "%$value%");
+    }
 }
