@@ -55,18 +55,38 @@
 
 
 
-        $("#btnContinueService").click(function(e) {
+        $("#btnContinueService").click(async function(e) {
 
             const info = {
                 amount: $(this).attr('data-price'),
                 currency: $(this).attr('data-currency'),
                 service: $(this).attr('data-service'),
-                name: "<?php (request()->user()) ? request()->user()->name : 'Savycon' ?>",
-                email: "<?php (request()->user()) ? request()->user()->email : 'user@savycon.com'; ?>",
-                phone: "<?php (request()->user()) ? request()->user()->phone : '' ?>",
+                name: "<?= (request()->user()) ? request()->user()->name : 'Savycon'; ?>",
+                phone: "<?= (request()->user()) ? request()->user()->phone : ''; ?>",
                 description: $(this).attr('data-desc'),
             }
 
+            const userEmail = "<?= (request()->user()) ? request()->user()->email : null; ?>";
+
+            if (!userEmail) {
+                const { value: email } = await Swal.fire({
+                    title: 'Enter Your Email',
+                    input: 'email',
+                    showCancelButton: true,
+                    inputPlaceholder: 'Email...',
+                    inputValidator: (value) => {
+                        if (!value.trim()) {
+                            return "Enter Email!";
+                        }
+                    }
+                });
+
+                info.email = email;
+            }
+            else {
+                info.email = userEmail;
+            }
+            
             makePayment(info);
         })
 

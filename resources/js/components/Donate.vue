@@ -63,17 +63,11 @@
 </template>
 
 <script>
-	import paystack from 'vue-paystack';
+	
 	export default {
-		components: {
-	        paystack
-	    },
 	    
 		data() {
 			return {
-				paystackkey: "pk_test_379e4193510b67197fa56d8783f3c64e3386d3e7", //paystack public key
-          		email: "foobar@example.com", // Customer email
-          		amount: 1000000, // in kobo
 
           		form: new Form({	
 					email: '',
@@ -91,7 +85,9 @@
 					{
 						code: 'USD'
 					}
-				]
+				],
+
+				key: '',
 			}
 		},
 
@@ -122,9 +118,10 @@
 		    	
 		    	form.user = (this.user) ? this.user.id : 0;
 		    	form.name = (this.user) ? this.user.name : 'Donator';
+		    	const key = this.key;
 
 			    FlutterwaveCheckout({
-			      	public_key: "FLWPUBK-3df0eb38dcdc8322952c52b996faa710-X", 
+			      	public_key: key, 
 			      	tx_ref: "hooli-tx-1920bbtyt",
 			      	amount: this.form.amount,
 			      	currency: this.form.currency,
@@ -180,6 +177,7 @@
 		mounted() {},
 
 		created() {
+			this.key = this.$store.getters.getKey;
 			this.loadUser();
 		}
 	}

@@ -293,7 +293,7 @@
             axios.get('/api/user-need-session')
             .then((response) => {
                 
-                if (!response.data.asked) {
+                if (response.data.asked) {
                     needPopup(url, currentPage);
                 }
                 else {

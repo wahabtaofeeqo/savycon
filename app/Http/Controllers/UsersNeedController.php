@@ -164,7 +164,7 @@ class UsersNeedController extends Controller {
     public function needSession(Request $request) {
 
       $response = array('show' => FALSE, 'message' => '');
-      $response['asked'] = session('needSession');
+      $response['asked'] = session('needSession', false);
 
       return response($response, 200);
     }

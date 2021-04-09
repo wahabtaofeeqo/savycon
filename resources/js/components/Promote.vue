@@ -46,6 +46,8 @@
 				url: '/api/service',
 
 				user: {},
+
+				key: '',
 			}
 		},
 
@@ -99,8 +101,11 @@
 			},
 
 			makePayment(info) {
+
+				const key = this.key;
+
 			    FlutterwaveCheckout({
-			      	public_key: "FLWPUBK-3df0eb38dcdc8322952c52b996faa710-X", 
+			      	public_key: key, 
 			      	tx_ref: "hooli-tx-1920bbtyt",
 			      	amount: info.amount,
 			      	currency: "NGN",
@@ -158,7 +163,9 @@
 
 		created() {
 			
+			this.key = this.$store.getters.getKey;
 			this.serviceID = this.$route.params.id;
+			
 			this.loadService(this.serviceID);
 			this.getUser();
 		}
