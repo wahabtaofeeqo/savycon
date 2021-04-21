@@ -179,4 +179,6 @@ Route::prefix('counter')->group(function() {
 Route::get('/user-need-session', 'UsersNeedController@needSession');
 
 //
-Route::post('service-payment', 'PaymentController@servicePayment')->middleware('auth:api');
+Route::get('/states', 'Admin\StateController@all')->middleware('auth:api');
+Route::post('/service-payment', 'PaymentController@servicePayment')->middleware('auth:api');
+Route::get('/userServices/{state}', 'Admin\UserServiceController@index')->middleware('auth:api');

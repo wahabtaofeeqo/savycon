@@ -110,13 +110,21 @@ class CategoryController extends Controller
         $category = $request->category;
         
         $services = explode(",", $services);
-        $check = Service::firstOrCreate(['name' => $parent], ['category_id' => $category]);
-        if ($check) {
+        $category = Category::where('name', $category)->first();
+
+        if ($category) {
+
+            $check = Service::firstOrCreate(['name' => $parent], ['category_id' => $category->id]);
             foreach ($services as $key => $id) {
                 //Get the Services by ID
                 $service = Service::findOrFail($id);
-                $service->delete();
+                if ($service->id != $check->id) {
+                    $service->delete();
+                }
             }
+        }
+        else {
+            $response['message'] = "Category specified not found";
         }
 
         return response($response, 200);

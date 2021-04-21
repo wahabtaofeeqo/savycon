@@ -43,7 +43,7 @@ class ServiceController extends Controller
         if ($request->image_1) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_1, 0, strpos($request->image_1, ';')))[1])[1];
 
-            \Image::make($request->image_1)->save('images/services/'.$name);
+            \Image::make($request->image_1)->save(public_path('images/services/'.$name));
             
             $request->merge(['image_1' => $name]);
             $service->image_1 = $request->image_1;
@@ -52,7 +52,7 @@ class ServiceController extends Controller
         if ($request->image_2) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_2, 0, strpos($request->image_2, ';')))[1])[1];
 
-            \Image::make($request->image_2)->save('images/services/'.$name);
+            \Image::make($request->image_2)->save(public_path('images/services/'.$name));
             
             $request->merge(['image_2' => $name]);
             $service->image_2 = $request->image_2;
@@ -61,7 +61,7 @@ class ServiceController extends Controller
         if ($request->image_3) {
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_3, 0, strpos($request->image_3, ';')))[1])[1];
 
-            \Image::make($request->image_3)->save('images/services/'.$name);
+            \Image::make($request->image_3)->save(public_path('images/services/'.$name));
             
             $request->merge(['image_3' => $name]);
             $service->image_3 = $request->image_3;
@@ -111,7 +111,7 @@ class ServiceController extends Controller
 
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_1, 0, strpos($request->image_1, ';')))[1])[1];
 
-            \Image::make($request->image_1)->save('images/services/'.$name);
+            \Image::make($request->image_1)->save(public_path('images/services/'.$name);
             
             $request->merge(['image_1' => $name]);
             $service->image_1 = $request->image_1;

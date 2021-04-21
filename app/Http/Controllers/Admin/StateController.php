@@ -30,6 +30,10 @@ class StateController extends Controller
         return response($states, 200);
     }
 
+    public function all() {
+        return response(State::all(), 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

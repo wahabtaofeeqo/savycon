@@ -17,9 +17,19 @@
 
     <div class="card">
       <div class="header">
+        <div></div>
         <h4 class="card-title">
           Services
           <span class="badge badge-primary">{{ pagination.total_items }}</span>
+
+          <div style="margin-bottom: 10px;" @change="loadStateServices">
+            <select class="form-control" v-model="state">
+              <option value="">Select State</option>
+              <option v-for="state in states" :value="state.name" :key="state.id">
+                {{state.name}}
+              </option>
+            </select>
+          </div>
 
           <div class="pull-right">
             <input
@@ -181,10 +191,12 @@ export default {
   data() {
     return {
       services: [],
+      states: [],
       pagination: {},
       search: "",
       file: "",
 
+      state: "",
       url: "/api/userService/",
     };
   },
@@ -258,7 +270,11 @@ export default {
       this.pagination = pagination;
     },
     fetchPaginateServicesWithIndex(pageno) {
-      this.url = "/api/userService?page=" + pageno;
+      if (this.state != "") 
+        this.url = "/api/userServices/" + this.state + "?page=" + pageno;
+      else
+        this.url = "/api/userService?page=" + pageno;
+
       this.loadServices();
     },
     searchService() {
@@ -357,6 +373,24 @@ export default {
         });
     },
 
+    loadStates() {
+      axios.get("/api/states/")
+        .then((response) => {
+          this.states = response.data;
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+    },
+
+    loadStateServices() {
+      if (this.state != "") {
+        this.url = "/api/userServices/" + this.state;
+        this.loadServices();
+      }
+    },
+
     showFormat() {
       Swal.fire({
             icon: "info",
@@ -366,7 +400,7 @@ export default {
   },
   created() {
     this.loadServices();
-
+    this.loadStates();
     Fire.$on("refreshServices", () => {
       this.loadServices();
     });

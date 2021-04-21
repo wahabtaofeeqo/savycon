@@ -11,6 +11,7 @@ use SavyCon\Models\UserService;
 use SavyCon\Models\User;
 use SavyCon\Models\Category;
 use SavyCon\Models\City;
+use SavyCon\Models\State;
 use SavyCon\Models\Payment;
 use SavyCon\Models\Service;
 use SavyCon\Imports\UserServicesImport;
@@ -27,15 +28,36 @@ class UserServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($state = null)
     {
-        $services = UserService::with([
-            'user',
-            'service',
-            'service.category',
-            'city',
-            'city.state'
-        ])->where('active', 1)->latest()->paginate(30);
+
+        $services = array();
+        if ($state != null) {
+
+            $stateDetails = State::where('name', $state)->first();
+            if ($stateDetails) {
+                $city = City::where('state_id', $stateDetails->id)->first();
+            }
+
+            if ($city) {
+                $services = UserService::with([
+                    'user',
+                    'service',
+                    'service.category',
+                    'city',
+                    'city.state'
+                ])->where('active', 1)->where('city_id', $city->id)->latest()->paginate(30);
+            }
+        }
+        else {
+            $services = UserService::with([
+                'user',
+                'service',
+                'service.category',
+                'city',
+                'city.state'
+            ])->where('active', 1)->latest()->paginate(30);
+        }
 
         return response($services, 200);
     }
