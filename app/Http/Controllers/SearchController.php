@@ -10,6 +10,7 @@ use SavyCon\Models\City;
 use SavyCon\Models\State;
 use SavyCon\Models\Search;
 use SavyCon\Models\Category;
+use SavyCon\Models\Service;
 
 class SearchController extends Controller
 {
@@ -138,7 +139,20 @@ class SearchController extends Controller
     public function suggestSearch($text = null)
     {
         $categories = Category::where('name', 'LIKE', '%'.$text.'%')->distinct()->get();
+        return response($categories, 200);
+    }
 
+    public function searchSubCategory($text = null) {
+        $services = Service::with('category')
+        ->where('name', 'LIKE', '%'.$text.'%')
+        ->distinct()
+        ->latest()
+        ->paginate();
+        return response($services, 200);
+    }
+
+    public function searchCategory($text = null) {
+        $categories = Category::where('name', 'LIKE', '%'.$text.'%')->distinct()->latest()->paginate();
         return response($categories, 200);
     }
 

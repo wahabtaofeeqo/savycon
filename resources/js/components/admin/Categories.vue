@@ -13,6 +13,18 @@
 							Merge Categories
 						</button>
 					</p>
+
+					<div class="pull-right">
+			            <input
+			              type="text"
+			              name="search"
+			              class="form-control"
+			              v-model="search"
+			              placeholder="Search by name..."
+			              @input="searchCategory"
+			              @keyup.enter="searchCategory"
+			            />
+			        </div>
 				</h4>
 				<p class="category">All categories</p>
 
@@ -162,6 +174,8 @@
 				categories: [],
 				pagination: {},
 				services: [],
+
+				search: "",
 
 				form: new Form({
 					id: '',
@@ -557,6 +571,24 @@
 					}
 				})
 			},
+
+			searchCategory() {
+		      setTimeout(() => {
+		        axios
+		          .get("/api/searchCategory/" + this.search)
+		          .then((response) => {
+		            this.categories = response.data.data;
+		            this.makePagination(response.data);
+		            console.log(response);
+		          })
+		          .catch(() => {
+		            Toast.fire({
+		              type: "error",
+		              title: "Search does not exist",
+		            });
+		          });
+		      }, 500);
+		    },
 		},
 		created() {
 			this.loadCategories()

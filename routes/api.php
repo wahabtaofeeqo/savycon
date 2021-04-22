@@ -87,6 +87,7 @@ Route::get('/findService/{text?}/{location?}', 'SearchController@search')->where
 Route::get('/suggestCategory/{text?}', 'SearchController@suggestSearch')->where([
 	'/text', '.*',
 ])->name('suggest.search');
+
 Route::get('/suggestLocation/{location?}', 'SearchController@suggestLocation')->where([
 	'/location', '.*',
 ])->name('suggest.location');
@@ -95,9 +96,18 @@ Route::get('/suggestLocation/{location?}', 'SearchController@suggestLocation')->
 Route::get('/findAdminService/{text?}', 'SearchController@adminSearch')->where([
 	'/text', '.*',
 ])->name('admin.search');
+
 Route::get('/findAdminVendor/{text?}', 'SearchController@adminSearchVendor')->where([
 	'/text', '.*',
 ])->name('admin.search.vendor');
+
+Route::get('/searchCategory/{text?}', 'SearchController@searchCategory')->where([
+	'/text', '.*',
+])->name('searchCategory');
+
+Route::get('/searchSubCategory/{text?}', 'SearchController@searchSubCategory')->where([
+	'/text', '.*',
+])->name('searchSubCategory');
 
 Route::get('/category', 'CategoryController@index');
 Route::get('/categories/{category}', 'CategoryController@categories');

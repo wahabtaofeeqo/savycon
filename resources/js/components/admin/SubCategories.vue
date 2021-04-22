@@ -13,6 +13,18 @@
               Merge Categories
             </button>
           </p>
+
+          <div class="pull-right">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    v-model="search"
+                    placeholder="Search by name..."
+                    @input="searchSubCategory"
+                    @keyup.enter="searchSubCategory"
+                  />
+          </div>
         </h4>
         <p class="category">All Subcategoris</p>
 
@@ -459,6 +471,24 @@ export default {
                     }
                 }
     },
+
+    searchSubCategory() {
+          setTimeout(() => {
+            axios
+              .get("/api/searchSubCategory/" + this.search)
+              .then((response) => {
+                this.services = response.data.data;
+                this.makePagination(response.data);
+                console.log(response);
+              })
+              .catch(() => {
+                Toast.fire({
+                  type: "error",
+                  title: "Search does not exist",
+                });
+              });
+          }, 500);
+        },
 
 
   //   mergeCategories() {
