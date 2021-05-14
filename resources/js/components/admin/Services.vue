@@ -387,6 +387,7 @@ export default {
     loadStateServices() {
       if (this.state != "") {
         this.url = "/api/userServices/" + this.state;
+        console.log(this.url);
         this.loadServices();
       }
     },

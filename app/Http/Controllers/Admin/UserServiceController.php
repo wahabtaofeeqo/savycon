@@ -46,7 +46,7 @@ class UserServiceController extends Controller
                     'service.category',
                     'city',
                     'city.state'
-                ])->where('active', 1)->where('city_id', $city->id)->latest()->paginate(30);
+                ])->where('active', 1)->where('city_id', $city->id)->orWhere('title', 'like', '%'. $state . '%')->latest()->paginate(30);
             }
         }
         else {

@@ -111,7 +111,7 @@ class ServiceController extends Controller
 
             $name = str_replace(' ', '', str_replace('.', '', microtime())).'.'.explode('/', explode(':', substr($request->image_1, 0, strpos($request->image_1, ';')))[1])[1];
 
-            \Image::make($request->image_1)->save(public_path('images/services/'.$name);
+            \Image::make($request->image_1)->save('images/services/'.$name);
             
             $request->merge(['image_1' => $name]);
             $service->image_1 = $request->image_1;

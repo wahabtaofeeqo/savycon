@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta name="description" content="@yield('description', 'Hire a vendor for your project')">
-        <meta name="author" content="Adeyinka M. Adefolurin">
+        <meta name="author" content="Josiah Akinloye">
         <meta name="robots" content="index, follow">
         <meta name="language" content="English">
         <meta name="keywords" content="freelance,jobs,career,service,vendor,worker">
@@ -31,8 +31,8 @@
 
         <title>{{ config('app.name') }} | {{ ucfirst(Auth::user()->role) }}</title>
 
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
 
         <!-- Stylesheets -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
