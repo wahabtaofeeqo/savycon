@@ -53,7 +53,7 @@
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 							@php
-								$path = ['images/services/'.$service->image_1, 'images/services/'.$service->image_2, 'images/services/'.$service->image_3];
+								$path = ['storage/images/services/'.$service->image_1, 'storage/images/services/'.$service->image_2, 'storage/images/services/'.$service->image_3];
 
 								if ($service->image_1 === 'unavailable.png')
 									$path[0] = 'images/tags/'.$service->service->category->image_tag;

@@ -349,7 +349,9 @@
 						window.location.reload()
 					}, 3000)
 				})
-				.catch(() => {
+				.catch((e) => {
+					console.log(e);
+					
 					Swal.fire({
 						title: 'Oops!',
 						text: 'Service was not created for some reason',

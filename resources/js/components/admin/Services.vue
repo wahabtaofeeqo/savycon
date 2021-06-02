@@ -377,17 +377,16 @@ export default {
       axios.get("/api/states/")
         .then((response) => {
           this.states = response.data;
-          console.log(response);
         })
         .catch((e) => {
-          console.log(e);
+          //console.log(e);
         })
     },
 
     loadStateServices() {
       if (this.state != "") {
         this.url = "/api/userServices/" + this.state;
-        console.log(this.url);
+        //console.log(this.url);
         this.loadServices();
       }
     },

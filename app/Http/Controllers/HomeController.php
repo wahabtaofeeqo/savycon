@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index() {
 
-        $count = UserService::where('active', 0)->count();
+        $count = UserService::where('active', 1)->count();
         return redirect()->route(auth()->user()->role)->with(['services' => $count]);
     }
 }

@@ -130,8 +130,8 @@
                         >
                           <img
                             :src="
-                              '/images/tags/' +
-                              service.service.category.image_tag
+                              '/storage/images/services/' +
+                              service.image_1
                             "
                             width="10"
                             height="10"
@@ -196,6 +196,10 @@ export default {
         path = "/images/tags/";
 
         name = service.service.category.image_tag;
+      }
+      else {
+        path = "storage/images/services/";
+        name = service.image_1;
       }
 
       return path + name;
