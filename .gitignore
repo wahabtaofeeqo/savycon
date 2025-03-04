@@ -1,0 +1,29 @@
+# Created by https://www.toptal.com/developers/gitignore/api/laravel
+# Edit at https://www.toptal.com/developers/gitignore?templates=laravel
+
+### Laravel ###
+# Laravel 4 specific
+@core/bootstrap/compiled.php
+@core/app/storage/
+@core/storage/*.key
+
+# Laravel 5 & Lumen specific
+@core/public/storage/
+@core/public/hot
+
+# Laravel 5 & Lumen specific with changed public path
+public_html/storage
+public_html/hot
+
+@core/bootstrap/cache
+
+@core/node_modules/
+@core/vendor/
+
+@core/.env
+
+@core/storage/framework/views/*
+@core/storage/framework/cache/*
+@core/storage/framework/sessions/*
+
+# End of https://www.toptal.com/developers/gitignore/api/laravel

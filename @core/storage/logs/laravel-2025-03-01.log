@@ -1,0 +1,4 @@
+[2025-03-01 01:09:57] local.ERROR: Trait "Spatie\Translatable\HasTranslations" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Spatie\\Translatable\\HasTranslations\" not found at D:\\qixer\\@core\\app\\GalleryCategory.php:9)
+[stacktrace]
+#0 {main}
+"} 
