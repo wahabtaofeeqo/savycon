@@ -36,6 +36,7 @@ Route::group(['prefix'=>'v1', 'middleware' => 'setlang'],function(){
     Route::post('/account-delete',[MiscellaneousController::class,'accountDelete'])->middleware('auth:sanctum');
     
     //todo: languages
+    Route::post('/donors',[PaymentController::class,'addDonor']);
     Route::get('/language',[LanguageController::class,'languageInfo']);
     Route::post('/translate-string',[LanguageController::class,'translateString']);
     Route::get('/mollie-ipn',[PaymentController::class,'mollieIpn'])->name('mollie.api.ipn')->middleware(['api']);

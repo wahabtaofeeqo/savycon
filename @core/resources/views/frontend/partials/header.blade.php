@@ -67,6 +67,8 @@
            <link rel="stylesheet" href="{{asset('assets/frontend/css/dynamic-style.css')}}">
            <link rel="stylesheet" href="{{asset('assets/frontend/theme-two/css/02_style.css')}}">
 
+           <script src="https://checkout.flutterwave.com/v3.js"></script>
+           
     @if( get_user_lang_direction() === 'rtl')
     <link rel="stylesheet" href="{{asset('assets/common/css/rtl.css')}}">
     @endif

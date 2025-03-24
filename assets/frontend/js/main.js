@@ -364,4 +364,52 @@
         });
     });
 
+    function makePayment(payload) {
+        FlutterwaveCheckout({
+            public_key: 'FLWPUBK_TEST-fec63da3bb65c48db6b9f1421164a2c1-X',
+            tx_ref: Date.now() + 'SVC_Donation',
+            amount: payload.amount,
+            currency: payload.currency,
+            callback: (data) => {
+                const post = {
+                    type: 'donation',
+                    ref: data.flw_ref,
+                    email: payload.email,
+                    amount: payload.amount,
+                    transaction: data.transaction_id
+                };
+
+                $.ajax({
+                    data: post,
+                    type: 'POST',
+                    url: '/api/v1/donors',
+                    success: (res => {
+                        // console.log(res);
+                    }),
+                    error: (e => {
+                        // console.log(e);
+                    })
+                })
+
+                //
+                location.href = '/thank-you';
+            },
+            customer: {
+                email: payload.email,
+                phone_number: payload.phone,
+            },
+            customizations: {
+                title: "Donation",
+                description: "Payment for donation on Savycon",
+            },
+        });
+    }
+
+    $("#donationForm").on('submit', function(e) {
+        e.preventDefault();
+        let payload = {};
+        $(this).serializeArray().forEach(r => payload[r.name] = r.value);
+        makePayment(payload)
+    })
+
 })(jQuery);

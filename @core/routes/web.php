@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['globalVariable', 'maintains_mode','setlang']], function () {
 
     Route::get('/', 'FrontendController@index')->name('homepage');
+    Route::get('/thank-you', 'FrontendController@thankYou');
     Route::get('/home-search', 'FrontendController@home_search')->name('frontend.home.search');
     Route::get('/home-search-two', 'FrontendController@home_search_two')->name('frontend.home.search.two');
     Route::get('/home-search/single-page', 'FrontendController@home_search_single_page')->name('frontend.home.search.single');

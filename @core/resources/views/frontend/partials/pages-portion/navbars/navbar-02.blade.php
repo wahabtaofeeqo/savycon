@@ -10,7 +10,7 @@
         <div class="responsive-mobile-menu">
             <div class="logo-wrapper">
                 <a href="{{ route('homepage') }}" class="logo">
-                    <img src="{{asset('assets/uploads/logo.png')}}" alt="logo">
+                    <img src="{{asset('assets/uploads/logo.png')}}" alt="logo" height="45">
                     {{-- {!! render_image_markup_by_attachment_id(get_static_option('site_logo')) !!} --}}
                 </a>
             </div>
@@ -44,7 +44,9 @@
                     <a href="">Categories</a>
                 </li>
                 <li>
-                    <a href="">Donate</a>
+                    <button type="button" class="btn btn-danger px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Donate
+                    </button>
                 </li>
             </ul>
         </div>
@@ -104,3 +106,48 @@
         </div>
     </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Your Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form method="POST" id="donationForm" action="#">
+            <div class="modal-body">
+                <div class="form-group m-b-20">
+                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    {{-- <has-error :form="form" field="email"></has-error> --}}
+                </div>
+
+                <div class="form-group m-b-20">
+                    <input type="number" name="amount" class="form-control" placeholder="Amount" id="amount" required>
+                    {{-- <has-error :form="form" field="amount"></has-error> --}}
+                </div>
+
+                <div class="form-group m-b-20">
+                    <input type="tel" name="phone" class="form-control" :class="{ 'has-error':form.errors.has('phone') }" v-model="form.phone" placeholder="Phone number" id="phone" aria-describedby="addon-phone" minlength="10" maxlength="10" required>
+                    {{-- <has-error :form="form" field="phone"></has-error> --}}
+                </div>
+
+                <div class="form-group">
+                    <div class="bor8 how-pos4-parent">
+                        <select name="currency" class="form-control" id="currency" required>
+                            <option disabled value="">Select your Currency</option>
+                            <option value="NGN">Naira</option>
+                            <option value="USD">US Dollar</option>
+                        </select>
+                    </div>
+                    {{-- <has-error :form="form" field="currency"></has-error> --}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success px-4">Continue</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>

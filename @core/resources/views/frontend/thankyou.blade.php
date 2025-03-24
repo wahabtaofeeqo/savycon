@@ -131,7 +131,7 @@
         <div class="notfound-404">
             <h1>{{__('Thanks')}}</h1>
         </div>
-        <h2>{{__('we are really thankful to you for subscribe our newsletter')}}</h2>
+        <h2>{{ $message ? $message : __('we are really thankful to you for subscribe our newsletter')}}</h2>
     </div>
 </div>
 </body>

@@ -6,6 +6,7 @@ use Str;
 use App\User;
 use App\Admin;
 use App\Order;
+use App\Payment;
 use App\Category;
 use App\Subcategory;
 use App\Mail\OrderMail;
@@ -153,5 +154,26 @@ class PaymentController extends Controller
             'payment_status' => 'complete',
             'transaction_id' => $transaction_id,
         ]);
+    }
+
+    public function addDonor(Request $request) {
+
+        $response = array('error' => FALSE, 'message' => '');
+        $request->validate(
+            [
+                'transaction' => 'required',
+                'ref' => 'required',
+                'amount' => 'required',
+            ]);
+
+        $payment = new Payment();
+        $payment->type = $request->type;
+        $payment->amount = $request->amount;
+        $payment->reference = $request->ref;
+        $payment->transaction_id = $request->transaction;
+
+        $payment->save();
+
+    	return response($response, 200);
     }
 }

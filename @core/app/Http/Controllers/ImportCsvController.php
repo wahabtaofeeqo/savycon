@@ -36,7 +36,7 @@ class ImportCsvController extends Controller
         // Excel::import(new CategoriesImport, public_path('dumps/categories.csv'));
 
         // Services
-        Excel::import(new ServicesImport, public_path('dumps/user_services.csv'));
+        // Excel::import(new ServicesImport, public_path('dumps/user_services.csv'));
 
         //
         return view('backend.pages.location.country_import');

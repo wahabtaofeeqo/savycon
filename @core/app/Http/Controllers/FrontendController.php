@@ -51,6 +51,13 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function thankYou()
+    {
+        return view('frontend.thankyou', [
+            'message' => 'we are really thankful for your contribution and support.'
+        ]);
+    }
+
     public function home_page_change($id)
     {
         if (!in_array($id, ['01', '02', '03', '04','05'])) {
